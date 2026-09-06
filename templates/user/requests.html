@@ -1,0 +1,64 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import user_sidebar, status_badge, priority_badge, empty_state %}
+{% set role = 'user' %}
+{% block title %}All Requests — MaintenX{% endblock %}
+{% block page_title %}All Requests{% endblock %}
+{% block sidebar_nav %}{{ user_sidebar('requests') }}{% endblock %}
+{% block content %}
+<div class="mb-6">
+  <h2 class="text-xl font-semibold text-ink-primary">All Maintenance Requests</h2>
+  <p class="text-sm text-ink-muted mt-1">Organization-wide maintenance activity.</p>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-3 mb-6">
+  <select class="px-4 py-2 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+    <option value="">All Statuses</option>
+    <option>Requested</option><option>Approved</option><option>On Work</option><option>Rectified</option><option>Closed</option>
+  </select>
+  <select class="px-4 py-2 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+    <option value="">All Priorities</option>
+    <option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
+  </select>
+  <select class="px-4 py-2 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+    <option value="">All Categories</option>
+  </select>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+  {% if requests %}
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-3">ID</th>
+          <th class="px-6 py-3">Title</th>
+          <th class="px-6 py-3">Category</th>
+          <th class="px-6 py-3">Priority</th>
+          <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3">Submitted By</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        {% for req in requests %}
+        <tr class="hover:bg-surface-container-low/50 transition-colors">
+          <td class="px-6 py-4 font-mono text-ink-muted">#{{ req.id }}</td>
+          <td class="px-6 py-4 font-medium text-ink-primary">{{ req.title }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ req.category_name }}</td>
+          <td class="px-6 py-4">{{ priority_badge(req.priority) }}</td>
+          <td class="px-6 py-4">{{ status_badge(req.status) }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ req.user_name }}</td>
+          <td class="px-6 py-4 text-right">
+            <a href="{{ url_for('user.request_details', id=req.id) }}" class="text-primary hover:underline font-medium">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="p-6">
+    {{ empty_state('folder_open','No requests found','There are no maintenance requests in the system yet.') }}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

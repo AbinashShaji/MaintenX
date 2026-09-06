@@ -1,0 +1,40 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import staff_sidebar %}
+{% set role = 'staff' %}
+{% block title %}Bug Report — MaintenX{% endblock %}
+{% block page_title %}Bug Report{% endblock %}
+{% block user_initial %}S{% endblock %}
+{% block sidebar_nav %}{{ staff_sidebar('bug_report') }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl">
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-ink-primary">Report a Bug</h2>
+    <p class="text-sm text-ink-muted mt-1">Found a problem with MaintenX? Let the admin team know.</p>
+  </div>
+  <form action="#" method="POST" class="bg-white rounded-xl border border-border-subtle p-6 space-y-5">
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="bug_title">Bug Title <span class="text-red-500">*</span></label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="bug_title" name="title" type="text" placeholder="Brief description of the bug" required/>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="page_feature">Page / Feature <span class="text-red-500">*</span></label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="page_feature" name="page_feature" type="text" placeholder="Which page or feature is affected?" required/>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="expected">Expected Behaviour</label>
+        <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="expected" name="expected_behaviour" rows="3" placeholder="What should happen?"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="actual">Actual Behaviour</label>
+        <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="actual" name="actual_behaviour" rows="3" placeholder="What actually happened?"></textarea>
+      </div>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="description">Detailed Description <span class="text-red-500">*</span></label>
+      <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="description" name="description" rows="4" placeholder="Provide as much detail as possible..." required></textarea>
+    </div>
+    <button class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">Submit Bug Report</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base_public.html" %}
+{% block title %}Services — MaintenX{% endblock %}
+{% block content %}
+<section class="relative w-full py-20 lg:py-28 px-6 sm:px-8 overflow-hidden">
+  <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-[60rem] h-[30rem] pointer-events-none -z-10">
+    <div class="absolute top-10 right-20 w-80 h-80 rounded-full bg-accent-blue/15 blur-3xl"></div>
+    <div class="absolute bottom-0 left-16 w-72 h-72 rounded-full bg-accent-tan/15 blur-3xl"></div>
+  </div>
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Our Services</span>
+    <h1 class="font-serif text-4xl md:text-5xl text-ink-primary mt-4 mb-6">Maintenance Categories We Cover</h1>
+    <p class="text-base md:text-lg text-ink-muted max-w-2xl mx-auto leading-relaxed">Every type of facility maintenance, organized and tracked through one unified platform.</p>
+  </div>
+</section>
+
+<section class="w-full py-16 px-6 sm:px-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for svc in [
+      ('bolt','Electrical','Wiring issues, power outages, lighting failures, switch replacements, and electrical panel maintenance.'),
+      ('water_drop','Plumbing','Pipe leaks, drain blockages, faucet repairs, water heater issues, and restroom maintenance.'),
+      ('ac_unit','HVAC / AC','Air conditioning repairs, heating system failures, ventilation issues, and temperature control.'),
+      ('chair','Furniture','Desk repairs, chair replacements, cabinet fixes, and workspace furniture maintenance.'),
+      ('router','Network / IT','Network connectivity, server room issues, cable management, and IT infrastructure.'),
+      ('domain','Civil / Building','Structural repairs, painting, flooring, roofing, and general building maintenance.'),
+      ('cleaning_services','Cleaning','Deep cleaning requests, sanitation issues, waste management, and hygiene maintenance.'),
+      ('precision_manufacturing','Equipment','Machinery repairs, equipment calibration, tool replacements, and operational equipment.'),
+      ('more_horiz','Other','Any maintenance request that does not fit the above categories.')
+    ] %}
+    <div class="bg-white rounded-xl border border-border-subtle p-6 hover:shadow-md transition-all group">
+      <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-2xl">{{ svc[0] }}</span>
+      </div>
+      <h3 class="text-lg font-semibold text-ink-primary mb-2">{{ svc[1] }}</h3>
+      <p class="text-sm text-ink-muted leading-relaxed">{{ svc[2] }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Features -->
+<section class="w-full py-20 bg-surface-container-low border-y border-border-subtle/70 px-6 sm:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold uppercase tracking-widest text-primary">Platform Features</span>
+      <h2 class="font-serif text-3xl text-ink-primary mt-3">Everything you need</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for feat in [
+        ('speed','Priority Management','Classify requests as low, medium, high, or critical for efficient resource allocation.'),
+        ('timeline','Real-time Tracking','Track every request through: Requested → Approved → On Work → Rectified → Closed.'),
+        ('history','Complete History','Every status change, work note, and action recorded with timestamps.'),
+        ('bar_chart','Reports & Analytics','Category breakdowns, priority distributions, staff workload, and resolution metrics.'),
+        ('group','Role-based Access','Separate dashboards and permissions for Users, Staff, and Administrators.'),
+        ('security','Secure Platform','Hashed passwords, parameterized queries, and role-based authorization.')
+      ] %}
+      <div class="bg-white rounded-xl border border-border-subtle p-6">
+        <span class="material-symbols-outlined text-2xl text-primary mb-3">{{ feat[0] }}</span>
+        <h3 class="text-base font-semibold text-ink-primary mb-2">{{ feat[1] }}</h3>
+        <p class="text-sm text-ink-muted leading-relaxed">{{ feat[2] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="w-full py-20 px-6 sm:px-8 text-center">
+  <h2 class="font-serif text-3xl text-ink-primary mb-4">Need a service not listed?</h2>
+  <p class="text-ink-muted mb-8">Categories are fully customizable by your administrator.</p>
+  <a href="{{ url_for('auth.register') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary hover:bg-primary-hover text-white font-medium shadow-md transition-all">Get Started<span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+</section>
+{% endblock %}

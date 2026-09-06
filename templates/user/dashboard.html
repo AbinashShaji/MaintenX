@@ -1,0 +1,87 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import user_sidebar, status_badge, priority_badge, empty_state %}
+{% set role = 'user' %}
+{% block title %}Dashboard — MaintenX{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block sidebar_nav %}{{ user_sidebar('dashboard') }}{% endblock %}
+{% block content %}
+<div class="mb-8">
+  <h2 class="text-2xl font-semibold text-ink-primary">Welcome back, {{ session.get('name') }}!</h2>
+  <p class="text-sm text-ink-muted mt-1">Here's an overview of your maintenance requests.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+    <div class="flex items-center justify-between mb-3">
+      <span class="material-symbols-outlined text-primary text-2xl">folder_open</span>
+    </div>
+    <div class="text-2xl font-bold text-ink-primary">{{ stats.total }}</div>
+    <div class="text-xs text-ink-muted mt-1">All Requests</div>
+  </div>
+  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+    <div class="flex items-center justify-between mb-3">
+      <span class="material-symbols-outlined text-status-requested text-2xl">pause_circle</span>
+    </div>
+    <div class="text-2xl font-bold text-ink-primary">{{ stats.requested }}</div>
+    <div class="text-xs text-ink-muted mt-1">Requested</div>
+  </div>
+  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+    <div class="flex items-center justify-between mb-3">
+      <span class="material-symbols-outlined text-status-approved text-2xl">check_circle</span>
+    </div>
+    <div class="text-2xl font-bold text-ink-primary">{{ stats.approved }}</div>
+    <div class="text-xs text-ink-muted mt-1">Approved/On Work</div>
+  </div>
+  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+    <div class="flex items-center justify-between mb-3">
+      <span class="material-symbols-outlined text-status-rectified text-2xl">verified</span>
+    </div>
+    <div class="text-2xl font-bold text-ink-primary">{{ stats.rectified }}</div>
+    <div class="text-xs text-ink-muted mt-1">Rectified</div>
+  </div>
+</div>
+<div class="flex flex-wrap gap-3 mb-8">
+  <a href="{{ url_for('user.create_request') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
+    <span class="material-symbols-outlined text-lg">add</span> New Request
+  </a>
+  <a href="{{ url_for('user.my_requests') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium shadow-sm transition-all">
+    <span class="material-symbols-outlined text-lg">list_alt</span> My Requests
+  </a>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle">
+  <div class="px-6 py-4 border-b border-border-subtle">
+    <h3 class="text-sm font-semibold text-ink-primary">Recent Request Activity</h3>
+  </div>
+  <div class="p-6">
+    {% if recent_requests %}
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm whitespace-nowrap">
+        <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+          <tr>
+            <th class="px-6 py-3">ID</th>
+            <th class="px-6 py-3">Title</th>
+            <th class="px-6 py-3">Category</th>
+            <th class="px-6 py-3">Status</th>
+            <th class="px-6 py-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border-subtle">
+          {% for req in recent_requests %}
+          <tr>
+            <td class="px-6 py-4 font-mono text-ink-muted">#{{ req.id }}</td>
+            <td class="px-6 py-4 font-medium text-ink-primary">{{ req.title }}</td>
+            <td class="px-6 py-4 text-ink-muted">{{ req.category_name }}</td>
+            <td class="px-6 py-4">{{ status_badge(req.status) }}</td>
+            <td class="px-6 py-4 text-right">
+              <a href="{{ url_for('user.request_details', id=req.id) }}" class="text-primary hover:underline font-medium">View</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {{ empty_state('inbox','No requests yet','Submit your first maintenance request to get started.', url_for('user.create_request'), 'Create Request') }}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base_public.html" %}
+{% block title %}Reviews — MaintenX{% endblock %}
+{% block content %}
+<section class="relative w-full py-20 lg:py-28 px-6 sm:px-8 overflow-hidden">
+  <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-[60rem] h-[30rem] pointer-events-none -z-10">
+    <div class="absolute top-10 left-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
+    <div class="absolute top-16 right-16 w-72 h-72 rounded-full bg-accent-tan/15 blur-3xl"></div>
+  </div>
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Testimonials</span>
+    <h1 class="font-serif text-4xl md:text-5xl text-ink-primary mt-4 mb-6">What Our Users Say</h1>
+    <p class="text-base md:text-lg text-ink-muted max-w-2xl mx-auto leading-relaxed">Real feedback from organizations using MaintenX to manage their maintenance operations.</p>
+  </div>
+</section>
+
+<section class="w-full py-16 px-6 sm:px-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for review in [
+      ('Dr. Sarah Chen','Hospital Administrator','MaintenX transformed how we handle facility issues. Response times dropped dramatically, and we finally have complete visibility into every maintenance request.','5'),
+      ('Raj Patel','Campus Manager','The digital workflow replaced our chaotic WhatsApp-based system. Now every complaint is tracked from submission to resolution with full accountability.','5'),
+      ('Emily Torres','Hotel Operations Director','Our maintenance staff loves the clear job queue. They know exactly what needs attention, the priority level, and can update progress in real time.','4'),
+      ('Michael Okafor','Factory Supervisor','The reporting dashboard gives us insights we never had before — which equipment fails most, average resolution times, staff workload distribution.','5'),
+      ('Aisha Rahman','School Principal','Parents and teachers can now report issues digitally. No more lost paper complaints. Everything is documented and resolved systematically.','4'),
+      ('James Wu','Property Manager','Managing maintenance across 200+ apartments was a nightmare. MaintenX made it organized, transparent, and actually manageable.','5')
+    ] %}
+    <div class="bg-white rounded-xl border border-border-subtle p-6 hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-1 mb-4">
+        {% for i in range(review[3]|int) %}
+        <span class="material-symbols-outlined filled text-accent-tan text-lg">star</span>
+        {% endfor %}
+        {% for i in range(5 - review[3]|int) %}
+        <span class="material-symbols-outlined text-border-subtle text-lg">star</span>
+        {% endfor %}
+      </div>
+      <p class="text-sm text-ink-muted leading-relaxed mb-6 italic">"{{ review[2] }}"</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold">{{ review[0][0] }}</div>
+        <div>
+          <div class="text-sm font-semibold text-ink-primary">{{ review[0] }}</div>
+          <div class="text-xs text-ink-muted">{{ review[1] }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Overall Rating -->
+<section class="w-full py-16 bg-surface-container-low border-y border-border-subtle/70 px-6 sm:px-8">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="text-5xl font-bold text-primary mb-2">4.8</div>
+    <div class="flex items-center justify-center gap-1 mb-3">
+      {% for i in range(5) %}
+      <span class="material-symbols-outlined filled text-accent-tan text-2xl">star</span>
+      {% endfor %}
+    </div>
+    <p class="text-ink-muted">Based on feedback from organizations across industries</p>
+  </div>
+</section>
+
+<section class="w-full py-20 px-6 sm:px-8 text-center">
+  <h2 class="font-serif text-3xl text-ink-primary mb-4">Join the community</h2>
+  <p class="text-ink-muted mb-8">Experience the difference that organized maintenance makes.</p>
+  <a href="{{ url_for('auth.register') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary hover:bg-primary-hover text-white font-medium shadow-md transition-all">Get Started<span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+</section>
+{% endblock %}

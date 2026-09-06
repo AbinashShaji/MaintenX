@@ -1,0 +1,54 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% set role = 'admin' %}
+{% block title %}Staff — MaintenX{% endblock %}
+{% block page_title %}Staff Management{% endblock %}
+{% block user_initial %}A{% endblock %}
+{% block sidebar_nav %}{{ admin_sidebar('staff') }}{% endblock %}
+{% block content %}
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <div>
+    <h2 class="text-xl font-semibold text-ink-primary">Maintenance Staff</h2>
+    <p class="text-sm text-ink-muted mt-1">Manage maintenance personnel accounts.</p>
+  </div>
+  <button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all shrink-0">
+    <span class="material-symbols-outlined text-lg">add</span> Add Staff
+  </button>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-4">Name</th>
+          <th class="px-6 py-4">Email</th>
+          <th class="px-6 py-4">Department / Trade</th>
+          <th class="px-6 py-4">Phone</th>
+          <th class="px-6 py-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        {% if staff %}
+        {% for member in staff %}
+        <tr class="hover:bg-surface-container-low/50 transition-colors">
+          <td class="px-6 py-4 font-medium text-ink-primary">{{ member.name }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ member.email }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ member.department or '—' }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ member.phone or '—' }}</td>
+          <td class="px-6 py-4 text-right">
+            <button class="text-primary hover:text-primary-hover font-medium mr-3">Edit</button>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-6 py-12">
+            {{ empty_state('badge','No staff found','There are no registered staff members yet.') }}
+          </td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% macro user_sidebar(active='') %}
+<a href="{{ url_for('user.dashboard') }}" class="sidebar-link {{ 'active' if active=='dashboard' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='dashboard' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">dashboard</span><span>Dashboard</span>
+</a>
+<a href="{{ url_for('user.my_requests') }}" class="sidebar-link {{ 'active' if active=='my_requests' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='my_requests' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">list_alt</span><span>My Requests</span>
+</a>
+<a href="{{ url_for('user.requests_list') }}" class="sidebar-link {{ 'active' if active=='requests' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='requests' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">folder_open</span><span>All Requests</span>
+</a>
+<a href="{{ url_for('user.create_request') }}" class="sidebar-link {{ 'active' if active=='new_request' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='new_request' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">add_circle</span><span>New Request</span>
+</a>
+<a href="{{ url_for('user.feedback') }}" class="sidebar-link {{ 'active' if active=='feedback' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='feedback' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">rate_review</span><span>Feedback</span>
+</a>
+<a href="{{ url_for('user.profile') }}" class="sidebar-link {{ 'active' if active=='profile' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='profile' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">person</span><span>Profile</span>
+</a>
+{% endmacro %}
+
+{% macro staff_sidebar(active='') %}
+<a href="{{ url_for('staff.dashboard') }}" class="sidebar-link {{ 'active' if active=='dashboard' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='dashboard' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">dashboard</span><span>Dashboard</span>
+</a>
+<a href="{{ url_for('staff.jobs') }}" class="sidebar-link {{ 'active' if active=='jobs' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='jobs' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">work</span><span>Available Jobs</span>
+</a>
+<a href="{{ url_for('staff.history') }}" class="sidebar-link {{ 'active' if active=='history' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='history' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">history</span><span>Job History</span>
+</a>
+<a href="{{ url_for('staff.bug_report') }}" class="sidebar-link {{ 'active' if active=='bug_report' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='bug_report' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">bug_report</span><span>Bug Report</span>
+</a>
+<a href="{{ url_for('staff.profile') }}" class="sidebar-link {{ 'active' if active=='profile' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='profile' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">person</span><span>Profile</span>
+</a>
+{% endmacro %}
+
+{% macro admin_sidebar(active='') %}
+<a href="{{ url_for('admin.dashboard') }}" class="sidebar-link {{ 'active' if active=='dashboard' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='dashboard' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">dashboard</span><span>Dashboard</span>
+</a>
+<a href="{{ url_for('admin.requests_list') }}" class="sidebar-link {{ 'active' if active=='requests' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='requests' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">assignment</span><span>Requests</span>
+</a>
+<a href="{{ url_for('admin.users') }}" class="sidebar-link {{ 'active' if active=='users' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='users' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">group</span><span>Users</span>
+</a>
+<a href="{{ url_for('admin.staff') }}" class="sidebar-link {{ 'active' if active=='staff' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='staff' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">badge</span><span>Staff</span>
+</a>
+<a href="{{ url_for('admin.categories') }}" class="sidebar-link {{ 'active' if active=='categories' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='categories' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">category</span><span>Categories</span>
+</a>
+<a href="{{ url_for('admin.reports') }}" class="sidebar-link {{ 'active' if active=='reports' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='reports' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">bar_chart</span><span>Reports</span>
+</a>
+<a href="{{ url_for('admin.feedback') }}" class="sidebar-link {{ 'active' if active=='feedback' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='feedback' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">reviews</span><span>Reviews & Feedback</span>
+</a>
+<a href="{{ url_for('admin.bug_reports') }}" class="sidebar-link {{ 'active' if active=='bug_reports' }} flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm {{ '' if active=='bug_reports' else 'text-ink-muted' }}">
+  <span class="material-symbols-outlined text-xl">bug_report</span><span>Bug Reports</span>
+</a>
+{% endmacro %}
+
+{% macro status_badge(status) %}
+{% if status == 'pending' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Requested</span>
+{% elif status == 'assigned' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>Approved</span>
+{% elif status == 'in_progress' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>On Work</span>
+{% elif status == 'resolved' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700"><span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>Rectified</span>
+{% elif status == 'closed' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-500"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Closed</span>
+{% endif %}
+{% endmacro %}
+
+{% macro priority_badge(priority) %}
+{% if priority == 'low' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Low</span>
+{% elif priority == 'medium' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">Medium</span>
+{% elif priority == 'high' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700">High</span>
+{% elif priority == 'critical' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700">Critical</span>
+{% endif %}
+{% endmacro %}
+
+{% macro request_timeline(statuses) %}
+<div class="flex flex-col gap-0">
+  {% for s in [('pending','Requested','edit_note'),('assigned','Approved','check_circle'),('in_progress','On Work','build'),('resolved','Rectified','verified')] %}
+  <div class="flex items-center gap-3 py-1.5">
+    {% if s[0] in statuses %}
+    <span class="material-symbols-outlined text-primary text-lg filled">{{ s[2] }}</span>
+    <span class="text-sm text-ink-primary font-medium">{{ s[1] }}</span>
+    {% else %}
+    <span class="material-symbols-outlined text-border-subtle text-lg">{{ s[2] }}</span>
+    <span class="text-sm text-ink-muted">{{ s[1] }}</span>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro empty_state(icon, title, description, action_url='', action_label='') %}
+<div class="flex flex-col items-center justify-center py-16 text-center">
+  <span class="material-symbols-outlined text-5xl text-border-subtle mb-4">{{ icon }}</span>
+  <h3 class="text-base font-semibold text-ink-primary mb-1">{{ title }}</h3>
+  <p class="text-sm text-ink-muted max-w-sm">{{ description }}</p>
+  {% if action_url %}
+  <a href="{{ action_url }}" class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
+    {{ action_label }}
+  </a>
+  {% endif %}
+</div>
+{% endmacro %}

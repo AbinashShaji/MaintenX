@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Log In — MaintenX{% endblock %}
+{% block body %}
+<div class="min-h-screen flex">
+  <!-- Left: Form -->
+  <div class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+      <a href="{{ url_for('home') }}" class="flex items-center gap-2 mb-10">
+        <span class="material-symbols-outlined text-primary text-3xl">engineering</span>
+        <span class="text-xl font-bold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
+      </a>
+      <h1 class="text-2xl font-semibold text-ink-primary mb-2">Welcome back</h1>
+      <p class="text-sm text-ink-muted mb-8">Sign in to your account to continue.</p>
+      <form action="{{ url_for('auth.login') }}" method="POST" class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="email">Email Address</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="email" name="email" type="email" placeholder="you@organization.com" required/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="password">Password</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="password" name="password" type="password" placeholder="••••••••" required/>
+        </div>
+        <button class="w-full py-3 rounded-xl bg-primary hover:bg-primary-hover text-white font-medium text-sm shadow-sm transition-all" type="submit">Sign In</button>
+      </form>
+      <p class="mt-6 text-center text-sm text-ink-muted">
+        Don't have an account? <a class="text-primary font-medium hover:underline" href="{{ url_for('auth.register') }}">Create one</a>
+      </p>
+    </div>
+  </div>
+  <!-- Right: Visual -->
+  <div class="hidden lg:flex flex-1 items-center justify-center bg-surface-container-low border-l border-border-subtle relative overflow-hidden">
+    <div class="absolute top-20 right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
+    <div class="absolute bottom-20 left-20 w-72 h-72 rounded-full bg-accent-tan/15 blur-3xl"></div>
+    <div class="relative text-center space-y-6 p-12">
+      <span class="material-symbols-outlined text-7xl text-primary/30">engineering</span>
+      <h2 class="font-serif text-3xl text-ink-primary">Maintenance,<br/>Simplified.</h2>
+      <p class="text-ink-muted text-sm max-w-xs mx-auto">Report issues, track progress, and get things fixed — all in one place.</p>
+      <div class="flex items-center justify-center gap-2 pt-4">
+        {% for status in ['Requested','Approved','On Work','Rectified'] %}
+        <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-border-subtle text-ink-muted">{{ status }}</span>
+        {% if not loop.last %}
+        <span class="material-symbols-outlined text-border-subtle text-sm">arrow_forward</span>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import user_sidebar, status_badge, priority_badge, request_timeline, empty_state %}
+{% set role = 'user' %}
+{% block title %}My Requests — MaintenX{% endblock %}
+{% block page_title %}My Requests{% endblock %}
+{% block sidebar_nav %}{{ user_sidebar('my_requests') }}{% endblock %}
+{% block content %}
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <div>
+    <h2 class="text-xl font-semibold text-ink-primary">My Requests</h2>
+    <p class="text-sm text-ink-muted mt-1">Requests you have submitted.</p>
+  </div>
+  <a href="{{ url_for('user.create_request') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all shrink-0">
+    <span class="material-symbols-outlined text-lg">add</span> New Request
+  </a>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+  {% if requests %}
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-3">ID</th>
+          <th class="px-6 py-3">Title</th>
+          <th class="px-6 py-3">Category</th>
+          <th class="px-6 py-3">Priority</th>
+          <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        {% for req in requests %}
+        <tr class="hover:bg-surface-container-low/50 transition-colors">
+          <td class="px-6 py-4 font-mono text-ink-muted">#{{ req.id }}</td>
+          <td class="px-6 py-4 font-medium text-ink-primary">{{ req.title }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ req.category_name }}</td>
+          <td class="px-6 py-4">{{ priority_badge(req.priority) }}</td>
+          <td class="px-6 py-4">{{ status_badge(req.status) }}</td>
+          <td class="px-6 py-4 text-right">
+            <a href="{{ url_for('user.request_details', id=req.id) }}" class="text-primary hover:underline font-medium">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="p-6">
+    {{ empty_state('list_alt','No requests submitted','You haven\'t submitted any maintenance requests yet.', url_for('user.create_request'), 'Submit Your First Request') }}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

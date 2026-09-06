@@ -1,0 +1,35 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% set role = 'admin' %}
+{% block title %}Reviews & Feedback — MaintenX{% endblock %}
+{% block page_title %}Reviews & Feedback{% endblock %}
+{% block user_initial %}A{% endblock %}
+{% block sidebar_nav %}{{ admin_sidebar('feedback') }}{% endblock %}
+{% block content %}
+<div class="mb-6">
+  <h2 class="text-xl font-semibold text-ink-primary">User Feedback</h2>
+  <p class="text-sm text-ink-muted mt-1">Review feedback and testimonials submitted by users.</p>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-4">User</th>
+          <th class="px-6 py-4">Type</th>
+          <th class="px-6 py-4">Subject</th>
+          <th class="px-6 py-4">Date</th>
+          <th class="px-6 py-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        <tr>
+          <td colspan="5" class="px-6 py-12">
+            {{ empty_state('rate_review','No feedback found','There are no feedback submissions yet.') }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

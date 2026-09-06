@@ -1,0 +1,97 @@
+{% extends "base_public.html" %}
+{% block title %}About — MaintenX{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="relative w-full py-20 lg:py-28 px-6 sm:px-8 overflow-hidden">
+  <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-[60rem] h-[30rem] pointer-events-none -z-10">
+    <div class="absolute top-10 left-20 w-72 h-72 rounded-full bg-accent-tan/15 blur-3xl"></div>
+    <div class="absolute top-20 right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
+  </div>
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">About MaintenX</span>
+    <h1 class="font-serif text-4xl md:text-5xl text-ink-primary mt-4 mb-6">Maintenance, Modernized</h1>
+    <p class="text-base md:text-lg text-ink-muted max-w-2xl mx-auto leading-relaxed">MaintenX replaces disorganized maintenance communication — verbal complaints, phone calls, WhatsApp messages, and paper registers — with a centralized digital workflow.</p>
+  </div>
+</section>
+
+<!-- Problem / Solution -->
+<section class="w-full py-16 bg-surface-container-low border-y border-border-subtle/70">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-accent-clay">The Problem</span>
+        <h2 class="font-serif text-2xl text-ink-primary mt-3 mb-6">Traditional maintenance is broken</h2>
+        <ul class="space-y-3">
+          {% for item in ['Complaints forgotten or lost','No centralized record','Difficult status tracking','Manual assignment with no accountability','No reliable maintenance history','Repeated follow-up by frustrated users'] %}
+          <li class="flex items-start gap-3 text-sm text-ink-muted">
+            <span class="material-symbols-outlined text-accent-clay text-lg mt-0.5">close</span>
+            {{ item }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-primary">The Solution</span>
+        <h2 class="font-serif text-2xl text-ink-primary mt-3 mb-6">MaintenX brings order</h2>
+        <ul class="space-y-3">
+          {% for item in ['Every request recorded permanently','Real-time status tracking','System-based staff assignment','Complete maintenance history','Dashboard statistics and reports','Full accountability through action history'] %}
+          <li class="flex items-start gap-3 text-sm text-ink-muted">
+            <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+            {{ item }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Target Organizations -->
+<section class="w-full py-20 px-6 sm:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold uppercase tracking-widest text-primary">Who It's For</span>
+      <h2 class="font-serif text-3xl text-ink-primary mt-3">Built for every organization</h2>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      {% for org in [('corporate_fare','Companies & Offices'),('local_hospital','Hospitals'),('hotel','Hotels'),('factory','Factories'),('school','Schools & Colleges'),('apartment','Apartment Complexes'),('account_balance','Government Buildings'),('store','Shopping Malls')] %}
+      <div class="bg-white rounded-xl border border-border-subtle p-5 text-center hover:shadow-md transition-shadow">
+        <span class="material-symbols-outlined text-3xl text-primary/60 mb-2">{{ org[0] }}</span>
+        <p class="text-sm font-medium text-ink-primary">{{ org[1] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Workflow -->
+<section class="w-full py-20 bg-surface-container-low border-y border-border-subtle/70 px-6 sm:px-8">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Core Workflow</span>
+    <h2 class="font-serif text-3xl text-ink-primary mt-3 mb-12">From report to resolution</h2>
+    <div class="flex flex-col items-center gap-4">
+      {% for step in [('edit_note','Problem Identified','User finds a maintenance issue'),('send','Request Submitted','Digital request with details, category, priority'),('assignment_ind','Staff Assigned','Admin reviews and assigns qualified staff'),('build','Work In Progress','Staff starts repair, updates progress'),('check_circle','Issue Rectified','Staff completes work, adds resolution note'),('lock','Request Closed','Admin verifies and closes — history preserved')] %}
+      <div class="w-full max-w-md bg-white rounded-xl border border-border-subtle p-4 flex items-center gap-4 text-left">
+        <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-xl">{{ step[0] }}</span>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-ink-primary">{{ step[1] }}</div>
+          <div class="text-xs text-ink-muted">{{ step[2] }}</div>
+        </div>
+      </div>
+      {% if not loop.last %}
+      <span class="material-symbols-outlined text-border-subtle text-xl">arrow_downward</span>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="w-full py-20 px-6 sm:px-8 text-center">
+  <h2 class="font-serif text-3xl text-ink-primary mb-4">Start managing maintenance the smart way</h2>
+  <p class="text-ink-muted mb-8 max-w-xl mx-auto">Create your account and submit your first maintenance request in minutes.</p>
+  <a href="{{ url_for('auth.register') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary hover:bg-primary-hover text-white font-medium shadow-md transition-all">Get Started<span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+</section>
+{% endblock %}

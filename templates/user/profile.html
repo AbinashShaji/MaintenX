@@ -1,0 +1,68 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import user_sidebar %}
+{% set role = 'user' %}
+{% block title %}Profile — MaintenX{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block sidebar_nav %}{{ user_sidebar('profile') }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl">
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-ink-primary">Profile Settings</h2>
+    <p class="text-sm text-ink-muted mt-1">View and update your account information.</p>
+  </div>
+  <!-- Profile Info -->
+  <div class="bg-white rounded-xl border border-border-subtle p-6 mb-6">
+    <div class="flex items-center gap-4 mb-6 pb-6 border-b border-border-subtle">
+      <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-semibold">U</div>
+      <div>
+        <h3 class="text-lg font-semibold text-ink-primary">User</h3>
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary mt-1">Employee</span>
+      </div>
+    </div>
+    <form action="#" method="POST" class="space-y-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="name">Full Name</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="name" name="name" type="text" value=""/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="email">Email</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-surface-container text-sm text-ink-muted cursor-not-allowed" id="email" type="email" value="" disabled/>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="phone">Phone</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="phone" name="phone" type="tel" value=""/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="department">Department</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="department" name="department" type="text" value=""/>
+        </div>
+      </div>
+      <button class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">Update Profile</button>
+    </form>
+  </div>
+  <!-- Change Password -->
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <h3 class="text-sm font-semibold text-ink-primary mb-4">Change Password</h3>
+    <form action="#" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="current_password">Current Password</label>
+        <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="current_password" name="current_password" type="password" required/>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="new_password">New Password</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="new_password" name="new_password" type="password" required/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="confirm_new">Confirm New Password</label>
+          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="confirm_new" name="confirm_new_password" type="password" required/>
+        </div>
+      </div>
+      <button class="px-6 py-2.5 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium transition-all" type="submit">Change Password</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

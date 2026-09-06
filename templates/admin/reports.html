@@ -1,0 +1,61 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% set role = 'admin' %}
+{% block title %}Reports — MaintenX{% endblock %}
+{% block page_title %}Reports & Analytics{% endblock %}
+{% block user_initial %}A{% endblock %}
+{% block sidebar_nav %}{{ admin_sidebar('reports') }}{% endblock %}
+{% block content %}
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <div>
+    <h2 class="text-xl font-semibold text-ink-primary">Platform Analytics</h2>
+    <p class="text-sm text-ink-muted mt-1">View statistics and export maintenance reports.</p>
+  </div>
+  <div class="flex gap-2">
+    <button class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium transition-all shrink-0">
+      <span class="material-symbols-outlined text-lg">print</span> Print
+    </button>
+    <button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all shrink-0">
+      <span class="material-symbols-outlined text-lg">download</span> Export CSV
+    </button>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <h3 class="text-sm font-semibold text-ink-primary mb-4">Requests by Category</h3>
+    <div class="flex items-center justify-center h-48 border border-dashed border-border-subtle rounded-lg bg-surface-container-low">
+      <span class="text-sm text-ink-muted">Chart visualization area</span>
+    </div>
+  </div>
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <h3 class="text-sm font-semibold text-ink-primary mb-4">Requests by Priority</h3>
+    <div class="flex items-center justify-center h-48 border border-dashed border-border-subtle rounded-lg bg-surface-container-low">
+      <span class="text-sm text-ink-muted">Chart visualization area</span>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white rounded-xl border border-border-subtle p-6">
+  <h3 class="text-sm font-semibold text-ink-primary mb-4">Staff Workload Distribution</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-3 rounded-tl-lg">Staff Member</th>
+          <th class="px-6 py-3">Active Jobs</th>
+          <th class="px-6 py-3">Resolved (All Time)</th>
+          <th class="px-6 py-3 rounded-tr-lg">Avg Resolution Time</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        <tr>
+          <td colspan="4" class="px-6 py-8">
+            <div class="text-center text-ink-muted">Not enough data to display staff workload.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

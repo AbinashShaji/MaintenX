@@ -1,0 +1,82 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import staff_sidebar, status_badge, empty_state %}
+{% set role = 'staff' %}
+{% block title %}Job History — MaintenX{% endblock %}
+{% block page_title %}Job History{% endblock %}
+{% block user_initial %}S{% endblock %}
+{% block sidebar_nav %}{{ staff_sidebar('history') }}{% endblock %}
+{% block content %}
+<div class="mb-6">
+  <h2 class="text-xl font-semibold text-ink-primary">Work History</h2>
+  <p class="text-sm text-ink-muted mt-1">Your accepted jobs grouped by status.</p>
+</div>
+<!-- Accepted Jobs -->
+<div class="mb-6">
+  <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-status-approved"></span> Accepted Jobs
+  </h3>
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    {% if jobs.assigned %}
+    <div class="space-y-3">
+      {% for job in jobs.assigned %}
+      <div class="flex items-center justify-between p-3 rounded-lg border border-border-subtle hover:bg-surface-container-low transition-colors">
+        <div>
+          <div class="text-sm font-medium text-ink-primary">{{ job.title }}</div>
+          <div class="text-xs text-ink-muted">{{ job.category_name }} &bull; {{ priority_badge(job.priority) }}</div>
+        </div>
+        <a href="{{ url_for('staff.job_details', id=job.id) }}" class="text-primary hover:underline text-sm font-medium">Update</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-sm text-ink-muted text-center py-4">No accepted jobs.</div>
+    {% endif %}
+  </div>
+</div>
+<!-- On Work -->
+<div class="mb-6">
+  <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-status-onwork"></span> On Work
+  </h3>
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    {% if jobs.in_progress %}
+    <div class="space-y-3">
+      {% for job in jobs.in_progress %}
+      <div class="flex items-center justify-between p-3 rounded-lg border border-border-subtle hover:bg-surface-container-low transition-colors">
+        <div>
+          <div class="text-sm font-medium text-ink-primary">{{ job.title }}</div>
+          <div class="text-xs text-ink-muted">{{ job.category_name }} &bull; {{ priority_badge(job.priority) }}</div>
+        </div>
+        <a href="{{ url_for('staff.job_details', id=job.id) }}" class="text-primary hover:underline text-sm font-medium">Update</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-sm text-ink-muted text-center py-4">No jobs currently in progress.</div>
+    {% endif %}
+  </div>
+</div>
+<!-- Completed -->
+<div>
+  <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-status-rectified"></span> Completed / Rectified
+  </h3>
+  <div class="bg-white rounded-xl border border-border-subtle p-6">
+    {% if jobs.resolved %}
+    <div class="space-y-3">
+      {% for job in jobs.resolved %}
+      <div class="flex items-center justify-between p-3 rounded-lg border border-border-subtle hover:bg-surface-container-low transition-colors">
+        <div>
+          <div class="text-sm font-medium text-ink-primary">{{ job.title }}</div>
+          <div class="text-xs text-ink-muted">{{ job.category_name }} &bull; {{ priority_badge(job.priority) }}</div>
+        </div>
+        <a href="{{ url_for('staff.job_details', id=job.id) }}" class="text-primary hover:underline text-sm font-medium">View</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    {{ empty_state('history','No completed jobs','Jobs you have completed will appear here.') }}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

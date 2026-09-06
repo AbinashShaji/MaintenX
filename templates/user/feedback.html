@@ -1,0 +1,90 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import user_sidebar %}
+{% set role = 'user' %}
+{% block title %}Feedback — MaintenX{% endblock %}
+{% block page_title %}Review & Feedback{% endblock %}
+{% block sidebar_nav %}{{ user_sidebar('feedback') }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl">
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-ink-primary">Submit Feedback</h2>
+    <p class="text-sm text-ink-muted mt-1">Share your experience, suggest improvements, or report bugs.</p>
+  </div>
+  <form action="#" method="POST" class="bg-white rounded-xl border border-border-subtle p-6 space-y-5">
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="type">Type <span class="text-red-500">*</span></label>
+      <select class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="feedback-type" name="type" onchange="toggleFeedbackFields()" required>
+        <option value="review">Review</option>
+        <option value="feedback">Feedback</option>
+        <option value="bug">Bug Report</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="subject">Subject <span class="text-red-500">*</span></label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="subject" name="subject" type="text" placeholder="Brief subject" required/>
+    </div>
+    <!-- Rating (for Reviews) -->
+    <div id="rating-field">
+      <label class="block text-sm font-medium text-ink-primary mb-1.5">Rating</label>
+      <div class="flex items-center gap-1">
+        {% for i in range(1, 6) %}
+        <button type="button" class="text-2xl text-border-subtle hover:text-accent-tan transition-colors star-btn" data-rating="{{ i }}">
+          <span class="material-symbols-outlined">star</span>
+        </button>
+        {% endfor %}
+      </div>
+      <input type="hidden" name="rating" id="rating-value" value="0"/>
+    </div>
+    <!-- Bug-specific fields -->
+    <div id="bug-fields" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="page_feature">Page / Feature</label>
+        <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="page_feature" name="page_feature" type="text" placeholder="Which page or feature?"/>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="expected">Expected Behaviour</label>
+        <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="expected" name="expected_behaviour" rows="2" placeholder="What should happen?"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="actual">Actual Behaviour</label>
+        <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="actual" name="actual_behaviour" rows="2" placeholder="What actually happened?"></textarea>
+      </div>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="message">Message <span class="text-red-500">*</span></label>
+      <textarea class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none" id="message" name="message" rows="4" placeholder="Your detailed feedback..." required></textarea>
+    </div>
+    <button class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">Submit Feedback</button>
+  </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function toggleFeedbackFields() {
+  const t = document.getElementById('feedback-type').value;
+  document.getElementById('bug-fields').classList.toggle('hidden', t !== 'bug');
+  document.getElementById('rating-field').classList.toggle('hidden', t === 'bug');
+}
+
+document.querySelectorAll('.star-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const r = parseInt(this.dataset.rating);
+    document.getElementById('rating-value').value = r;
+    
+    document.querySelectorAll('.star-btn').forEach((b, i) => {
+      const isFilled = i < r;
+      const span = b.querySelector('span');
+      span.classList.toggle('filled', isFilled);
+      
+      if (isFilled) {
+        b.classList.add('text-accent-tan');
+        b.classList.remove('text-border-subtle');
+      } else {
+        b.classList.remove('text-accent-tan');
+        b.classList.add('text-border-subtle');
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

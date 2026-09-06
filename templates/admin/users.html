@@ -1,0 +1,51 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% set role = 'admin' %}
+{% block title %}Users — MaintenX{% endblock %}
+{% block page_title %}User Management{% endblock %}
+{% block user_initial %}A{% endblock %}
+{% block sidebar_nav %}{{ admin_sidebar('users') }}{% endblock %}
+{% block content %}
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <div>
+    <h2 class="text-xl font-semibold text-ink-primary">Registered Users</h2>
+    <p class="text-sm text-ink-muted mt-1">Manage standard user accounts across the organization.</p>
+  </div>
+</div>
+<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+        <tr>
+          <th class="px-6 py-4">Name</th>
+          <th class="px-6 py-4">Email</th>
+          <th class="px-6 py-4">Department</th>
+          <th class="px-6 py-4">Phone</th>
+          <th class="px-6 py-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        {% if users %}
+        {% for user in users %}
+        <tr class="hover:bg-surface-container-low/50 transition-colors">
+          <td class="px-6 py-4 font-medium text-ink-primary">{{ user.name }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ user.email }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ user.department or '—' }}</td>
+          <td class="px-6 py-4 text-ink-muted">{{ user.phone or '—' }}</td>
+          <td class="px-6 py-4 text-right">
+            <button class="text-primary hover:text-primary-hover font-medium mr-3">Edit</button>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-6 py-12">
+            {{ empty_state('group','No users found','There are no registered standard users yet.') }}
+          </td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
