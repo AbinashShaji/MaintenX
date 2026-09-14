@@ -7,7 +7,7 @@
 {% block sidebar_nav %}{{ staff_sidebar('jobs') }}{% endblock %}
 {% block content %}
 <div class="mb-6">
-  <h2 class="text-xl font-semibold text-ink-primary">Available Jobs</h2>
+  <h2 class="font-serif text-2xl font-semibold text-ink-primary">Available Jobs</h2>
   <p class="text-sm text-ink-muted mt-1">Maintenance requests available for you to accept.</p>
 </div>
 <div class="flex flex-wrap gap-3 mb-6">
@@ -19,18 +19,18 @@
     <option value="">All Categories</option>
   </select>
 </div>
-<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+<div class="bg-white rounded-2xl border border-border-subtle overflow-hidden shadow-sm">
   {% if available_jobs %}
   <div class="overflow-x-auto">
     <table class="w-full text-left text-sm whitespace-nowrap">
-      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted text-[12px] font-semibold uppercase tracking-[0.04em]">
         <tr>
-          <th class="px-6 py-3">ID</th>
-          <th class="px-6 py-3">Title</th>
-          <th class="px-6 py-3">Category</th>
-          <th class="px-6 py-3">Location</th>
-          <th class="px-6 py-3">Priority</th>
-          <th class="px-6 py-3 text-right">Actions</th>
+          <th class="px-6 py-3 border-b border-border-subtle">ID</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Title</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Category</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Location</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Priority</th>
+          <th class="px-6 py-3 border-b border-border-subtle text-right">Actions</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-border-subtle">

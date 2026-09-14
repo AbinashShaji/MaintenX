@@ -65,19 +65,19 @@
 {% endmacro %}
 
 {% macro status_badge(status) %}
-{% if status == 'pending' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Requested</span>
-{% elif status == 'assigned' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>Approved</span>
-{% elif status == 'in_progress' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>On Work</span>
-{% elif status == 'resolved' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700"><span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>Rectified</span>
-{% elif status == 'closed' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-500"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Closed</span>
+{% if status == 'pending' %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-semibold bg-status-requested/15 text-[#4A4A46]">Requested</span>
+{% elif status == 'assigned' %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-semibold bg-status-approved/25 text-[#2B4A5D]">Approved</span>
+{% elif status == 'in_progress' %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-semibold bg-status-onwork/30 text-[#5C441E]">On Work</span>
+{% elif status == 'resolved' %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-semibold bg-status-rectified/15 text-[#234231]">Rectified</span>
+{% elif status == 'closed' %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-semibold bg-status-closed/15 text-[#3A3834]">Closed</span>
 {% endif %}
 {% endmacro %}
 
 {% macro priority_badge(priority) %}
-{% if priority == 'low' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Low</span>
-{% elif priority == 'medium' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">Medium</span>
-{% elif priority == 'high' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700">High</span>
-{% elif priority == 'critical' %}<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700">Critical</span>
+{% if priority == 'low' %}<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-bold bg-priority-low/20 text-[#2B4A5D]"><span class="w-1.5 h-1.5 rounded-full bg-priority-low"></span>Low</span>
+{% elif priority == 'medium' %}<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-bold bg-priority-medium/30 text-[#5C441E]"><span class="w-1.5 h-1.5 rounded-full bg-priority-medium"></span>Medium</span>
+{% elif priority == 'high' %}<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-bold bg-priority-high/20 text-[#72351B]"><span class="w-1.5 h-1.5 rounded-full bg-priority-high"></span>High</span>
+{% elif priority == 'critical' %}<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-bold bg-priority-critical/15 text-[#93000A]"><span class="w-1.5 h-1.5 rounded-full bg-priority-critical"></span>Critical</span>
 {% endif %}
 {% endmacro %}
 
@@ -99,11 +99,15 @@
 
 {% macro empty_state(icon, title, description, action_url='', action_label='') %}
 <div class="flex flex-col items-center justify-center py-16 text-center">
-  <span class="material-symbols-outlined text-5xl text-border-subtle mb-4">{{ icon }}</span>
-  <h3 class="text-base font-semibold text-ink-primary mb-1">{{ title }}</h3>
+  <div class="relative w-24 h-24 mb-6 flex items-center justify-center">
+    <div class="absolute inset-0 bg-accent-tan/20 rounded-[40%_60%_70%_30%/40%_50%_60%_50%]"></div>
+    <div class="absolute inset-2 bg-accent-blue/15 rounded-[60%_40%_30%_70%/50%_60%_40%_50%]"></div>
+    <span class="material-symbols-outlined text-4xl text-primary relative z-10">{{ icon }}</span>
+  </div>
+  <h3 class="text-lg font-serif font-semibold text-ink-primary mb-2">{{ title }}</h3>
   <p class="text-sm text-ink-muted max-w-sm">{{ description }}</p>
   {% if action_url %}
-  <a href="{{ action_url }}" class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
+  <a href="{{ action_url }}" class="mt-6 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
     {{ action_label }}
   </a>
   {% endif %}

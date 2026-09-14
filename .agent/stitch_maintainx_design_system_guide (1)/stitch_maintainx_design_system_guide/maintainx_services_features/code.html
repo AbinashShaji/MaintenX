@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MaintainX — Capabilities &amp; Services</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3F6C53",
+            "primary-hover": "#345A44",
+            "primary-dark": "#27543c",
+            "bg-canvas": "#FAF7F2",
+            "surface-card": "#FFFFFF",
+            "border-subtle": "#E7E2D9",
+            "ink-primary": "#1E1E1C",
+            "ink-muted": "#6B6862",
+            "accent-clay": "#C97B5B",
+            "accent-tan": "#E4C9A3",
+            "accent-blue": "#AFC8D8",
+            "priority-critical": "#C0392B"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#FAF7F2] text-[#1E1E1C] font-sans antialiased min-h-screen flex flex-col">
+<!-- 1. Header / Navbar -->
+<header class="sticky top-0 z-50 w-full bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#E7E2D9]">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Logo -->
+<a class="flex items-center gap-3" href="#">
+<img alt="MaintainX Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xad4CLhC3MI0A3xEhJWk8W0jPp-TVEqe-uPrVU0S1hZhUTjbU6Fv-7MvvjICgbkPXr5pV4QV7bpkxG1VAnihbV77Q8T4exEj2Fh56fyMXZ-eTEMz_5kqSyonnt40RBTtPOPlEEpP7wup6jzH-ok8rqYc9E0XikTJBAWfZe6N7s0HwOp__CiTIIX6G6g_L1aBbIw2NXVlD8UHGQl4Aqe3Zzs1P8_c4YG4dnsvJBTlnloXbgnybodgkTOm78"/>
+</a>
+<!-- Center Links -->
+<nav class="hidden md:flex items-center gap-8 text-[15px] font-medium text-[#6B6862]">
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">Home</a>
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">About</a>
+<a aria-current="page" class="text-[#3F6C53] font-semibold flex items-center gap-1.5" href="#">
+          Services
+          <span class="w-1.5 h-1.5 rounded-full bg-[#3F6C53]"></span>
+</a>
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">Reviews</a>
+</nav>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<a class="hidden sm:inline-flex px-4 py-2 text-[15px] font-medium text-[#6B6862] hover:text-[#1E1E1C] transition-colors" href="#">Log In</a>
+<a class="inline-flex items-center justify-center rounded-full bg-[#3F6C53] hover:bg-[#345A44] active:scale-[0.98] text-white text-[14px] font-semibold px-6 py-2.5 shadow-sm transition-all" href="#">
+          Get Started
+        </a>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- 2. Hero Section -->
+<section class="relative py-20 px-6 overflow-hidden text-center bg-[#FAF7F2]">
+<div class="max-w-4xl mx-auto flex flex-col items-center">
+<!-- Badge -->
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E7E2D9]/60 border border-[#E7E2D9] mb-6">
+<span class="w-2 h-2 rounded-full bg-[#3F6C53]"></span>
+<span class="text-[12px] font-semibold tracking-wider text-[#3F6C53] uppercase">Capabilities &amp; Operational Architecture</span>
+</div>
+<!-- Headline -->
+<h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1E1E1C] mb-6 max-w-3xl leading-[1.15]">
+          Everything you need to manage maintenance.
+        </h1>
+<!-- Subtitle -->
+<p class="text-lg sm:text-xl text-[#6B6862] max-w-2xl leading-relaxed mb-10">
+          A unified system connecting employees who spot issues, technicians who fix them, and administrators who oversee operations.
+        </p>
+<!-- Metrics Pills -->
+<div class="flex flex-wrap items-center justify-center gap-3">
+<div class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E7E2D9] shadow-sm">
+<span class="font-mono text-xs font-bold text-[#3F6C53]">01</span>
+<span class="text-sm font-medium text-[#1E1E1C]">Zero Latency Dispatch</span>
+</div>
+<div class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E7E2D9] shadow-sm">
+<span class="font-mono text-xs font-bold text-[#3F6C53]">02</span>
+<span class="text-sm font-medium text-[#1E1E1C]">Granular RBAC</span>
+</div>
+<div class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E7E2D9] shadow-sm">
+<span class="font-mono text-xs font-bold text-[#3F6C53]">03</span>
+<span class="text-sm font-medium text-[#1E1E1C]">Full Immutable Audit</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Functional Architecture (3x3 Grid) -->
+<section class="py-16 px-6 bg-white border-y border-[#E7E2D9]">
+<div class="max-w-6xl mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<span class="text-xs font-semibold tracking-widest text-[#3F6C53] uppercase block mb-2">Functional Architecture</span>
+<h2 class="font-serif text-3xl font-bold text-[#1E1E1C]">Core Platform Engine</h2>
+</div>
+<p class="text-sm text-[#6B6862] max-w-md">
+            Engineered for continuous field uptime, literary clarity, and effortless mechanical recordkeeping across physical facilities.
+          </p>
+</div>
+<!-- 3x3 Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">SEC-01</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Authentication &amp; Role Control</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Rigid role boundaries safeguarding operational integrity with segmented views tailored for User, Staff, and Enterprise Admin groups.
+              </p>
+</div>
+<div class="flex items-center gap-2 pt-3 border-t border-[#E7E2D9] text-xs font-medium text-[#1E1E1C]">
+<span class="material-symbols-outlined text-[16px] text-[#3F6C53]">admin_panel_settings</span>
+<span>User • Staff • Enterprise Admin</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">add_task</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">INT-02</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Request Management</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Single-click incident reporting featuring automated geolocation tagging, visual attachment ingestion, and structured fault descriptions.
+              </p>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-xs">
+<span class="text-[#6B6862] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-[#C97B5B]">pin_drop</span> Building 4 / Floor 2
+              </span>
+<span class="font-semibold text-[#3F6C53]">Instant Submission</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">flag</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">SLA-03</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">4-Tier Priority Engine</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Calibrated SLA dispatch routing utilizing Low, Medium, High, and Critical color markers to command instant field focus.
+              </p>
+</div>
+<div class="grid grid-cols-4 gap-1.5 pt-3 border-t border-[#E7E2D9]">
+<div class="flex flex-col items-center py-1 rounded bg-[#FAF7F2] border border-[#E7E2D9]">
+<span class="w-2 h-2 rounded-full bg-[#AFC8D8] mb-1"></span>
+<span class="text-[10px] font-medium text-[#1E1E1C]">Low</span>
+</div>
+<div class="flex flex-col items-center py-1 rounded bg-[#FAF7F2] border border-[#E7E2D9]">
+<span class="w-2 h-2 rounded-full bg-[#E4C9A3] mb-1"></span>
+<span class="text-[10px] font-medium text-[#1E1E1C]">Med</span>
+</div>
+<div class="flex flex-col items-center py-1 rounded bg-[#FAF7F2] border border-[#E7E2D9]">
+<span class="w-2 h-2 rounded-full bg-[#C97B5B] mb-1"></span>
+<span class="text-[10px] font-medium text-[#1E1E1C]">High</span>
+</div>
+<div class="flex flex-col items-center py-1 rounded bg-[#FAF7F2] border border-[#E7E2D9]">
+<span class="w-2 h-2 rounded-full bg-[#C0392B] mb-1"></span>
+<span class="text-[10px] font-semibold text-[#C0392B]">Crit</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">sync_alt</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">OPS-04</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Live Status Tracking</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Granular transitions from Requested to Approved, On Work, Rectified, and Closed with non-destructive verification checkpoints.
+              </p>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-[11px] font-medium text-[#6B6862]">
+<span class="px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9]">Req</span>
+<span>→</span>
+<span class="px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9]">Appr</span>
+<span>→</span>
+<span class="px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9]">Work</span>
+<span>→</span>
+<span class="px-1.5 py-0.5 rounded bg-[#3F6C53]/10 text-[#3F6C53] font-semibold">Done</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">history_edu</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">LOG-05</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Full Work History</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                End-to-end auditability preserving precision microsecond timestamps, parts consumption ledgers, and signed technician notes.
+              </p>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-xs">
+<span class="font-mono text-[#1E1E1C]">WO-8842 • Rotor #4</span>
+<span class="text-[#3F6C53] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Verified
+              </span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">dashboard_customize</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">UI-06</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Dedicated Role Dashboards</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Purpose-built views designed without clutter: mobile for techs, tablet for floor leads, and executive console for HQ operations.
+              </p>
+</div>
+<div class="flex items-center gap-1.5 pt-3 border-t border-[#E7E2D9]">
+<span class="px-2 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9] text-[11px] font-medium text-[#1E1E1C]">Tech Mobile</span>
+<span class="px-2 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9] text-[11px] font-medium text-[#1E1E1C]">Tablet Lead</span>
+<span class="px-2 py-0.5 rounded bg-[#FAF7F2] border border-[#E7E2D9] text-[11px] font-medium text-[#1E1E1C]">HQ Console</span>
+</div>
+</div>
+<!-- Card 7 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">filter_list</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">QRY-07</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Advanced Search &amp; Filtering</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Instant multi-dimensional querying spanning machine categories, SLA urgency, assigned technicians, facility sectors, and cycle dates.
+              </p>
+</div>
+<div class="flex items-center gap-1.5 pt-3 border-t border-[#E7E2D9] text-xs text-[#6B6862]">
+<span class="material-symbols-outlined text-[15px] text-[#3F6C53]">manage_search</span>
+<span>4,890 records indexed &lt; 8ms</span>
+</div>
+</div>
+<!-- Card 8 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">analytics</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#6B6862] bg-[#FAF7F2] px-2.5 py-1 rounded-md border border-[#E7E2D9]">REP-08</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Exportable Analytics &amp; Reports</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Automated calculation of MTTR (Mean Time to Resolution), failure frequencies, and component wear, exportable in PDF and CSV formats.
+              </p>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-xs">
+<span class="font-semibold text-[#3F6C53]">CSV / PDF Ready</span>
+<span class="font-mono text-[#6B6862] text-[11px]">Daily 06:00 Z</span>
+</div>
+</div>
+<!-- Card 9 -->
+<div class="bg-white rounded-2xl border border-[#E7E2D9] p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-[#3F6C53]/40 transition-all group">
+<div>
+<div class="flex items-center justify-between mb-5">
+<span class="w-11 h-11 rounded-xl bg-[#FAF7F2] border border-[#E7E2D9] flex items-center justify-center text-[#3F6C53] group-hover:bg-[#3F6C53] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[22px]">auto_awesome</span>
+</span>
+<span class="font-mono text-xs font-semibold text-[#3F6C53] bg-[#3F6C53]/10 px-2.5 py-1 rounded-md">PREV-09</span>
+</div>
+<h3 class="text-lg font-bold text-[#1E1E1C] mb-2">Preventive Autonomy</h3>
+<p class="text-sm text-[#6B6862] leading-relaxed mb-6">
+                Rhythmic preventative maintenance schedules driven dynamically by machine runtime hours, sensor thresholds, and operational cycles.
+              </p>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-xs">
+<span class="text-[#6B6862]">Calendar + Telemetry</span>
+<span class="font-semibold text-[#3F6C53] flex items-center gap-1">Automated <span class="material-symbols-outlined text-[14px]">bolt</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Role-based Breakdown Tabs -->
+<section class="py-20 px-6 bg-[#FAF7F2]">
+<div class="max-w-6xl mx-auto">
+<!-- Heading -->
+<div class="text-center max-w-3xl mx-auto mb-10">
+<span class="text-xs font-semibold tracking-widest text-[#3F6C53] uppercase block mb-2">Tailored Experience</span>
+<h2 class="font-serif text-3xl sm:text-4xl font-bold text-[#1E1E1C] mb-4">Harmonized for every operational level</h2>
+<p class="text-[#6B6862] text-base sm:text-lg">
+            Select a role to preview how MaintainX eliminates friction across physical and administrative tiers.
+          </p>
+</div>
+<!-- Pill Tabs -->
+<div class="flex justify-center mb-12">
+<div class="inline-flex p-1.5 rounded-full bg-white border border-[#E7E2D9] shadow-sm gap-1">
+<button class="role-tab px-6 py-2.5 rounded-full text-sm font-semibold transition-all bg-[#3F6C53] text-white shadow-sm" id="tab-employee" onclick="switchRole('employee')">
+              For Employees
+            </button>
+<button class="role-tab px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-[#6B6862] hover:text-[#1E1E1C]" id="tab-staff" onclick="switchRole('staff')">
+              For Maintenance Staff
+            </button>
+<button class="role-tab px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-[#6B6862] hover:text-[#1E1E1C]" id="tab-admin" onclick="switchRole('admin')">
+              For Administrators
+            </button>
+</div>
+</div>
+<!-- Two Column Content Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-3xl border border-[#E7E2D9] p-8 sm:p-12 shadow-sm">
+<!-- Left Checklist (5 cols) -->
+<div class="lg:col-span-5 space-y-6" id="role-checklist">
+<div class="flex items-start gap-3.5">
+<span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1">Frictionless 30-second ticket logging</h4>
+<p class="text-sm text-[#6B6862] leading-relaxed">Scan QR codes on hardware or machinery to preload asset specifications and location data instantly.</p>
+</div>
+</div>
+<div class="flex items-start gap-3.5">
+<span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1">Real-time resolution timeline</h4>
+<p class="text-sm text-[#6B6862] leading-relaxed">Receive calm notifications when technicians are dispatched, inspect the fault, and close the issue.</p>
+</div>
+</div>
+<div class="flex items-start gap-3.5">
+<span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1">Zero login friction on field kiosks</h4>
+<p class="text-sm text-[#6B6862] leading-relaxed">SSO pin authentication on shared manufacturing floor and facility dispatch panels.</p>
+</div>
+</div>
+</div>
+<!-- Right UI Preview Card (7 cols) -->
+<div class="lg:col-span-7 bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-6 shadow-inner">
+<!-- Simulated Chrome Header -->
+<div class="flex items-center justify-between pb-4 mb-4 border-b border-[#E7E2D9]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#C97B5B]/80"></span>
+<span class="w-3 h-3 rounded-full bg-[#E4C9A3]"></span>
+<span class="w-3 h-3 rounded-full bg-[#3F6C53]/80"></span>
+<span class="font-mono text-[11px] font-semibold text-[#6B6862] ml-2 tracking-wider" id="preview-tag">VIEW: EMPLOYEE_PORTAL // DISPATCH</span>
+</div>
+<span class="text-xs font-semibold text-[#3F6C53] flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#3F6C53] animate-pulse"></span> Live Ticket
+              </span>
+</div>
+<!-- Dynamic Preview Content -->
+<div class="space-y-4" id="preview-container">
+<!-- Dispatch Ticket Mockup -->
+<div class="bg-white rounded-xl border border-[#E7E2D9] p-5 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-[#3F6C53]/10 text-[#3F6C53] font-mono text-xs font-semibold">REQ-9014</span>
+<span class="font-mono text-xs text-[#6B6862]">Just Now</span>
+</div>
+<h5 class="text-base font-bold text-[#1E1E1C] mb-1">Pneumatic Lift 2 Pressure Anomaly</h5>
+<p class="text-xs text-[#6B6862] mb-4">Line B Assembly • Station 14 • Reported by Sarah Jenkins</p>
+<div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#E7E2D9]">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#C97B5B]"></span>
+<span class="text-xs font-semibold text-[#1E1E1C]">Priority High</span>
+</div>
+<span class="text-xs px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#E7E2D9] text-[#1E1E1C] font-medium">
+                    Assigned: Tech Marcus L.
+                  </span>
+</div>
+</div>
+<!-- Quick Action Card -->
+<div class="bg-white rounded-xl border border-[#E7E2D9] p-4 flex items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#3F6C53] text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+</div>
+<div>
+<h6 class="text-sm font-semibold text-[#1E1E1C]">Scan Asset Barcode / QR</h6>
+<p class="text-xs text-[#6B6862]">Instant match with pump, motor, or HVAC specs</p>
+</div>
+</div>
+<button class="shrink-0 px-3.5 py-1.5 rounded-lg bg-[#FAF7F2] hover:bg-[#E7E2D9] border border-[#E7E2D9] text-xs font-semibold text-[#1E1E1C] transition-colors" type="button">
+                  Open Camera
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. 5-Step Resolution Lifecycle -->
+<section class="py-20 px-6 bg-white border-y border-[#E7E2D9]">
+<div class="max-w-6xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-14">
+<span class="text-xs font-semibold tracking-widest text-[#3F6C53] uppercase block mb-2">Sequential Process</span>
+<h2 class="font-serif text-3xl font-bold text-[#1E1E1C] mb-3">The 5-Step Resolution Lifecycle</h2>
+<p class="text-[#6B6862] text-sm sm:text-base">
+            From first symptom detection to immutable audit verification, every step is orchestrated with visual poise.
+          </p>
+</div>
+<!-- 5-Step Horizontal Grid -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+<!-- Step 1 -->
+<div class="bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="w-full h-1 bg-[#8C8C88] absolute top-0 left-0"></div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-sm font-bold text-[#6B6862]">01</span>
+<span class="px-2 py-0.5 rounded-full bg-[#8C8C88]/15 text-[#1E1E1C] text-[11px] font-semibold">Report</span>
+</div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1.5">Issue Raised</h4>
+<p class="text-xs text-[#6B6862] leading-relaxed mb-6">Operator captures photo, audio clip, and symptom checklist at the machine.</p>
+</div>
+<div class="pt-3 border-t border-[#E7E2D9]">
+<span class="font-mono text-xs font-bold text-[#1E1E1C] block">≤ 45 Seconds</span>
+<span class="text-[10px] text-[#6B6862]">Avg capture time</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="w-full h-1 bg-[#AFC8D8] absolute top-0 left-0"></div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-sm font-bold text-[#3F6C53]">02</span>
+<span class="px-2 py-0.5 rounded-full bg-[#AFC8D8]/30 text-[#1E1E1C] text-[11px] font-semibold">Triage</span>
+</div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1.5">Triage &amp; Review</h4>
+<p class="text-xs text-[#6B6862] leading-relaxed mb-6">Lead supervisor assesses SLA urgency, safety factors, and parts availability.</p>
+</div>
+<div class="pt-3 border-t border-[#E7E2D9]">
+<span class="font-mono text-xs font-bold text-[#1E1E1C] block">≤ 10 Minutes</span>
+<span class="text-[10px] text-[#6B6862]">SLA triage target</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="w-full h-1 bg-[#C97B5B] absolute top-0 left-0"></div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-sm font-bold text-[#C97B5B]">03</span>
+<span class="px-2 py-0.5 rounded-full bg-[#C97B5B]/20 text-[#C97B5B] text-[11px] font-semibold">Assign</span>
+</div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1.5">Assign Staff</h4>
+<p class="text-xs text-[#6B6862] leading-relaxed mb-6">Dynamic auto-routing assigns qualified technicians by certifications and proximity.</p>
+</div>
+<div class="pt-3 border-t border-[#E7E2D9]">
+<span class="font-mono text-xs font-bold text-[#1E1E1C] block">Instant Ping</span>
+<span class="text-[10px] text-[#6B6862]">Push notification</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="w-full h-1 bg-[#E4C9A3] absolute top-0 left-0"></div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-sm font-bold text-[#6B6862]">04</span>
+<span class="px-2 py-0.5 rounded-full bg-[#E4C9A3]/50 text-[#1E1E1C] text-[11px] font-semibold">On Work</span>
+</div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1.5">Active Work</h4>
+<p class="text-xs text-[#6B6862] leading-relaxed mb-6">Technicians follow specs, deduct inventory parts, and record timer metrics.</p>
+</div>
+<div class="pt-3 border-t border-[#E7E2D9]">
+<span class="font-mono text-xs font-bold text-[#1E1E1C] block">Live Timer</span>
+<span class="text-[10px] text-[#6B6862]">Labor tracking</span>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="bg-[#FAF7F2] rounded-2xl border border-[#E7E2D9] p-5 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="w-full h-1 bg-[#3F6C53] absolute top-0 left-0"></div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-sm font-bold text-[#3F6C53]">05</span>
+<span class="px-2 py-0.5 rounded-full bg-[#3F6C53]/20 text-[#3F6C53] text-[11px] font-semibold">Rectified</span>
+</div>
+<h4 class="text-base font-bold text-[#1E1E1C] mb-1.5">Rectified &amp; Closed</h4>
+<p class="text-xs text-[#6B6862] leading-relaxed mb-6">Supervisory approval, photographic sign-off, and ledger permanently archived.</p>
+</div>
+<div class="pt-3 border-t border-[#E7E2D9]">
+<span class="font-mono text-xs font-bold text-[#3F6C53] block">100% Audited</span>
+<span class="text-[10px] text-[#6B6862]">Immutable record</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Closing Editorial CTA Banner -->
+<section class="py-20 px-6 bg-[#FAF7F2]">
+<div class="max-w-5xl mx-auto rounded-3xl bg-[#3F6C53] text-white p-10 sm:p-16 text-center shadow-lg relative overflow-hidden">
+<div class="max-w-2xl mx-auto relative z-10">
+<span class="text-xs font-semibold tracking-widest text-[#E4C9A3] uppercase block mb-3">Ready for Rhythmic Operations</span>
+<h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5 leading-tight">
+            Elevate your frontline maintenance today.
+          </h2>
+<p class="text-white/80 text-base sm:text-lg mb-8 leading-relaxed">
+            Bring calm confidence, structural visibility, and literary precision to industrial workflows. Experience MaintainX with your facility roster.
+          </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-[#FAF7F2] hover:bg-white text-[#1E1E1C] font-semibold text-sm px-8 py-3.5 shadow-sm transition-all active:scale-[0.98]" href="#">
+              Get Started Now
+            </a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm px-7 py-3.5 transition-colors" href="#">
+              Schedule a Demo →
+            </a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Global Footer -->
+<footer class="w-full bg-white border-t border-[#E7E2D9]">
+<div class="max-w-7xl mx-auto px-6 py-16">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
+<div class="md:col-span-2 space-y-4">
+<img alt="MaintainX" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xad4CLhC3MI0A3xEhJWk8W0jPp-TVEqe-uPrVU0S1hZhUTjbU6Fv-7MvvjICgbkPXr5pV4QV7bpkxG1VAnihbV77Q8T4exEj2Fh56fyMXZ-eTEMz_5kqSyonnt40RBTtPOPlEEpP7wup6jzH-ok8rqYc9E0XikTJBAWfZe6N7s0HwOp__CiTIIX6G6g_L1aBbIw2NXVlD8UHGQl4Aqe3Zzs1P8_c4YG4dnsvJBTlnloXbgnybodgkTOm78"/>
+<p class="text-sm text-[#6B6862] leading-relaxed max-w-sm">
+            A calm, high-craft operational platform engineering precision workflows and dignified frontline maintenance clarity.
+          </p>
+<div class="pt-2">
+<span class="text-xs uppercase tracking-widest font-mono text-[#6B6862]">Operational System Core • Edition 2025</span>
+</div>
+</div>
+<div>
+<h5 class="text-sm font-bold text-[#1E1E1C] mb-4">Product</h5>
+<ul class="space-y-2.5 text-sm text-[#6B6862]">
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Work Orders</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Preventive Maintenance</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Asset Tracking</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Parts Inventory</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-sm font-bold text-[#1E1E1C] mb-4">Solutions</h5>
+<ul class="space-y-2.5 text-sm text-[#6B6862]">
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Manufacturing</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Facilities</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Fleet Management</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Field Operations</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-sm font-bold text-[#1E1E1C] mb-4">Company</h5>
+<ul class="space-y-2.5 text-sm text-[#6B6862]">
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Philosophy</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Editorial Journal</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-[#1E1E1C] transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-[#E7E2D9] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#6B6862]">
+<p>© 2025 MaintainX Inc. Designed with literary restraint and industrial precision.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-[#1E1E1C] transition-colors" href="#">Security Protocols</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Script for Interactive Role Switcher -->
+<script>
+    function switchRole(roleKey) {
+      const tabs = document.querySelectorAll('.role-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-[#3F6C53]', 'text-white', 'shadow-sm');
+        tab.classList.add('text-[#6B6862]');
+      });
+
+      const activeTab = document.getElementById('tab-' + roleKey);
+      if (activeTab) {
+        activeTab.classList.remove('text-[#6B6862]');
+        activeTab.classList.add('bg-[#3F6C53]', 'text-white', 'shadow-sm');
+      }
+
+      const checklist = document.getElementById('role-checklist');
+      const previewTag = document.getElementById('preview-tag');
+      const previewContainer = document.getElementById('preview-container');
+
+      if (roleKey === 'employee') {
+        checklist.innerHTML = `
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Frictionless 30-second ticket logging</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Scan QR codes on hardware or machinery to preload asset specifications and location data instantly.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Real-time resolution timeline</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Receive calm notifications when technicians are dispatched, inspect the fault, and close the issue.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Zero login friction on field kiosks</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">SSO pin authentication on shared manufacturing floor and facility dispatch panels.</p>
+            </div>
+          </div>
+        `;
+        previewTag.textContent = 'VIEW: EMPLOYEE_PORTAL // DISPATCH';
+        previewContainer.innerHTML = `
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#3F6C53]/10 text-[#3F6C53] font-mono text-xs font-semibold">REQ-9014</span>
+              <span class="font-mono text-xs text-[#6B6862]">Just Now</span>
+            </div>
+            <h5 class="text-base font-bold text-[#1E1E1C] mb-1">Pneumatic Lift 2 Pressure Anomaly</h5>
+            <p class="text-xs text-[#6B6862] mb-4">Line B Assembly • Station 14 • Reported by Sarah Jenkins</p>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#E7E2D9]">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#C97B5B]"></span>
+                <span class="text-xs font-semibold text-[#1E1E1C]">Priority High</span>
+              </div>
+              <span class="text-xs px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#E7E2D9] text-[#1E1E1C] font-medium">
+                Assigned: Tech Marcus L.
+              </span>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-4 flex items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-[#3F6C53] text-white flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+              </div>
+              <div>
+                <h6 class="text-sm font-semibold text-[#1E1E1C]">Scan Asset Barcode / QR</h6>
+                <p class="text-xs text-[#6B6862]">Instant match with pump, motor, or HVAC specs</p>
+              </div>
+            </div>
+            <button type="button" class="shrink-0 px-3.5 py-1.5 rounded-lg bg-[#FAF7F2] hover:bg-[#E7E2D9] border border-[#E7E2D9] text-xs font-semibold text-[#1E1E1C] transition-colors">
+              Open Camera
+            </button>
+          </div>
+        `;
+      } else if (roleKey === 'staff') {
+        checklist.innerHTML = `
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Offline-first mobile work orders</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Access full schematic PDFs, torque specs, and parts manuals even inside basement utility vaults.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">One-tap parts inventory consumption</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Deduct replacement gaskets, hydraulic fluid, or mechanical belts in real time via barcode scan.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Hands-free voice notes</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Dictate work observations and mechanical adjustments directly into work orders without removing gloves.</p>
+            </div>
+          </div>
+        `;
+        previewTag.textContent = 'VIEW: TECHNICIAN_WORKSPACE // ACTIVE_JOBS';
+        previewContainer.innerHTML = `
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#E4C9A3]/50 text-[#1E1E1C] font-mono text-xs font-semibold">ACTIVE: IN PROGRESS</span>
+              <span class="font-mono text-xs text-[#6B6862]">Timer: 00:42:15</span>
+            </div>
+            <h5 class="text-base font-bold text-[#1E1E1C] mb-1">Cooling Tower Impeller Bearing Lubrication</h5>
+            <p class="text-xs text-[#6B6862] mb-4">Sector 7 Roof • Spec: ISO VG 220 Synthetic • Tech: Marcus L.</p>
+            <div class="grid grid-cols-2 gap-2 pt-3 border-t border-[#E7E2D9]">
+              <button class="px-3 py-2 rounded-lg bg-[#FAF7F2] border border-[#E7E2D9] text-[#1E1E1C] text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-[#E7E2D9] transition-colors">
+                <span class="material-symbols-outlined text-[16px]">inventory_2</span> Deduct Gasket
+              </button>
+              <button class="px-3 py-2 rounded-lg bg-[#3F6C53] text-white text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-[#345A44] transition-colors">
+                <span class="material-symbols-outlined text-[16px]">task_alt</span> Complete Step
+              </button>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-4 flex items-center justify-between gap-4 shadow-sm text-xs">
+            <span class="text-[#6B6862]">Next Job: Chiller Loop Flush (14:30 Z)</span>
+            <span class="font-mono text-[#3F6C53] font-bold">Priority Med</span>
+          </div>
+        `;
+      } else if (roleKey === 'admin') {
+        checklist.innerHTML = `
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Comprehensive facility health telemetry</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Monitor plant-wide MTTR, SLA compliance rates, and technician load across multiple operational sites.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Granular audit and compliance logs</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Generate certified documentation for ISO 9001, OSHA, and environmental safety inspections instantly.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+            </span>
+            <div>
+              <h4 class="text-base font-bold text-[#1E1E1C] mb-1">Automated SLA escalation triggers</h4>
+              <p class="text-sm text-[#6B6862] leading-relaxed">Establish algorithmic threshold rules when critical assets exceed target diagnostic windows.</p>
+            </div>
+          </div>
+        `;
+        previewTag.textContent = 'VIEW: OPERATIONS_EXECUTIVE // GLOBAL_TELEMETRY';
+        previewContainer.innerHTML = `
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <h5 class="text-base font-bold text-[#1E1E1C]">Facility Operations SLA: 98.6%</h5>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#3F6C53]/15 text-[#3F6C53] font-semibold text-xs">Optimal</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 my-3 text-center">
+              <div class="p-2.5 bg-[#FAF7F2] rounded-lg border border-[#E7E2D9]">
+                <span class="text-[10px] text-[#6B6862] uppercase block font-semibold">Open Orders</span>
+                <span class="font-mono text-lg font-bold text-[#1E1E1C]">18</span>
+              </div>
+              <div class="p-2.5 bg-[#FAF7F2] rounded-lg border border-[#E7E2D9]">
+                <span class="text-[10px] text-[#6B6862] uppercase block font-semibold">Avg MTTR</span>
+                <span class="font-mono text-lg font-bold text-[#3F6C53]">1.2 hrs</span>
+              </div>
+              <div class="p-2.5 bg-[#FAF7F2] rounded-lg border border-[#E7E2D9]">
+                <span class="text-[10px] text-[#6B6862] uppercase block font-semibold">Active Techs</span>
+                <span class="font-mono text-lg font-bold text-[#1E1E1C]">12 / 14</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-[#E7E2D9] text-xs">
+              <span class="text-[#6B6862]">Critical Unassigned: 0</span>
+              <a href="#" class="text-[#3F6C53] font-semibold hover:underline">Export Monthly Report (PDF)</a>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-[#E7E2D9] p-4 flex items-center justify-between gap-4 shadow-sm text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#3F6C53]"></span>
+              <span class="font-medium text-[#1E1E1C]">ISO 55001 Protocol Synchronized</span>
+            </div>
+            <span class="font-mono text-[#6B6862]">Audited 12m ago</span>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body></html>

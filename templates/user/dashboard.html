@@ -6,7 +6,7 @@
 {% block sidebar_nav %}{{ user_sidebar('dashboard') }}{% endblock %}
 {% block content %}
 <div class="mb-8">
-  <h2 class="text-2xl font-semibold text-ink-primary">Welcome back, {{ session.get('name') }}!</h2>
+  <h2 class="font-serif text-3xl text-ink-primary">Welcome back, {{ session.get('name') }}!</h2>
   <p class="text-sm text-ink-muted mt-1">Here's an overview of your maintenance requests.</p>
 </div>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -40,10 +40,10 @@
   </div>
 </div>
 <div class="flex flex-wrap gap-3 mb-8">
-  <a href="{{ url_for('user.create_request') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
+  <a href="{{ url_for('user.create_request') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all">
     <span class="material-symbols-outlined text-lg">add</span> New Request
   </a>
-  <a href="{{ url_for('user.my_requests') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium shadow-sm transition-all">
+  <a href="{{ url_for('user.my_requests') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-primary bg-transparent hover:bg-primary/5 text-primary text-sm font-medium transition-all">
     <span class="material-symbols-outlined text-lg">list_alt</span> My Requests
   </a>
 </div>

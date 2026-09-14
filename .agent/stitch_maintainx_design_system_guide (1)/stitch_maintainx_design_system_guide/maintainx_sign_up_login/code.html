@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MaintainX — Sign Up &amp; Log In</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3F6C53",
+            "primary-hover": "#345A44",
+            "primary-dark": "#27543C",
+            "primary-fixed": "#BCEECE",
+            "bg-canvas": "#FAF7F2",
+            "surface-card": "#FFFFFF",
+            "border-subtle": "#E7E2D9",
+            "ink-primary": "#1E1E1C",
+            "ink-muted": "#6B6862",
+            "accent-tan": "#E4C9A3",
+            "accent-blue": "#AFC8D8",
+            "accent-clay": "#C97B5B",
+            "surface-muted": "#F6F3EF"
+          },
+          fontFamily: {
+            "display": ["'Playfair Display'", "serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      overscroll-behavior: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-ink-primary font-body antialiased min-h-screen flex flex-col justify-between selection:bg-accent-tan/50">
+<!-- 1. Ambient Decorative Background Elements -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-[#3F6C53]/10 rounded-full blur-3xl"></div>
+<div class="absolute top-1/3 -left-36 w-[480px] h-[480px] bg-[#E4C9A3]/25 rounded-full blur-3xl"></div>
+<div class="absolute bottom-10 -right-24 w-[540px] h-[540px] bg-[#AFC8D8]/20 rounded-full blur-3xl"></div>
+</div>
+<!-- 2. Top Navigation Bar -->
+<header class="w-full border-b border-border-subtle bg-bg-canvas/80 backdrop-blur-md sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-6 sm:px-8 h-18 py-3.5 flex items-center justify-between">
+<a aria-label="MaintainX Home" class="inline-flex items-center gap-3 transition-opacity hover:opacity-90" href="#">
+<img alt="MaintainX" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xad4CLhC3MI0A3xEhJWk8W0jPp-TVEqe-uPrVU0S1hZhUTjbU6Fv-7MvvjICgbkPXr5pV4QV7bpkxG1VAnihbV77Q8T4exEj2Fh56fyMXZ-eTEMz_5kqSyonnt40RBTtPOPlEEpP7wup6jzH-ok8rqYc9E0XikTJBAWfZe6N7s0HwOp__CiTIIX6G6g_L1aBbIw2NXVlD8UHGQl4Aqe3Zzs1P8_c4YG4dnsvJBTlnloXbgnybodgkTOm78"/>
+</a>
+<a class="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink-primary transition-colors py-1.5 px-3 rounded-full hover:bg-surface-muted border border-transparent hover:border-border-subtle" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back to Home</span>
+</a>
+</div>
+</header>
+<!-- 3. Centered Authentication Content -->
+<main class="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-14">
+<div class="w-full max-w-lg bg-surface-card rounded-3xl p-8 sm:p-10 border border-border-subtle shadow-[0_12px_40px_-12px_rgba(30,30,28,0.08)] relative z-10">
+<!-- Header & Icon Badge -->
+<div class="flex flex-col items-center text-center mb-6">
+<div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-sm mb-4">
+<svg class="w-6 h-6" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 7L17 17M17 7L7 17" stroke="#FAF7F2" stroke-linecap="round" stroke-width="2.2"></path>
+<circle cx="12" cy="12" fill="#E4C9A3" r="2.2"></circle>
+</svg>
+</div>
+<h1 class="font-display text-2xl sm:text-3xl text-ink-primary font-normal tracking-tight mb-2" id="authTitle">
+          Welcome to MaintainX
+        </h1>
+<p class="text-sm text-ink-muted max-w-sm" id="authSubtitle">
+          Calm, transparent operations for modern maintenance teams.
+        </p>
+</div>
+<!-- Segmented Tab Switcher -->
+<div class="bg-surface-muted p-1.5 rounded-full flex gap-1 mb-7 max-w-xs mx-auto border border-border-subtle/70" role="tablist">
+<button aria-selected="true" class="flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-surface-card text-ink-primary shadow-sm" id="tabRegister" onclick="switchAuthMode('register')" role="tab">
+          Create Account
+        </button>
+<button aria-selected="false" class="flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary" id="tabLogin" onclick="switchAuthMode('login')" role="tab">
+          Log In
+        </button>
+</div>
+<!-- Auth Form -->
+<form class="space-y-5" id="authForm" onsubmit="event.preventDefault(); handleAuthSubmit();">
+<!-- Registration Specific Group -->
+<div class="space-y-5" id="registerGroup">
+<!-- Full Name -->
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="fullNameInput">Full Name</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">person</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-surface-muted/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="fullNameInput" placeholder="Jane Holloway" required="" type="text"/>
+</div>
+</div>
+<!-- Organization & Department -->
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="orgInput">Organization &amp; Department</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">domain</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-surface-muted/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="orgInput" placeholder="Acme Corp — Facilities" required="" type="text"/>
+</div>
+</div>
+<!-- Notice Box -->
+<div class="bg-surface-muted rounded-xl p-3.5 border border-border-subtle text-xs text-ink-muted flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+<p class="leading-relaxed">
+              Self-serve registration creates an <span class="font-semibold text-ink-primary">Employee</span> account. Maintenance Staff and Admin accounts are provisioned directly by your organization administrator.
+            </p>
+</div>
+</div>
+<!-- Work Email Address (Shared) -->
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="emailInput">Work Email Address</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">mail</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-surface-muted/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="emailInput" placeholder="j.holloway@acme.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-ink-muted" for="passInput">Password</label>
+<button class="hidden text-xs font-medium text-primary hover:text-primary-hover hover:underline" id="forgotPasswordLink" onclick="alert('Password reset link sent to your work email.')" type="button">
+              Forgot password?
+            </button>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">lock</span>
+<input class="w-full h-11 pl-11 pr-11 rounded-xl bg-surface-muted/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="passInput" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-0.5 rounded" onclick="togglePasswordVisibility('passInput', this)" type="button">
+<span class="material-symbols-outlined text-[19px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password Field -->
+<div id="confirmPassWrapper">
+<label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="confirmPassInput">Confirm Password</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">verified_user</span>
+<input class="w-full h-11 pl-11 pr-11 rounded-xl bg-surface-muted/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="confirmPassInput" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-0.5 rounded" onclick="togglePasswordVisibility('confirmPassInput', this)" type="button">
+<span class="material-symbols-outlined text-[19px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Terms & Privacy Checkbox -->
+<div class="flex items-start gap-2.5 pt-1" id="termsWrapper">
+<input class="mt-0.5 w-4 h-4 rounded border-border-subtle text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer" id="termsCheck" required="" type="checkbox"/>
+<label class="text-xs sm:text-sm text-ink-muted leading-snug cursor-pointer" for="termsCheck">
+            I accept the <a class="text-primary hover:underline font-medium" href="#">Operational Safety Terms</a> &amp; <a class="text-primary hover:underline font-medium" href="#">Privacy Policy</a>.
+          </label>
+</div>
+<!-- Primary Submit Button -->
+<button class="w-full h-12 bg-primary hover:bg-primary-hover active:scale-[0.99] text-white font-medium rounded-full shadow-sm hover:shadow transition-all duration-150 flex items-center justify-center gap-2 text-base mt-2" id="submitBtn" type="submit">
+<span id="submitBtnText">Create Account</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Switch Mode Link -->
+<div class="mt-6 text-center">
+<button class="text-xs sm:text-sm text-ink-muted hover:text-ink-primary transition-colors" id="switchModePrompt" onclick="toggleAuthMode()" type="button">
+          Already have an account? <span class="font-semibold text-primary underline underline-offset-2">Log In</span>
+</button>
+</div>
+<!-- Role-Based Redirection Guide -->
+<div class="mt-8 pt-6 border-t border-border-subtle/80">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Role-Based Redirection Routing</span>
+<span class="material-symbols-outlined text-ink-muted text-[15px]">alt_route</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="bg-surface-muted p-2.5 rounded-xl border border-border-subtle/60 hover:border-border-subtle transition-colors">
+<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white text-ink-primary border border-border-subtle shadow-xs mb-1">Employee</span>
+<p class="text-[11px] text-ink-muted font-medium truncate">Requisition Portal</p>
+</div>
+<div class="bg-surface-muted p-2.5 rounded-xl border border-border-subtle/60 hover:border-border-subtle transition-colors">
+<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-accent-tan/30 text-[#6F5B3C] border border-accent-tan/40 mb-1">Staff</span>
+<p class="text-[11px] text-ink-muted font-medium truncate">Field Work Orders</p>
+</div>
+<div class="bg-surface-muted p-2.5 rounded-xl border border-border-subtle/60 hover:border-border-subtle transition-colors">
+<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary-fixed text-primary-dark border border-primary-fixed-dim mb-1">Admin</span>
+<p class="text-[11px] text-ink-muted font-medium truncate">Fleet Console</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- 4. Simple Editorial Footer -->
+<footer class="w-full border-t border-border-subtle py-6 bg-bg-canvas/50">
+<div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-muted">
+<p>© 2025 MaintainX Operations Inc. All rights reserved.</p>
+<div class="flex items-center gap-5">
+<a class="hover:text-ink-primary transition-colors" href="#">Security Policy</a>
+<a class="hover:text-ink-primary transition-colors" href="#">Operational Terms</a>
+<a class="hover:text-ink-primary transition-colors" href="#">System Status</a>
+<a class="hover:text-ink-primary transition-colors" href="#">Support Desk</a>
+</div>
+</div>
+</footer>
+<script>
+    let currentMode = 'register';
+
+    function switchAuthMode(mode) {
+      currentMode = mode;
+      const tabRegister = document.getElementById('tabRegister');
+      const tabLogin = document.getElementById('tabLogin');
+      const registerGroup = document.getElementById('registerGroup');
+      const confirmPassWrapper = document.getElementById('confirmPassWrapper');
+      const termsWrapper = document.getElementById('termsWrapper');
+      const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+      const authTitle = document.getElementById('authTitle');
+      const authSubtitle = document.getElementById('authSubtitle');
+      const submitBtnText = document.getElementById('submitBtnText');
+      const switchModePrompt = document.getElementById('switchModePrompt');
+      
+      const fullNameInput = document.getElementById('fullNameInput');
+      const orgInput = document.getElementById('orgInput');
+      const confirmPassInput = document.getElementById('confirmPassInput');
+      const termsCheck = document.getElementById('termsCheck');
+
+      if (mode === 'login') {
+        tabLogin.className = "flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-surface-card text-ink-primary shadow-sm";
+        tabLogin.setAttribute('aria-selected', 'true');
+        tabRegister.className = "flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary";
+        tabRegister.setAttribute('aria-selected', 'false');
+
+        registerGroup.classList.add('hidden');
+        confirmPassWrapper.classList.add('hidden');
+        termsWrapper.classList.add('hidden');
+        forgotPasswordLink.classList.remove('hidden');
+
+        fullNameInput.required = false;
+        orgInput.required = false;
+        confirmPassInput.required = false;
+        termsCheck.required = false;
+
+        authTitle.textContent = "Welcome Back";
+        authSubtitle.textContent = "Sign in to access your designated operational dashboard and open tasks.";
+        submitBtnText.textContent = "Sign In";
+        switchModePrompt.innerHTML = "Don't have an account? <span class='font-semibold text-primary underline underline-offset-2'>Create Account</span>";
+      } else {
+        tabRegister.className = "flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-surface-card text-ink-primary shadow-sm";
+        tabRegister.setAttribute('aria-selected', 'true');
+        tabLogin.className = "flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary";
+        tabLogin.setAttribute('aria-selected', 'false');
+
+        registerGroup.classList.remove('hidden');
+        confirmPassWrapper.classList.remove('hidden');
+        termsWrapper.classList.remove('hidden');
+        forgotPasswordLink.classList.add('hidden');
+
+        fullNameInput.required = true;
+        orgInput.required = true;
+        confirmPassInput.required = true;
+        termsCheck.required = true;
+
+        authTitle.textContent = "Welcome to MaintainX";
+        authSubtitle.textContent = "Calm, transparent operations for modern maintenance teams.";
+        submitBtnText.textContent = "Create Account";
+        switchModePrompt.innerHTML = "Already have an account? <span class='font-semibold text-primary underline underline-offset-2'>Log In</span>";
+      }
+    }
+
+    function toggleAuthMode() {
+      switchAuthMode(currentMode === 'register' ? 'login' : 'register');
+    }
+
+    function togglePasswordVisibility(fieldId, btnEl) {
+      const field = document.getElementById(fieldId);
+      const icon = btnEl.querySelector('span');
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        field.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    function handleAuthSubmit() {
+      const email = document.getElementById('emailInput').value.toLowerCase();
+      let targetRole = 'User (Employee)';
+      let destination = 'Employee Requisition Workspace';
+
+      if (email.includes('admin')) {
+        targetRole = 'Administrator';
+        destination = 'Executive Fleet Console';
+      } else if (email.includes('staff') || email.includes('tech') || email.includes('field')) {
+        targetRole = 'Maintenance Staff';
+        destination = 'Field Work Order Queue';
+      }
+
+      const action = currentMode === 'register' ? 'Registration complete' : 'Authentication verified';
+      alert(`${action}! Authenticated as ${targetRole}. Redirecting to ${destination}...`);
+    }
+  </script>
+</body></html>

@@ -7,20 +7,20 @@
 {% block sidebar_nav %}{{ admin_sidebar('bug_reports') }}{% endblock %}
 {% block content %}
 <div class="mb-6">
-  <h2 class="text-xl font-semibold text-ink-primary">System Bug Reports</h2>
+  <h2 class="font-serif text-2xl font-semibold text-ink-primary">System Bug Reports</h2>
   <p class="text-sm text-ink-muted mt-1">Manage platform issues reported by users and staff.</p>
 </div>
-<div class="bg-white rounded-xl border border-border-subtle overflow-hidden">
+<div class="bg-white rounded-2xl border border-border-subtle overflow-hidden shadow-sm">
   <div class="overflow-x-auto">
     <table class="w-full text-left text-sm whitespace-nowrap">
-      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted font-medium">
+      <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted text-[12px] font-semibold uppercase tracking-[0.04em]">
         <tr>
-          <th class="px-6 py-4">Reporter</th>
-          <th class="px-6 py-4">Title</th>
-          <th class="px-6 py-4">Feature</th>
-          <th class="px-6 py-4">Status</th>
-          <th class="px-6 py-4">Date</th>
-          <th class="px-6 py-4 text-right">Actions</th>
+          <th class="px-6 py-4 border-b border-border-subtle">Reporter</th>
+          <th class="px-6 py-4 border-b border-border-subtle">Title</th>
+          <th class="px-6 py-4 border-b border-border-subtle">Feature</th>
+          <th class="px-6 py-4 border-b border-border-subtle">Status</th>
+          <th class="px-6 py-4 border-b border-border-subtle">Date</th>
+          <th class="px-6 py-4 border-b border-border-subtle text-right">Actions</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-border-subtle">

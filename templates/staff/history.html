@@ -7,7 +7,7 @@
 {% block sidebar_nav %}{{ staff_sidebar('history') }}{% endblock %}
 {% block content %}
 <div class="mb-6">
-  <h2 class="text-xl font-semibold text-ink-primary">Work History</h2>
+  <h2 class="font-serif text-2xl font-semibold text-ink-primary">Work History</h2>
   <p class="text-sm text-ink-muted mt-1">Your accepted jobs grouped by status.</p>
 </div>
 <!-- Accepted Jobs -->
@@ -15,7 +15,7 @@
   <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
     <span class="w-2 h-2 rounded-full bg-status-approved"></span> Accepted Jobs
   </h3>
-  <div class="bg-white rounded-xl border border-border-subtle p-6">
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
     {% if jobs.assigned %}
     <div class="space-y-3">
       {% for job in jobs.assigned %}
@@ -38,7 +38,7 @@
   <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
     <span class="w-2 h-2 rounded-full bg-status-onwork"></span> On Work
   </h3>
-  <div class="bg-white rounded-xl border border-border-subtle p-6">
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
     {% if jobs.in_progress %}
     <div class="space-y-3">
       {% for job in jobs.in_progress %}
@@ -61,7 +61,7 @@
   <h3 class="text-sm font-semibold text-ink-primary mb-3 flex items-center gap-2">
     <span class="w-2 h-2 rounded-full bg-status-rectified"></span> Completed / Rectified
   </h3>
-  <div class="bg-white rounded-xl border border-border-subtle p-6">
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
     {% if jobs.resolved %}
     <div class="space-y-3">
       {% for job in jobs.resolved %}

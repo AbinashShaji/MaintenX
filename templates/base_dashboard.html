@@ -9,17 +9,17 @@
     <!-- Logo -->
     <div class="h-16 flex items-center gap-2 px-5 border-b border-border-subtle shrink-0">
       <span class="material-symbols-outlined text-primary text-2xl">engineering</span>
-      <span class="text-lg font-bold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
+      <span class="text-lg font-serif font-semibold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
     </div>
     <!-- Role Badge -->
     <div class="px-5 pt-4 pb-2">
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold
-        {% if role == 'admin' %}bg-purple-50 text-purple-700
-        {% elif role == 'staff' %}bg-blue-50 text-blue-700
-        {% else %}bg-primary/10 text-primary{% endif %}">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+        {% if role == 'admin' %}bg-accent-blue/20 text-[#2B4A5D]
+        {% elif role == 'staff' %}bg-accent-tan/30 text-[#5C441E]
+        {% else %}bg-primary/15 text-[#234231]{% endif %}">
         <span class="w-1.5 h-1.5 rounded-full
-          {% if role == 'admin' %}bg-purple-500
-          {% elif role == 'staff' %}bg-blue-500
+          {% if role == 'admin' %}bg-accent-blue
+          {% elif role == 'staff' %}bg-accent-tan
           {% else %}bg-primary{% endif %}"></span>
         {{ role|capitalize }} Panel
       </span>
@@ -45,7 +45,7 @@
         <button class="lg:hidden p-2 -ml-2 rounded-lg hover:bg-surface-container" onclick="toggleSidebar()">
           <span class="material-symbols-outlined text-xl">menu</span>
         </button>
-        <h1 class="text-lg font-semibold text-ink-primary truncate">{% block page_title %}Dashboard{% endblock %}</h1>
+        <h1 class="font-serif text-xl sm:text-2xl font-semibold text-ink-primary truncate">{% block page_title %}Dashboard{% endblock %}</h1>
       </div>
       <div class="flex items-center gap-3">
         <button class="p-2 rounded-lg hover:bg-surface-container relative">

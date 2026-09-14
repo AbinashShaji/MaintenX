@@ -8,38 +8,38 @@
 {% block content %}
 <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
   <div>
-    <h2 class="text-2xl font-semibold text-ink-primary">Admin Overview</h2>
+    <h2 class="font-serif text-3xl font-semibold text-ink-primary">Admin Overview</h2>
     <p class="text-sm text-ink-muted mt-1">Platform metrics and system health.</p>
   </div>
-  <a href="{{ url_for('admin.reports') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium shadow-sm transition-all shrink-0">
+  <a href="{{ url_for('admin.reports') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium shadow-sm transition-all shrink-0">
     <span class="material-symbols-outlined text-lg">download</span> Download Report
   </a>
 </div>
 
 <!-- Key Metrics -->
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <div class="flex items-center justify-between mb-3">
       <span class="material-symbols-outlined text-primary text-2xl">assignment</span>
     </div>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.total }}</div>
     <div class="text-xs text-ink-muted mt-1">Total Requests</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <div class="flex items-center justify-between mb-3">
       <span class="material-symbols-outlined text-priority-critical text-2xl">error</span>
     </div>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.pending }}</div>
     <div class="text-xs text-ink-muted mt-1">Pending Assignment</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <div class="flex items-center justify-between mb-3">
       <span class="material-symbols-outlined text-status-onwork text-2xl">build</span>
     </div>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.active }}</div>
     <div class="text-xs text-ink-muted mt-1">Active Work</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <div class="flex items-center justify-between mb-3">
       <span class="material-symbols-outlined text-status-rectified text-2xl">verified</span>
     </div>
@@ -50,7 +50,7 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
   <!-- Requests Needing Attention -->
-  <div class="bg-white rounded-xl border border-border-subtle">
+  <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
       <h3 class="text-sm font-semibold text-ink-primary">Needs Assignment</h3>
       <a href="{{ url_for('admin.requests_list') }}" class="text-xs text-primary font-medium hover:underline">View All</a>
@@ -61,7 +61,7 @@
   </div>
   
   <!-- Critical Issues -->
-  <div class="bg-white rounded-xl border border-border-subtle">
+  <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
       <h3 class="text-sm font-semibold text-ink-primary">Critical Priority</h3>
       <a href="{{ url_for('admin.requests_list') }}" class="text-xs text-primary font-medium hover:underline">View All</a>

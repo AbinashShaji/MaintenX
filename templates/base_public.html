@@ -5,7 +5,7 @@
   <div class="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
     <a class="flex items-center gap-2 group" href="{{ url_for('home') }}">
       <span class="material-symbols-outlined text-primary text-3xl">engineering</span>
-      <span class="text-xl font-bold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
+      <span class="text-xl font-serif font-semibold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
     </a>
     <nav class="hidden md:flex items-center gap-8 text-sm">
       <a class="font-medium {% if request.endpoint == 'home' %}text-primary{% else %}text-ink-muted hover:text-ink-primary{% endif %} transition-colors" href="{{ url_for('home') }}">Home</a>
@@ -14,9 +14,9 @@
       <a class="font-medium {% if request.endpoint == 'reviews' %}text-primary{% else %}text-ink-muted hover:text-ink-primary{% endif %} transition-colors" href="{{ url_for('reviews') }}">Reviews</a>
     </nav>
     <div class="flex items-center gap-3">
-      <a class="hidden sm:inline-flex items-center px-5 py-2 rounded-full border border-border-subtle bg-white/70 hover:bg-white text-ink-primary text-sm font-medium transition-colors shadow-sm" href="{{ url_for('auth.login') }}">Log In</a>
-      <a class="inline-flex items-center px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium tracking-wide shadow-sm transition-all" href="{{ url_for('auth.register') }}">Get Started</a>
-      <button class="md:hidden p-2 rounded-lg hover:bg-surface-container" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')">
+      <a class="hidden sm:inline-flex items-center px-6 py-2.5 rounded-full border border-border-subtle bg-transparent hover:bg-surface-container text-primary text-sm font-medium transition-colors" href="{{ url_for('auth.login') }}">Log In</a>
+      <a class="inline-flex items-center px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-all" href="{{ url_for('auth.register') }}">Get Started</a>
+      <button class="md:hidden p-2 rounded-lg hover:bg-surface-container text-ink-primary" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')">
         <span class="material-symbols-outlined text-2xl">menu</span>
       </button>
     </div>

@@ -10,13 +10,13 @@
   <a href="{{ url_for('admin.requests_list') }}" class="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-primary transition-colors mb-4">
     <span class="material-symbols-outlined text-lg">arrow_back</span> Back to Requests
   </a>
-  <h2 class="text-xl font-semibold text-ink-primary">Request #{{ request_id }}</h2>
+  <h2 class="font-serif text-2xl font-semibold text-ink-primary">Request #{{ request_id }}</h2>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <div class="lg:col-span-2 space-y-6">
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <div class="flex items-start justify-between mb-4">
-        <h3 class="text-lg font-semibold text-ink-primary">{{ req.title }}</h3>
+        <h3 class="font-serif text-xl font-semibold text-ink-primary">{{ req.title }}</h3>
         {{ status_badge(req.status) }}
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-4 border-b border-border-subtle pb-4">
@@ -54,14 +54,14 @@
             </select>
           </div>
         </div>
-        <button class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">
+        <button class="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">
           Apply Updates
         </button>
       </form>
     </div>
     
     <!-- Work History -->
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Work History Log</h3>
       {% if updates %}
       <div class="space-y-4">
@@ -90,11 +90,11 @@
   </div>
   
   <div class="space-y-6">
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Progress</h3>
       {{ request_timeline(statuses) }}
     </div>
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Assignment</h3>
       {% if req.assigned_to_name %}
       <div class="text-sm text-ink-primary font-medium flex items-center gap-2">

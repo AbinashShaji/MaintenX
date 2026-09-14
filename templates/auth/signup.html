@@ -1,59 +1,379 @@
 {% extends "base.html" %}
 {% block title %}Sign Up — MaintenX{% endblock %}
+{% block head %}
+<style>
+  body { overscroll-behavior: none; }
+  /* Combobox dropdown */
+  .org-dropdown { position: absolute; top: 100%; left: 0; right: 0; z-index: 50; max-height: 200px; overflow-y: auto; background: #fff; border: 1px solid #E7E2D9; border-top: none; border-radius: 0 0 12px 12px; box-shadow: 0 8px 24px -4px rgba(30,30,28,0.06), 0 2px 6px -1px rgba(30,30,28,0.04); display: none; }
+  .org-dropdown.open { display: block; }
+  .org-dropdown-item { padding: 10px 14px 10px 44px; font-size: 14px; color: #1E1E1C; cursor: pointer; transition: background 0.1s; }
+  .org-dropdown-item:hover, .org-dropdown-item.highlighted { background: #F6F3EF; }
+  .org-dropdown-item .org-match { font-weight: 600; }
+  /* Conditional field transition */
+  .field-slide { transition: opacity 180ms ease, max-height 180ms ease; overflow: hidden; }
+  .field-slide.collapsed { opacity: 0; max-height: 0; margin-top: 0 !important; padding: 0 !important; }
+  .field-slide.expanded { opacity: 1; max-height: 140px; }
+</style>
+{% endblock %}
 {% block body %}
-<div class="min-h-screen flex">
-  <!-- Left: Form -->
-  <div class="flex-1 flex items-center justify-center px-6 py-12">
-    <div class="w-full max-w-md">
-      <a href="{{ url_for('home') }}" class="flex items-center gap-2 mb-10">
-        <span class="material-symbols-outlined text-primary text-3xl">engineering</span>
-        <span class="text-xl font-bold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
-      </a>
-      <h1 class="text-2xl font-semibold text-ink-primary mb-2">Create your account</h1>
-      <p class="text-sm text-ink-muted mb-8">Join your organization's maintenance platform.</p>
-      <form action="{{ url_for('auth.register') }}" method="POST" class="space-y-4">
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-ink-primary mb-1.5" for="name">Full Name</label>
-            <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="name" name="name" type="text" placeholder="John Doe" required/>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-ink-primary mb-1.5" for="phone">Phone</label>
-            <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="phone" name="phone" type="tel" placeholder="Optional"/>
-          </div>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="email">Email Address</label>
-          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="email" name="email" type="email" placeholder="you@organization.com" required/>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="department">Department</label>
-          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="department" name="department" type="text" placeholder="e.g. IT, Facilities, HR"/>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="password">Password</label>
-          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="password" name="password" type="password" placeholder="Min 8 characters" required/>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-ink-primary mb-1.5" for="confirm_password">Confirm Password</label>
-          <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="confirm_password" name="confirm_password" type="password" placeholder="••••••••" required/>
-        </div>
-        <button class="w-full py-3 rounded-xl bg-primary hover:bg-primary-hover text-white font-medium text-sm shadow-sm transition-all mt-2" type="submit">Create Account</button>
-      </form>
-      <p class="mt-6 text-center text-sm text-ink-muted">
-        Already have an account? <a class="text-primary font-medium hover:underline" href="{{ url_for('auth.login') }}">Sign in</a>
-      </p>
-    </div>
-  </div>
-  <!-- Right: Visual -->
-  <div class="hidden lg:flex flex-1 items-center justify-center bg-surface-container-low border-l border-border-subtle relative overflow-hidden">
-    <div class="absolute top-20 left-20 w-80 h-80 rounded-full bg-accent-blue/15 blur-3xl"></div>
-    <div class="absolute bottom-20 right-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl"></div>
-    <div class="relative text-center space-y-6 p-12">
-      <span class="material-symbols-outlined text-7xl text-primary/30">group_add</span>
-      <h2 class="font-serif text-3xl text-ink-primary">Join Your<br/>Organization</h2>
-      <p class="text-ink-muted text-sm max-w-xs mx-auto">Report maintenance issues, track resolutions, and keep your facility running smoothly.</p>
-    </div>
-  </div>
+<!-- Ambient Decorative Background -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+  <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-primary/10 rounded-full blur-3xl"></div>
+  <div class="absolute top-1/3 -left-36 w-[480px] h-[480px] bg-accent-tan/25 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-10 -right-24 w-[540px] h-[540px] bg-accent-blue/20 rounded-full blur-3xl"></div>
 </div>
+
+<!-- Top Navigation Bar -->
+<header class="w-full border-b border-border-subtle bg-bg-canvas/80 backdrop-blur-md sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 h-18 py-3.5 flex items-center justify-between">
+    <a aria-label="MaintenX Home" class="inline-flex items-center gap-2.5 transition-opacity hover:opacity-90" href="{{ url_for('home') }}">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-sm">
+        <span class="material-symbols-outlined text-white text-[20px]">engineering</span>
+      </div>
+      <span class="text-lg font-bold text-ink-primary tracking-tight">Mainten<span class="text-primary">X</span></span>
+    </a>
+    <a class="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink-primary transition-colors py-1.5 px-3 rounded-full hover:bg-[#F6F3EF] border border-transparent hover:border-border-subtle" href="{{ url_for('home') }}">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      <span>Back to Home</span>
+    </a>
+  </div>
+</header>
+
+<!-- Centered Auth Content -->
+<main class="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-14">
+  <div class="w-full max-w-lg bg-white rounded-3xl p-8 sm:p-10 border border-border-subtle shadow-[0_12px_40px_-12px_rgba(30,30,28,0.08)] relative z-10">
+
+    <!-- Header & Icon Badge -->
+    <div class="flex flex-col items-center text-center mb-6">
+      <div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-sm mb-4">
+        <span class="material-symbols-outlined text-white text-[24px]">engineering</span>
+      </div>
+      <h1 class="font-serif text-2xl sm:text-3xl text-ink-primary tracking-tight mb-2">Welcome to MaintenX</h1>
+      <p class="text-sm text-ink-muted max-w-sm">Calm, transparent operations for modern maintenance teams.</p>
+    </div>
+
+    <!-- Segmented Tab Switcher -->
+    <div class="bg-[#F6F3EF] p-1.5 rounded-full flex gap-1 mb-7 max-w-xs mx-auto border border-border-subtle/70" role="tablist">
+      <span class="flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white text-ink-primary shadow-sm text-center" role="tab" aria-selected="true">
+        Create Account
+      </span>
+      <a href="{{ url_for('auth.login') }}" class="flex-1 py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary text-center" role="tab">
+        Log In
+      </a>
+    </div>
+
+    <!-- Sign Up Form -->
+    <form action="{{ url_for('auth.register') }}" method="POST" class="space-y-5" id="signupForm" onsubmit="return validateSignup()">
+
+      <!-- Full Name -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="name">Full Name</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">person</span>
+          <input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="name" name="name" type="text" placeholder="Jane Holloway" required/>
+        </div>
+      </div>
+
+      <!-- Organization (Searchable Dropdown / Combobox) -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="orgInput">Organization</label>
+        <div class="relative" id="orgCombobox">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted text-[20px] pointer-events-none z-10">domain</span>
+          <input
+            class="w-full h-11 pl-11 pr-10 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150"
+            id="orgInput" name="department" type="text"
+            placeholder="Search or select organization..."
+            autocomplete="off" required
+            onfocus="openOrgDropdown()" oninput="filterOrgs()" />
+          <span class="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-muted text-[16px] pointer-events-none">expand_more</span>
+          <div class="org-dropdown" id="orgDropdown"></div>
+        </div>
+      </div>
+
+      <!-- Role Selector -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5">Role</label>
+        <div class="bg-[#F6F3EF] p-1 rounded-full flex gap-1 border border-border-subtle/70" role="radiogroup" aria-label="Select role">
+          <button type="button" id="roleUser" onclick="switchRole('user')" role="radio" aria-checked="true"
+            class="flex-1 py-2 px-4 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white text-ink-primary shadow-sm flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">person</span><span>User</span>
+          </button>
+          <button type="button" id="roleStaff" onclick="switchRole('staff')" role="radio" aria-checked="false"
+            class="flex-1 py-2 px-4 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">badge</span><span>Staff</span>
+          </button>
+        </div>
+        <input type="hidden" name="role" id="roleInput" value="user"/>
+      </div>
+
+      <!-- Conditional: College ID (User) -->
+      <div id="collegeIdWrapper" class="field-slide expanded">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="college_id">College ID</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">school</span>
+          <input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="college_id" name="college_id" type="text" placeholder="e.g. LMCST22CS045" required/>
+        </div>
+      </div>
+
+      <!-- Conditional: Staff ID (Staff) -->
+      <div id="staffIdWrapper" class="field-slide collapsed">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="staff_id">Staff ID / Worker ID</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">work</span>
+          <input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="staff_id" name="staff_id" type="text" placeholder="e.g. STAFF-0231"/>
+        </div>
+      </div>
+
+      <!-- ID Notice Box -->
+      <div class="bg-[#F6F3EF] rounded-xl p-3.5 border border-border-subtle text-xs text-ink-muted flex items-start gap-2.5">
+        <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+        <p class="leading-relaxed">
+          This ID is used to verify your affiliation with the organization and prevent fake account registrations. <span class="font-semibold text-ink-primary">Accounts without a valid ID cannot be approved.</span>
+        </p>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="email">Email Address</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">mail</span>
+          <input class="w-full h-11 pl-11 pr-3.5 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="email" name="email" type="email" placeholder="j.holloway@lmcst.ac.in" required/>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="password">Password</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">lock</span>
+          <input class="w-full h-11 pl-11 pr-11 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="password" name="password" type="password" placeholder="••••••••" required/>
+          <button aria-label="Toggle password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-0.5 rounded" onclick="toggleVis('password', this)" type="button">
+            <span class="material-symbols-outlined text-[19px]">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-ink-muted mb-1.5" for="confirm_password">Confirm Password</label>
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3.5 text-ink-muted text-[20px] pointer-events-none">verified_user</span>
+          <input class="w-full h-11 pl-11 pr-11 rounded-xl bg-[#F6F3EF]/60 border border-border-subtle text-sm text-ink-primary placeholder:text-ink-muted/60 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-150" id="confirm_password" name="confirm_password" type="password" placeholder="••••••••" required/>
+          <button aria-label="Toggle password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-0.5 rounded" onclick="toggleVis('confirm_password', this)" type="button">
+            <span class="material-symbols-outlined text-[19px]">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Terms Checkbox -->
+      <div class="flex items-start gap-2.5 pt-1">
+        <input class="mt-0.5 w-4 h-4 rounded border-border-subtle text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer" id="termsCheck" name="terms" required type="checkbox"/>
+        <label class="text-xs sm:text-sm text-ink-muted leading-snug cursor-pointer" for="termsCheck">
+          I accept the <a class="text-primary hover:underline font-medium" href="#">Terms of Service</a> &amp; <a class="text-primary hover:underline font-medium" href="#">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <!-- Inline Error -->
+      <div id="formError" class="hidden bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-red-700 items-start gap-2">
+        <span class="material-symbols-outlined text-[16px] shrink-0 mt-0.5 text-red-500">error</span>
+        <p id="formErrorText"></p>
+      </div>
+
+      <!-- Submit -->
+      <button class="w-full h-12 bg-primary hover:bg-[#345A44] active:scale-[0.99] text-white font-medium rounded-full shadow-sm hover:shadow transition-all duration-150 flex items-center justify-center gap-2 text-base mt-2" type="submit">
+        <span>Create Account</span>
+        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+      </button>
+    </form>
+
+    <!-- Switch to Log In -->
+    <div class="mt-6 text-center">
+      <a class="text-xs sm:text-sm text-ink-muted hover:text-ink-primary transition-colors" href="{{ url_for('auth.login') }}">
+        Already have an account? <span class="font-semibold text-primary underline underline-offset-2">Log In</span>
+      </a>
+    </div>
+
+    <!-- Role-Based Routing Guide -->
+    <div class="mt-8 pt-6 border-t border-border-subtle/80">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Role-Based Redirection Routing</span>
+        <span class="material-symbols-outlined text-ink-muted text-[15px]">alt_route</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-center">
+        <div class="bg-[#F6F3EF] p-2.5 rounded-xl border border-border-subtle/60 hover:border-border-subtle transition-colors">
+          <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white text-ink-primary border border-border-subtle shadow-xs mb-1">User</span>
+          <p class="text-[11px] text-ink-muted font-medium truncate">User Dashboard</p>
+        </div>
+        <div class="bg-[#F6F3EF] p-2.5 rounded-xl border border-border-subtle/60 hover:border-border-subtle transition-colors">
+          <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-accent-tan/30 text-[#6F5B3C] border border-accent-tan/40 mb-1">Staff</span>
+          <p class="text-[11px] text-ink-muted font-medium truncate">Staff Portal</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-border-subtle py-6 bg-bg-canvas/50">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-muted">
+    <p>&copy; 2025 MaintenX. All rights reserved.</p>
+    <div class="flex items-center gap-5">
+      <a class="hover:text-ink-primary transition-colors" href="#">Privacy Policy</a>
+      <a class="hover:text-ink-primary transition-colors" href="#">Terms of Service</a>
+      <a class="hover:text-ink-primary transition-colors" href="#">Support Desk</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Organization Searchable Dropdown (Combobox) ── */
+const orgList = [
+  "Lourdes Matha College of Science and Technology",
+  "Mar Athanasius College of Engineering",
+  "Government Engineering College, Thrissur",
+  "College of Engineering, Trivandrum",
+  "TKM College of Engineering, Kollam",
+  "Rajagiri School of Engineering & Technology",
+  "Saintgits College of Engineering",
+  "Federal Institute of Science and Technology",
+  "Amal Jyothi College of Engineering",
+  "MES College of Engineering, Kuttippuram"
+];
+
+const orgInput = document.getElementById('orgInput');
+const orgDropdown = document.getElementById('orgDropdown');
+let highlightIdx = -1;
+
+function renderOrgItems(filter) {
+  const q = (filter || '').toLowerCase();
+  const matches = q ? orgList.filter(o => o.toLowerCase().includes(q)) : orgList;
+  highlightIdx = -1;
+  if (matches.length === 0) {
+    orgDropdown.innerHTML = '<div class="org-dropdown-item" style="color:#6B6862;cursor:default;">No results — type your own</div>';
+  } else {
+    orgDropdown.innerHTML = matches.map((o, i) => {
+      let label = o;
+      if (q) {
+        const idx = o.toLowerCase().indexOf(q);
+        if (idx >= 0) label = o.slice(0, idx) + '<span class="org-match">' + o.slice(idx, idx + q.length) + '</span>' + o.slice(idx + q.length);
+      }
+      return '<div class="org-dropdown-item" data-value="' + o + '" data-idx="' + i + '" onmousedown="selectOrg(this)">' + label + '</div>';
+    }).join('');
+  }
+}
+
+function openOrgDropdown() {
+  renderOrgItems(orgInput.value);
+  orgDropdown.classList.add('open');
+}
+
+function closeOrgDropdown() {
+  setTimeout(() => orgDropdown.classList.remove('open'), 150);
+}
+
+function filterOrgs() {
+  renderOrgItems(orgInput.value);
+  if (!orgDropdown.classList.contains('open')) orgDropdown.classList.add('open');
+}
+
+function selectOrg(el) {
+  orgInput.value = el.getAttribute('data-value');
+  orgDropdown.classList.remove('open');
+}
+
+orgInput.addEventListener('blur', closeOrgDropdown);
+orgInput.addEventListener('keydown', function(e) {
+  const items = orgDropdown.querySelectorAll('.org-dropdown-item[data-value]');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    highlightIdx = Math.min(highlightIdx + 1, items.length - 1);
+    items.forEach((it, i) => it.classList.toggle('highlighted', i === highlightIdx));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    highlightIdx = Math.max(highlightIdx - 1, 0);
+    items.forEach((it, i) => it.classList.toggle('highlighted', i === highlightIdx));
+  } else if (e.key === 'Enter' && highlightIdx >= 0 && items[highlightIdx]) {
+    e.preventDefault();
+    orgInput.value = items[highlightIdx].getAttribute('data-value');
+    orgDropdown.classList.remove('open');
+  }
+});
+
+/* ── Role Switcher ── */
+let currentRole = 'user';
+function switchRole(role) {
+  currentRole = role;
+  document.getElementById('roleInput').value = role;
+  const roleUser = document.getElementById('roleUser');
+  const roleStaff = document.getElementById('roleStaff');
+  const collegeW = document.getElementById('collegeIdWrapper');
+  const staffW = document.getElementById('staffIdWrapper');
+  const collegeIn = document.getElementById('college_id');
+  const staffIn = document.getElementById('staff_id');
+
+  const active = "flex-1 py-2 px-4 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white text-ink-primary shadow-sm flex items-center justify-center gap-1.5";
+  const inactive = "flex-1 py-2 px-4 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 text-ink-muted hover:text-ink-primary flex items-center justify-center gap-1.5";
+
+  if (role === 'staff') {
+    roleStaff.className = active; roleStaff.setAttribute('aria-checked','true');
+    roleUser.className = inactive; roleUser.setAttribute('aria-checked','false');
+    collegeW.classList.remove('expanded'); collegeW.classList.add('collapsed');
+    collegeIn.required = false; collegeIn.value = '';
+    staffW.classList.remove('collapsed'); staffW.classList.add('expanded');
+    staffIn.required = true;
+  } else {
+    roleUser.className = active; roleUser.setAttribute('aria-checked','true');
+    roleStaff.className = inactive; roleStaff.setAttribute('aria-checked','false');
+    staffW.classList.remove('expanded'); staffW.classList.add('collapsed');
+    staffIn.required = false; staffIn.value = '';
+    collegeW.classList.remove('collapsed'); collegeW.classList.add('expanded');
+    collegeIn.required = true;
+  }
+  clearErr();
+}
+
+/* ── Password Visibility ── */
+function toggleVis(fieldId, btnEl) {
+  const f = document.getElementById(fieldId);
+  const i = btnEl.querySelector('span');
+  if (f.type === 'password') { f.type = 'text'; i.textContent = 'visibility_off'; }
+  else { f.type = 'password'; i.textContent = 'visibility'; }
+}
+
+/* ── Error Helpers ── */
+function showErr(msg) {
+  const b = document.getElementById('formError');
+  document.getElementById('formErrorText').textContent = msg;
+  b.classList.remove('hidden'); b.classList.add('flex');
+}
+function clearErr() {
+  const b = document.getElementById('formError');
+  b.classList.add('hidden'); b.classList.remove('flex');
+}
+
+/* ── ID Validation ── */
+function isValidId(v) {
+  const t = v.trim();
+  return t.length >= 5 && /^[A-Za-z0-9\-]+$/.test(t);
+}
+
+/* ── Form Validation ── */
+function validateSignup() {
+  clearErr();
+  const pw = document.getElementById('password').value;
+  const cpw = document.getElementById('confirm_password').value;
+  if (pw !== cpw) { showErr('Passwords do not match.'); return false; }
+
+  let idVal, idLabel;
+  if (currentRole === 'user') { idVal = document.getElementById('college_id').value; idLabel = 'College ID'; }
+  else { idVal = document.getElementById('staff_id').value; idLabel = 'Staff ID'; }
+
+  if (!isValidId(idVal)) {
+    showErr('Please enter a valid ' + idLabel + ' (at least 5 alphanumeric characters).');
+    return false;
+  }
+  return true;
+}
+</script>
 {% endblock %}

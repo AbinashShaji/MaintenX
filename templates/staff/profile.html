@@ -8,15 +8,15 @@
 {% block content %}
 <div class="max-w-2xl">
   <div class="mb-6">
-    <h2 class="text-xl font-semibold text-ink-primary">Profile Settings</h2>
+    <h2 class="font-serif text-2xl font-semibold text-ink-primary">Profile Settings</h2>
     <p class="text-sm text-ink-muted mt-1">View and update your account information.</p>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-6 mb-6">
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 mb-6 shadow-sm">
     <div class="flex items-center gap-4 mb-6 pb-6 border-b border-border-subtle">
-      <div class="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-semibold">S</div>
+      <div class="w-16 h-16 rounded-full bg-accent-tan/30 text-[#5C441E] flex items-center justify-center text-2xl font-semibold">S</div>
       <div>
         <h3 class="text-lg font-semibold text-ink-primary">Staff Member</h3>
-        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 mt-1">Maintenance Staff</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-tan/30 text-[#5C441E] mt-1">Maintenance Staff</span>
       </div>
     </div>
     <form action="#" method="POST" class="space-y-5">
@@ -40,10 +40,10 @@
           <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" name="department" type="text" value=""/>
         </div>
       </div>
-      <button class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">Update Profile</button>
+      <button class="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">Update Profile</button>
     </form>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-6">
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
     <h3 class="text-sm font-semibold text-ink-primary mb-4">Change Password</h3>
     <form action="#" method="POST" class="space-y-4">
       <div>
@@ -60,7 +60,7 @@
           <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" name="confirm_new_password" type="password" required/>
         </div>
       </div>
-      <button class="px-6 py-2.5 rounded-xl border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium transition-all" type="submit">Change Password</button>
+      <button class="px-6 py-2.5 rounded-full border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium transition-all" type="submit">Change Password</button>
     </form>
   </div>
 </div>

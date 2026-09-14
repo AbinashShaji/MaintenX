@@ -7,38 +7,38 @@
 {% block sidebar_nav %}{{ staff_sidebar('dashboard') }}{% endblock %}
 {% block content %}
 <div class="mb-8">
-  <h2 class="text-2xl font-semibold text-ink-primary">Staff Dashboard</h2>
+  <h2 class="font-serif text-3xl font-semibold text-ink-primary">Staff Dashboard</h2>
   <p class="text-sm text-ink-muted mt-1">Overview of your maintenance assignments.</p>
 </div>
 <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <span class="material-symbols-outlined text-primary text-2xl mb-2">work</span>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.available }}</div>
     <div class="text-xs text-ink-muted mt-1">Available Jobs</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <span class="material-symbols-outlined text-status-approved text-2xl mb-2">assignment_turned_in</span>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.accepted }}</div>
     <div class="text-xs text-ink-muted mt-1">Accepted</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <span class="material-symbols-outlined text-status-onwork text-2xl mb-2">build</span>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.on_work }}</div>
     <div class="text-xs text-ink-muted mt-1">On Work</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <span class="material-symbols-outlined text-status-rectified text-2xl mb-2">verified</span>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.rectified }}</div>
     <div class="text-xs text-ink-muted mt-1">Rectified</div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle p-5 hover:shadow-md transition-shadow">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 hover:shadow-md transition-shadow shadow-sm">
     <span class="material-symbols-outlined text-priority-high text-2xl mb-2">priority_high</span>
     <div class="text-2xl font-bold text-ink-primary">{{ stats.high_priority }}</div>
     <div class="text-xs text-ink-muted mt-1">High Priority</div>
   </div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  <div class="bg-white rounded-xl border border-border-subtle">
+  <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
       <h3 class="text-sm font-semibold text-ink-primary">Available Jobs</h3>
       <a href="{{ url_for('staff.jobs') }}" class="text-xs text-primary font-medium hover:underline">View All</a>
@@ -61,7 +61,7 @@
       {% endif %}
     </div>
   </div>
-  <div class="bg-white rounded-xl border border-border-subtle">
+  <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
       <h3 class="text-sm font-semibold text-ink-primary">Your Active Work</h3>
       <a href="{{ url_for('staff.history') }}" class="text-xs text-primary font-medium hover:underline">View History</a>

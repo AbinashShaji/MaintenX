@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MaintainX — Modern Dignified Maintenance Operations</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3F6C53",
+            "primary-hover": "#325742",
+            "primary-dark": "#27543C",
+            "bg-canvas": "#FAF7F2",
+            "surface-card": "#FFFFFF",
+            "surface-container": "#F4EFEA",
+            "surface-container-low": "#F9F6F1",
+            "border-subtle": "#E7E2D9",
+            "ink-primary": "#1E1E1C",
+            "ink-muted": "#6B6862",
+            "accent-tan": "#E4C9A3",
+            "accent-blue": "#AFC8D8",
+            "accent-clay": "#C97B5B",
+            "status-rectified": "#3F6C53"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAF7F2;
+        color: #1E1E1C;
+        font-family: 'Inter', sans-serif;
+      }
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill-current {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-bg-canvas text-ink-primary font-sans antialiased selection:bg-primary selection:text-white">
+<!-- HEADER / NAVBAR -->
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-[#FAF7F2]/90 backdrop-blur-md border-b border-border-subtle/80 transition-all">
+<div class="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
+<!-- Left: MaintainX Logo & Brand -->
+<a class="flex items-center gap-3 group" href="#">
+<div class="h-10 w-auto flex items-center">
+<img alt="MaintainX Logo" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xad4CLhC3MI0A3xEhJWk8W0jPp-TVEqe-uPrVU0S1hZhUTjbU6Fv-7MvvjICgbkPXr5pV4QV7bpkxG1VAnihbV77Q8T4exEj2Fh56fyMXZ-eTEMz_5kqSyonnt40RBTtPOPlEEpP7wup6jzH-ok8rqYc9E0XikTJBAWfZe6N7s0HwOp__CiTIIX6G6g_L1aBbIw2NXVlD8UHGQl4Aqe3Zzs1P8_c4YG4dnsvJBTlnloXbgnybodgkTOm78"/>
+</div>
+</a>
+<!-- Center: Navigation Links spaced cleanly -->
+<nav class="hidden md:flex items-center gap-8 text-sm">
+<a aria-current="page" class="font-medium text-primary flex items-center gap-1.5 transition-colors" href="#">
+<span>Home</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</a>
+<a class="font-medium text-ink-muted hover:text-ink-primary transition-colors" href="#about">About</a>
+<a class="font-medium text-ink-muted hover:text-ink-primary transition-colors" href="#workflow">Services</a>
+<a class="font-medium text-ink-muted hover:text-ink-primary transition-colors" href="#testimonials">Reviews</a>
+</nav>
+<!-- Right: Spaced CTA group -->
+<div class="flex items-center gap-4">
+<a class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full border border-border-subtle bg-white/70 hover:bg-white text-ink-primary text-sm font-medium transition-colors shadow-2xs" href="#">
+          Log In
+        </a>
+<a class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover active:scale-[0.98] text-white text-sm font-medium tracking-wide shadow-sm transition-all" href="#">
+          Get Started
+        </a>
+</div>
+</div>
+</header>
+<main class="w-full pt-20">
+<!-- 1. HERO SECTION -->
+<section class="relative w-full py-20 lg:py-28 px-6 sm:px-8 overflow-hidden">
+<!-- Subtle Decorative Elements -->
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-[72rem] h-[36rem] pointer-events-none -z-10 flex justify-center items-center">
+<div class="absolute top-10 left-12 w-80 h-80 rounded-full bg-accent-tan/20 blur-3xl"></div>
+<div class="absolute top-16 right-16 w-96 h-96 rounded-full bg-accent-blue/20 blur-3xl"></div>
+<div class="absolute bottom-0 left-1/3 w-72 h-72 rounded-full bg-primary/10 blur-3xl"></div>
+</div>
+<div class="max-w-5xl mx-auto flex flex-col items-center text-center">
+<!-- Eyebrow Pill -->
+<div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-border-subtle text-xs font-semibold uppercase tracking-wider text-ink-muted shadow-2xs mb-8">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>OPERATIONAL PROTOCOL • RELEASE 4.1</span>
+</div>
+<!-- Serif Headline -->
+<h1 class="font-serif text-5xl md:text-6xl text-[#1E1E1C] font-normal leading-tight max-w-3xl mb-6">
+          What’s broken today?
+        </h1>
+<!-- Subtitle -->
+<p class="font-sans text-base md:text-lg text-ink-muted max-w-2xl leading-relaxed mb-10">
+          Report it. Track it. Get it fixed. The calm, transparent maintenance workflow engineered for modern, dignified operations.
+        </p>
+<!-- Search / Prompt Container -->
+<div class="w-full max-w-2xl bg-white border border-[#E7E2D9] rounded-full p-2 pl-6 flex items-center justify-between shadow-sm focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+<div class="flex items-center gap-3 w-full pr-3">
+<span class="material-symbols-outlined text-ink-muted text-xl select-none">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-sm md:text-base text-ink-primary placeholder:text-ink-muted/70 focus:outline-none focus:ring-0" id="hero-input" onkeydown="if(event.key === 'Enter'){ triggerDemoFeedback(); }" placeholder="Describe an issue (e.g., 3rd floor HVAC leaking or main elevator light)..." type="text"/>
+</div>
+<button class="shrink-0 inline-flex items-center gap-2 rounded-full bg-primary hover:bg-primary-hover text-white px-5 py-2.5 font-medium text-sm transition-all shadow-xs" onclick="triggerDemoFeedback()" type="button">
+<span>Try Demo Request</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Interactive Toast Feedback -->
+<div class="hidden mt-4 px-4 py-2 rounded-xl bg-white border border-border-subtle shadow-xs text-xs font-mono text-primary items-center gap-2 transition-all" id="demo-feedback-box">
+<span class="material-symbols-outlined text-base animate-spin">sync</span>
+<span id="demo-feedback-text">Analyzing report context...</span>
+</div>
+<!-- Quick Category Pills -->
+<div class="mt-6 flex flex-wrap gap-2.5 sm:gap-3 justify-center items-center">
+<span class="text-xs uppercase font-semibold text-ink-muted tracking-wider mr-1">Quick select:</span>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Main water pipe leaking in basement B2', 'Plumbing')" type="button">
+<span class="w-2 h-2 rounded-full bg-accent-blue"></span> Plumbing
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Server room AC compressor failure', 'HVAC')" type="button">
+<span class="w-2 h-2 rounded-full bg-accent-tan"></span> HVAC
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Flickering panel switches in west wing', 'Electrical')" type="button">
+<span class="w-2 h-2 rounded-full bg-accent-clay"></span> Electrical
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Conference room acoustic door jammed', 'Carpentry')" type="button">
+<span class="w-2 h-2 rounded-full bg-[#8C6D4C]"></span> Carpentry
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Core switch rack terminal overheating', 'IT &amp; Network')" type="button">
+<span class="w-2 h-2 rounded-full bg-primary"></span> IT &amp; Network
+          </button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-border-subtle hover:border-ink-muted/50 text-xs font-medium text-ink-primary shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5" onclick="setQuickIssue('Entrance sliding barrier recalibration', 'Facilities')" type="button">
+<span class="w-2 h-2 rounded-full bg-ink-muted"></span> Facilities
+          </button>
+</div>
+<!-- Clean Hero Image Card -->
+<div class="mt-14 w-full max-w-4xl">
+<div class="bg-white p-3 sm:p-4 rounded-2xl border border-border-subtle shadow-md">
+<div class="relative w-full h-72 sm:h-96 rounded-xl overflow-hidden">
+<img alt="Modern facility operations center preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANr1SmfowUXxqdeWTPvAbUOhs880av9FKJ-_BFg7DGnT9l3Blu6lWkD1XXB1xUpgTq1ctmwRBjGqyGT_QUTzi4L00Sz7LDvcKUvTrB5Iw5NWNbg33g3M_nPWYbSlFnkRWsAk_cSd2aCTHg8szzWLXFSw0jH4YM-6jvF_CtvtgCzE-JySpTrCuQhsS4rJOaoVeGAghJXQ5cp1Zn_N0cydCNcHbkd7PLqK9OAm8L0EtOOObNJWjIt3P15g"/>
+<!-- Floating Ticket Status Overlay -->
+<div class="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md bg-white/95 backdrop-blur-md border border-border-subtle p-3.5 rounded-xl shadow-lg flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+<div class="text-left">
+<div class="text-xs font-mono text-ink-muted">WO-9204 • HVAC Chiller #2</div>
+<div class="text-sm font-semibold text-ink-primary">Pressure Calibrated</div>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">Rectified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. SPLIT NARRATIVE SECTION ("What is MaintainX?") -->
+<section class="w-full py-20 lg:py-24 bg-surface-container-low border-y border-border-subtle/70" id="about">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+<!-- Left Column: Editorial context -->
+<div class="lg:col-span-5 space-y-6">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Autonomous Coordination</span>
+<h2 class="font-serif text-3xl sm:text-4xl text-ink-primary font-normal leading-tight">
+              What is MaintainX?
+            </h2>
+<p class="text-base text-ink-muted leading-relaxed">
+              Traditional facilities rely on messy chat threads, crumpled sticky notes, and lost work tickets. When issues disappear into an operational void, tenants grow frustrated, assets decay unnoticed, and frontline workers take the blame.
+            </p>
+<p class="text-base text-ink-muted leading-relaxed">
+              MaintainX restores composure to physical infrastructure. By pairing frictionless reporting with real-time transparent stage tracking, every request is automatically classified, assigned without friction, and driven to resolution with verifiable accountability.
+            </p>
+<div class="pt-4 flex flex-wrap items-center gap-4">
+<a class="px-6 py-3 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-all shadow-xs" href="#">
+                Get Started
+              </a>
+<button class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-border-subtle hover:bg-surface-container text-ink-primary text-sm font-medium transition-colors" onclick="document.getElementById('workflow').scrollIntoView({behavior: 'smooth'})" type="button">
+<span>View Interactive Demo</span>
+<span class="material-symbols-outlined text-lg">play_circle</span>
+</button>
+</div>
+</div>
+<!-- Right Column: 3-Role Operational Triad -->
+<div class="lg:col-span-7 bg-white rounded-2xl border border-border-subtle p-6 sm:p-8 shadow-sm">
+<div class="flex items-center justify-between pb-6 border-b border-border-subtle">
+<h3 class="font-serif text-xl font-normal text-ink-primary">The Operational Triad</h3>
+<span class="text-xs font-mono font-semibold uppercase tracking-wider text-ink-muted">SYNCED NETWORK</span>
+</div>
+<div class="divide-y divide-border-subtle">
+<!-- Role 1: Requester -->
+<div class="py-6 flex items-start gap-4">
+<div class="w-11 h-11 rounded-xl bg-accent-tan/30 text-ink-primary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-xl">person</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-bold uppercase tracking-wider text-ink-muted">Frontline Requester</span>
+<span class="text-xs px-2.5 py-0.5 rounded-full bg-accent-tan/30 font-medium text-ink-primary">Instant Access</span>
+</div>
+<h4 class="text-base font-semibold text-ink-primary mt-1">Tenant &amp; Employee</h4>
+<p class="text-sm text-ink-muted mt-1 leading-normal">
+                    Instant reporting in seconds via QR or natural language. Real-time stage tracking directly removes anxiety and repeated follow-up emails.
+                  </p>
+</div>
+</div>
+<!-- Role 2: Staff -->
+<div class="py-6 flex items-start gap-4">
+<div class="w-11 h-11 rounded-xl bg-accent-blue/30 text-ink-primary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-xl">handyman</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-bold uppercase tracking-wider text-ink-muted">Assigned Staff</span>
+<span class="text-xs px-2.5 py-0.5 rounded-full bg-accent-blue/30 font-medium text-ink-primary">Field Ready</span>
+</div>
+<h4 class="text-base font-semibold text-ink-primary mt-1">Field Technician</h4>
+<p class="text-sm text-ink-muted mt-1 leading-normal">
+                    Prioritized queue, machine schematics, and one-tap status rectifications. Built for high-legibility touch tablets in tough field environments.
+                  </p>
+</div>
+</div>
+<!-- Role 3: Admin -->
+<div class="pt-6 flex items-start gap-4">
+<div class="w-11 h-11 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Command Core</span>
+<span class="text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-semibold">Governance</span>
+</div>
+<h4 class="text-base font-semibold text-ink-primary mt-1">Facilities Director</h4>
+<p class="text-sm text-ink-muted mt-1 leading-normal">
+                    Workload balancing, automated preventive maintenance routines, category spending forecasts, and executive compliance telemetry.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. 5-STEP RESOLUTION LIFECYCLE STRIP -->
+<section class="w-full py-20 lg:py-24 bg-bg-canvas" id="workflow">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<!-- Centered Header -->
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Step-by-Step Lifecycle</span>
+<h2 class="font-serif text-3xl sm:text-4xl text-ink-primary font-normal mt-3">
+            From first ping to complete resolution.
+          </h2>
+<p class="text-base text-ink-muted mt-3">
+            Five calm, interconnected milestones engineered to eliminate operational blind spots.
+          </p>
+</div>
+<!-- 5-Column Grid Layout -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+<!-- Step 1 -->
+<div class="bg-white rounded-2xl border border-border-subtle p-5 flex flex-col justify-between shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-mono text-xs font-bold text-ink-primary">01</span>
+<span class="px-2.5 py-0.5 rounded-full bg-ink-muted/10 text-ink-muted text-xs font-medium">Requested</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-accent-tan/30 flex items-center justify-center text-ink-primary mb-4">
+<span class="material-symbols-outlined text-xl">edit_note</span>
+</div>
+<h3 class="font-semibold text-ink-primary text-base mb-1.5">1. Report</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Frontline tenant logs ticket in seconds with quick photo, location tag, and memo.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-white rounded-2xl border border-border-subtle p-5 flex flex-col justify-between shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-mono text-xs font-bold text-ink-primary">02</span>
+<span class="px-2.5 py-0.5 rounded-full bg-accent-blue/30 text-ink-primary text-xs font-medium">Triaged</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-accent-blue/30 flex items-center justify-center text-ink-primary mb-4">
+<span class="material-symbols-outlined text-xl">rule</span>
+</div>
+<h3 class="font-semibold text-ink-primary text-base mb-1.5">2. Review</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Automated safety check &amp; lead supervisor review confirms severity, SLA, and tools.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-white rounded-2xl border border-border-subtle p-5 flex flex-col justify-between shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-mono text-xs font-bold text-ink-primary">03</span>
+<span class="px-2.5 py-0.5 rounded-full bg-accent-clay/20 text-[#8C4A31] text-xs font-medium">Dispatched</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-accent-clay/20 flex items-center justify-center text-[#8C4A31] mb-4">
+<span class="material-symbols-outlined text-xl">person_add</span>
+</div>
+<h3 class="font-semibold text-ink-primary text-base mb-1.5">3. Assign</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Routing engine matches specialized technician based on skill, zone, and workload.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="bg-white rounded-2xl border border-border-subtle p-5 flex flex-col justify-between shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-mono text-xs font-bold text-ink-primary">04</span>
+<span class="px-2.5 py-0.5 rounded-full bg-accent-tan/40 text-[#6B4F1A] text-xs font-medium">In Progress</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-accent-tan/40 flex items-center justify-center text-[#6B4F1A] mb-4">
+<span class="material-symbols-outlined text-xl">engineering</span>
+</div>
+<h3 class="font-semibold text-ink-primary text-base mb-1.5">4. Work</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Staff executes repair with dynamic checklists, parts check-out, and safety lock logs.</p>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="bg-white rounded-2xl border border-border-subtle p-5 flex flex-col justify-between shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-mono text-xs font-bold text-ink-primary">05</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary text-xs font-semibold">Completed</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-xl">verified</span>
+</div>
+<h3 class="font-semibold text-ink-primary text-base mb-1.5">5. Resolve</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Requester notified, digital sign-off completed, and asset maintenance history logged.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. TARGET SECTORS GRID -->
+<section class="w-full py-20 lg:py-24 bg-surface-container-low border-y border-border-subtle/70">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Target Sectors</span>
+<h2 class="font-serif text-3xl sm:text-4xl text-ink-primary font-normal mt-2">
+              Built for high-stakes environments.
+            </h2>
+</div>
+<p class="text-sm md:text-base text-ink-muted max-w-md">
+            From sterile hospital surgical wings to multi-acre manufacturing floors, MaintainX keeps physical spaces running without panic.
+          </p>
+</div>
+<!-- 4-Column Grid of 8 Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">apartment</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Companies &amp; Tech HQs</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Effortless desk, HVAC, AV, and facility upkeep across multi-floor metropolitan headquarters.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">local_hospital</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Hospitals &amp; Healthcare</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Strict compliance, sterile room HVAC regulation, and zero-downtime medical gas line monitoring.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">hotel</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Hotels &amp; Hospitality</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Rapid guest room repair cycles, kitchen refrigeration maintenance, and luxury standards preservation.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">precision_manufacturing</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Factories &amp; Plants</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Heavy machinery maintenance intervals, conveyor uptime tracking, and OSHA compliance checklists.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Universities &amp; Colleges</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Distributed dorm work tickets, lecture hall maintenance, and sprawling campus fleet management.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">holiday_village</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Residential Portfolios</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Transparent tenant portals for high-rise condos, property management groups, and leasing firms.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">account_balance</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Municipal &amp; Government</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Auditable asset catalogs, public infrastructure repair queues, and secure regulatory accountability.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-border-subtle shadow-2xs hover:shadow-sm transition-all group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-4">
+<span class="material-symbols-outlined text-2xl">storefront</span>
+</div>
+<h3 class="text-base font-semibold text-ink-primary mb-2">Retail Malls &amp; Centers</h3>
+<p class="text-xs text-ink-muted leading-relaxed">Escalator uptime, lighting balance, tenant common area service tickets, and loading dock coordination.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. SOCIAL PROOF & METRICS STRIP -->
+<section class="w-full py-16 lg:py-20 bg-bg-canvas">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<div class="bg-white rounded-3xl border border-border-subtle p-8 sm:p-12 shadow-sm">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 divide-y sm:divide-y-0 sm:divide-x divide-border-subtle">
+<div class="flex flex-col items-center text-center pt-4 sm:pt-0 sm:px-4">
+<span class="font-serif text-4xl sm:text-5xl font-medium text-ink-primary tracking-tight">10,000+</span>
+<span class="text-sm font-medium text-ink-muted mt-2">Requests Resolved</span>
+<span class="font-mono text-xs text-primary font-semibold mt-1">↑ 34% this quarter</span>
+</div>
+<div class="flex flex-col items-center text-center pt-4 sm:pt-0 sm:px-4">
+<span class="font-serif text-4xl sm:text-5xl font-medium text-ink-primary tracking-tight">98.4%</span>
+<span class="text-sm font-medium text-ink-muted mt-2">On-time Rectification</span>
+<span class="font-mono text-xs text-ink-muted mt-1">SLA benchmark 95%</span>
+</div>
+<div class="flex flex-col items-center text-center pt-4 sm:pt-0 sm:px-4">
+<span class="font-serif text-4xl sm:text-5xl font-medium text-ink-primary tracking-tight">15 min</span>
+<span class="text-sm font-medium text-ink-muted mt-2">Average Triage Time</span>
+<span class="font-mono text-xs text-primary font-semibold mt-1">Down from 4.2 hours</span>
+</div>
+<div class="flex flex-col items-center text-center pt-4 sm:pt-0 sm:px-4">
+<span class="font-serif text-4xl sm:text-5xl font-medium text-ink-primary tracking-tight">4.9 / 5</span>
+<span class="text-sm font-medium text-ink-muted mt-2">User Satisfaction</span>
+<span class="font-mono text-xs text-primary font-semibold mt-1">Over 2,400 reviews</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. TESTIMONIAL PREVIEW & CLOSING CTA BANNER -->
+<section class="w-full py-20 lg:py-24 bg-surface-container-low border-t border-border-subtle/70" id="testimonials">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Frontline Voices</span>
+<h2 class="font-serif text-3xl sm:text-4xl text-ink-primary font-normal mt-2">Quiet calm on the ground floor.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+<!-- Testimonial 1 -->
+<div class="p-8 rounded-2xl bg-white border border-border-subtle shadow-2xs flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-accent-clay mb-4">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+</div>
+<p class="font-serif text-base sm:text-lg text-ink-primary italic leading-relaxed">
+                “MaintainX eliminated our morning dispatch anxiety entirely. In our regional healthcare center, an elevator breakdown or air pressure drop is critical; now it’s handled before doctors even notice.”
+              </p>
+</div>
+<div class="mt-8 pt-6 border-t border-border-subtle flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-full bg-accent-blue/40 text-ink-primary flex items-center justify-center font-bold text-xs">
+                ER
+              </div>
+<div>
+<div class="text-sm font-semibold text-ink-primary">Elena Rostova</div>
+<div class="text-xs text-ink-muted">Facilities Director, Nexus Health</div>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="p-8 rounded-2xl bg-white border border-border-subtle shadow-2xs flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-accent-clay mb-4">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+</div>
+<p class="font-serif text-base sm:text-lg text-ink-primary italic leading-relaxed">
+                “Our technicians actually like opening the app. No microscopic checkboxes or frozen screens. It feels like a premium consumer tool designed for adults who work with their hands.”
+              </p>
+</div>
+<div class="mt-8 pt-6 border-t border-border-subtle flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-full bg-accent-tan/50 text-ink-primary flex items-center justify-center font-bold text-xs">
+                MC
+              </div>
+<div>
+<div class="text-sm font-semibold text-ink-primary">Marcus Chen</div>
+<div class="text-xs text-ink-muted">Head of Plant Engineering, Apex</div>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="p-8 rounded-2xl bg-white border border-border-subtle shadow-2xs flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-accent-clay mb-4">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+</div>
+<p class="font-serif text-base sm:text-lg text-ink-primary italic leading-relaxed">
+                “Tenants stopped calling our front desk in tears. Because they see the exact stage timestamp as parts are ordered, the frustration simply evaporated. Truly transformative.”
+              </p>
+</div>
+<div class="mt-8 pt-6 border-t border-border-subtle flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
+                SL
+              </div>
+<div>
+<div class="text-sm font-semibold text-ink-primary">Sarah Lindqvist</div>
+<div class="text-xs text-ink-muted">General Manager, Nordic Living</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FULL-WIDTH WARM BANNER WITH DEEP SAGE ACCENT -->
+<div class="relative rounded-3xl bg-primary text-white overflow-hidden p-8 sm:p-16 flex flex-col items-center text-center shadow-xl">
+<div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-primary-hover blur-2xl pointer-events-none opacity-60"></div>
+<div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-primary-dark blur-2xl pointer-events-none opacity-60"></div>
+<span class="text-xs font-semibold uppercase tracking-widest text-[#BCEECE] mb-3">
+            Immediate Deployment
+          </span>
+<h2 class="font-serif text-3xl sm:text-5xl text-white max-w-2xl font-normal leading-tight mb-5">
+            Bring order to your maintenance workflow.
+          </h2>
+<p class="text-base text-white/85 max-w-xl mb-8 leading-relaxed">
+            Join over 10,000 operators and facility leaders transforming chaotic maintenance tickets into predictable, calm resolution systems.
+          </p>
+<div class="flex flex-col sm:flex-row items-center gap-4">
+<a class="px-8 py-3.5 rounded-full bg-white hover:bg-surface-container text-primary font-medium text-sm transition-all shadow-sm" href="#">
+              Get Started Free
+            </a>
+<a class="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium text-sm transition-all" href="#workflow">
+              Explore Capabilities
+            </a>
+</div>
+<p class="mt-6 text-xs text-white/60">
+            No credit card required • Self-service setup in under 5 minutes • SOC2 Type II Certified
+          </p>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="w-full bg-[#FAF7F2] border-t border-border-subtle py-16">
+<div class="max-w-7xl mx-auto px-6 sm:px-8">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-border-subtle">
+<!-- Col 1 & 2: Brand Info -->
+<div class="md:col-span-2 space-y-4 pr-0 md:pr-8">
+<div class="flex items-center gap-3">
+<img alt="MaintainX Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xad4CLhC3MI0A3xEhJWk8W0jPp-TVEqe-uPrVU0S1hZhUTjbU6Fv-7MvvjICgbkPXr5pV4QV7bpkxG1VAnihbV77Q8T4exEj2Fh56fyMXZ-eTEMz_5kqSyonnt40RBTtPOPlEEpP7wup6jzH-ok8rqYc9E0XikTJBAWfZe6N7s0HwOp__CiTIIX6G6g_L1aBbIw2NXVlD8UHGQl4Aqe3Zzs1P8_c4YG4dnsvJBTlnloXbgnybodgkTOm78"/>
+</div>
+<p class="text-sm text-ink-muted leading-relaxed max-w-sm">
+            A calm, high-craft operational platform engineering precision workflows and dignified frontline maintenance clarity.
+          </p>
+<div class="pt-2">
+<span class="text-xs font-mono uppercase tracking-wider text-ink-muted">Operational System Core • Edition 2025</span>
+</div>
+</div>
+<!-- Col 3: Product -->
+<div>
+<h4 class="text-sm font-semibold text-ink-primary mb-4">Product</h4>
+<ul class="space-y-2.5 text-sm text-ink-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Work Orders</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Preventive Maintenance</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Asset Tracking</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Parts Inventory</a></li>
+</ul>
+</div>
+<!-- Col 4: Solutions -->
+<div>
+<h4 class="text-sm font-semibold text-ink-primary mb-4">Solutions</h4>
+<ul class="space-y-2.5 text-sm text-ink-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Manufacturing</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Facilities</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fleet Management</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Field Operations</a></li>
+</ul>
+</div>
+<!-- Col 5: Company -->
+<div>
+<h4 class="text-sm font-semibold text-ink-primary mb-4">Company</h4>
+<ul class="space-y-2.5 text-sm text-ink-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Philosophy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Editorial Journal</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+<!-- Bottom bar -->
+<div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-ink-muted">
+<p>© 2025 MaintainX Inc. Designed with literary restraint and industrial precision.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-ink-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-ink-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-ink-primary transition-colors" href="#">Security Protocols</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Interactivity Helper -->
+<script>
+    function setQuickIssue(text, category) {
+      const input = document.getElementById('hero-input');
+      if (input) {
+        input.value = text;
+        input.focus();
+        triggerDemoFeedback(category);
+      }
+    }
+
+    function triggerDemoFeedback(customCategory) {
+      const input = document.getElementById('hero-input');
+      const box = document.getElementById('demo-feedback-box');
+      const text = document.getElementById('demo-feedback-text');
+      if (!input || !box || !text) return;
+
+      const val = input.value.trim();
+      if (!val) {
+        input.focus();
+        return;
+      }
+
+      const cat = customCategory || 'Facilities Diagnostics';
+      box.classList.remove('hidden');
+      box.classList.add('inline-flex');
+      text.innerHTML = `Triaging: "<strong>${val.substring(0, 28)}...</strong>" &rarr; Routed to <strong>${cat}</strong>`;
+
+      setTimeout(() => {
+        text.innerHTML = `<span class="text-primary font-bold">WO-#${Math.floor(1000 + Math.random() * 9000)}</span> drafted and added to technician queue.`;
+      }, 1000);
+    }
+  </script>
+</body></html>

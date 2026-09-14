@@ -9,14 +9,14 @@
   <a href="{{ url_for('user.my_requests') }}" class="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-primary transition-colors mb-4">
     <span class="material-symbols-outlined text-lg">arrow_back</span> Back to My Requests
   </a>
-  <h2 class="text-xl font-semibold text-ink-primary">Request #{{ request_id }}</h2>
+  <h2 class="font-serif text-2xl font-semibold text-ink-primary">Request #{{ request_id }}</h2>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <!-- Main Details -->
   <div class="lg:col-span-2 space-y-6">
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <div class="flex items-start justify-between mb-4">
-        <h3 class="text-lg font-semibold text-ink-primary">{{ req.title }}</h3>
+        <h3 class="font-serif text-xl font-semibold text-ink-primary">{{ req.title }}</h3>
         {{ status_badge(req.status) }}
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- Work History -->
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Work History</h3>
       {% if updates %}
       <div class="space-y-4">
@@ -60,11 +60,11 @@
   </div>
   <!-- Sidebar: Timeline & Info -->
   <div class="space-y-6">
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Request Progress</h3>
       {{ request_timeline(statuses) }}
     </div>
-    <div class="bg-white rounded-xl border border-border-subtle p-6">
+    <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
       <h3 class="text-sm font-semibold text-ink-primary mb-4">Assignment</h3>
       {% if req.assigned_to_name %}
       <div class="text-sm text-ink-primary font-medium flex items-center gap-2">
