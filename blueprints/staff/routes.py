@@ -2,6 +2,10 @@ from flask import render_template, request, session, redirect, url_for, flash
 from blueprints.staff import staff_bp
 from database.connection import get_db_connection
 from blueprints.auth.utils import role_required
+from blueprints.workflow import (
+    validate_transition, log_request_update,
+    STATUS_ASSIGNED, STATUS_ON_WORK, STATUS_RECTIFIED
+)
 from werkzeug.security import check_password_hash, generate_password_hash
 
 @staff_bp.route('/dashboard')
@@ -85,69 +89,31 @@ def jobs():
             
     return render_template('staff/jobs.html', available_jobs=available_jobs)
 
+# --- Job Inspection and Acceptance ---
+
 @staff_bp.route('/job/<int:id>', methods=['GET', 'POST'])
 @role_required('staff')
 def job_details(id):
-    staff_id = session.get('user_id')
-    conn = get_db_connection()
-    
+    """
+    Job Inspection & Acceptance view.
+    Only allows viewing details and accepting available jobs.
+    Work actions (start, update, rectify) are decoupled and redirected to workspace.
+    """
     if request.method == 'POST':
         action = request.form.get('action')
-        note = request.form.get('note', '')
-        
-        if conn:
-            try:
-                cursor = conn.cursor()
-                cursor.execute("SELECT status FROM maintenance_requests WHERE id = ?", (id,))
-                req = cursor.fetchone()
-                
-                if not req:
-                    flash("Job not found.", "error")
-                    return redirect(url_for('staff.jobs'))
-                    
-                current_status = req['status']
-                
-                if action == 'accept':
-                    if current_status != 'pending':
-                        flash("Job is no longer available.", "error")
-                    else:
-                        cursor.execute("UPDATE maintenance_requests SET status = 'assigned', assigned_to = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?", (staff_id, id))
-                        cursor.execute("INSERT INTO request_updates (request_id, user_id, old_status, new_status, note) VALUES (?, ?, 'pending', 'assigned', 'Job accepted by staff')", (id, staff_id))
-                        conn.commit()
-                        flash("Job accepted successfully.", "success")
-                        
-                elif action in ['start', 'update', 'rectify']:
-                    # Must be assigned to this staff member
-                    cursor.execute("SELECT assigned_to FROM maintenance_requests WHERE id = ?", (id,))
-                    assigned_req = cursor.fetchone()
-                    if not assigned_req or assigned_req['assigned_to'] != staff_id:
-                        flash("You are not assigned to this job.", "error")
-                        return redirect(url_for('staff.job_details', id=id))
-                        
-                    new_status = current_status
-                    if action == 'start':
-                        new_status = 'in_progress'
-                        if not note:
-                            note = 'Work started'
-                    elif action == 'rectify':
-                        new_status = 'resolved'
-                        if not note:
-                            note = 'Job marked as rectified'
-                            
-                    cursor.execute("UPDATE maintenance_requests SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?", (new_status, id))
-                    if action == 'rectify':
-                        cursor.execute("UPDATE maintenance_requests SET resolved_at = CURRENT_TIMESTAMP WHERE id = ?", (id,))
-                        
-                    cursor.execute("INSERT INTO request_updates (request_id, user_id, old_status, new_status, note) VALUES (?, ?, ?, ?, ?)", (id, staff_id, current_status, new_status, note))
-                    conn.commit()
-                    flash("Job progress updated.", "success")
-                    
-            except Exception as e:
-                flash("An error occurred.", "error")
-                
-        return redirect(url_for('staff.job_details', id=id))
-    
-    # GET method
+        if action == 'accept':
+            return accept_job(id)
+        elif action == 'start':
+            return start_work(id)
+        elif action == 'update':
+            return update_work(id)
+        elif action == 'rectify':
+            return rectify_job(id)
+        else:
+            return accept_job(id)
+            
+    staff_id = session.get('user_id')
+    conn = get_db_connection()
     job = None
     updates = []
     statuses = set()
@@ -156,16 +122,16 @@ def job_details(id):
         try:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT r.*, c.name as category_name, u.name as reported_by
+                SELECT r.*, c.name as category_name, u.name as reported_by, s.name as assigned_to_name
                 FROM maintenance_requests r
                 LEFT JOIN categories c ON r.category_id = c.id
                 LEFT JOIN users u ON r.user_id = u.id
+                LEFT JOIN users s ON r.assigned_to = s.id
                 WHERE r.id = ?
             """, (id,))
             job = cursor.fetchone()
             
             if job:
-                # Timeline calculation
                 s = job['status']
                 if s == 'pending':
                     statuses.add('pending')
@@ -197,9 +163,61 @@ def job_details(id):
         
     return render_template('staff/job_details.html', job_id=id, job=job, updates=updates, statuses=statuses)
 
+@staff_bp.route('/job/<int:id>/accept', methods=['POST'])
+@role_required('staff')
+def accept_job(id):
+    """
+    Accept / Claim an available maintenance request.
+    Atomically updates status to 'assigned' and assigns to current staff member.
+    Redirects to /staff/history.
+    """
+    staff_id = session.get('user_id')
+    conn = get_db_connection()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status FROM maintenance_requests WHERE id = ?", (id,))
+            job = cursor.fetchone()
+            if not job:
+                flash("Job not found.", "error")
+                return redirect(url_for('staff.jobs'))
+                
+            if job['status'] != 'pending':
+                flash("This job is no longer available.", "error")
+                return redirect(url_for('staff.jobs'))
+                
+            # Atomic claim
+            cursor.execute("""
+                UPDATE maintenance_requests 
+                SET status = ?, assigned_to = ?, updated_at = CURRENT_TIMESTAMP 
+                WHERE id = ? AND status = 'pending'
+            """, (STATUS_ASSIGNED, staff_id, id))
+            
+            if cursor.rowcount == 0:
+                flash("This job was just claimed by another staff member.", "error")
+                return redirect(url_for('staff.jobs'))
+                
+            log_request_update(cursor, id, staff_id, 'pending', STATUS_ASSIGNED, 'Job accepted by staff')
+            
+            conn.commit()
+            flash("Job accepted successfully! You can now manage it from your Work Workspace.", "success")
+            return redirect(url_for('staff.history'))
+        except Exception:
+            flash("An error occurred while accepting the job.", "error")
+        finally:
+            conn.close()
+            
+    return redirect(url_for('staff.history'))
+
+# --- Staff Work Workspace ---
+
 @staff_bp.route('/history')
 @role_required('staff')
 def history():
+    """
+    Staff Work Workspace / History page.
+    Groups accepted jobs, on work jobs, and rectified/completed jobs.
+    """
     staff_id = session.get('user_id')
     jobs_by_status = {'assigned': [], 'in_progress': [], 'resolved': []}
     
@@ -208,7 +226,8 @@ def history():
         try:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT r.id, r.title, r.status, r.priority, c.name as category_name, r.updated_at
+                SELECT r.id, r.title, r.status, r.priority, r.location, 
+                       c.name as category_name, r.updated_at, r.resolved_at
                 FROM maintenance_requests r
                 LEFT JOIN categories c ON r.category_id = c.id
                 WHERE r.assigned_to = ? AND r.status IN ('assigned', 'in_progress', 'resolved', 'closed')
@@ -229,6 +248,220 @@ def history():
             conn.close()
             
     return render_template('staff/history.html', jobs=jobs_by_status)
+
+@staff_bp.route('/job/<int:id>/work-details')
+@staff_bp.route('/work-details/<int:id>')
+@role_required('staff')
+def work_details(id):
+    """
+    Dedicated Work Workspace view for managing active work execution,
+    submitting progress updates, and completing rectification.
+    """
+    staff_id = session.get('user_id')
+    conn = get_db_connection()
+    job = None
+    updates = []
+    statuses = set()
+    
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT r.*, c.name as category_name, u.name as reported_by
+                FROM maintenance_requests r
+                LEFT JOIN categories c ON r.category_id = c.id
+                LEFT JOIN users u ON r.user_id = u.id
+                WHERE r.id = ?
+            """, (id,))
+            job = cursor.fetchone()
+            
+            if job:
+                # Rule: Only assigned staff member can access the work workspace
+                if job['assigned_to'] != staff_id:
+                    flash("You are not assigned to this job.", "error")
+                    return redirect(url_for('staff.history'))
+                    
+                s = job['status']
+                if s == 'pending':
+                    statuses.add('pending')
+                elif s == 'assigned':
+                    statuses.update(['pending', 'assigned'])
+                elif s == 'in_progress':
+                    statuses.update(['pending', 'assigned', 'in_progress'])
+                elif s == 'resolved':
+                    statuses.update(['pending', 'assigned', 'in_progress', 'resolved'])
+                elif s == 'closed':
+                    statuses.update(['pending', 'assigned', 'in_progress', 'resolved', 'closed'])
+                    
+                cursor.execute("""
+                    SELECT u.*, user.name as user_name, user.role as user_role
+                    FROM request_updates u
+                    LEFT JOIN users user ON u.user_id = user.id
+                    WHERE u.request_id = ?
+                    ORDER BY u.created_at ASC
+                """, (id,))
+                updates = cursor.fetchall()
+        except Exception:
+            pass
+        finally:
+            conn.close()
+            
+    if not job:
+        flash("Job not found.", "error")
+        return redirect(url_for('staff.history'))
+        
+    return render_template('staff/work_details.html', job_id=id, job=job, updates=updates, statuses=statuses)
+
+@staff_bp.route('/job/<int:id>/start', methods=['POST'])
+@role_required('staff')
+def start_work(id):
+    """
+    Staff starts work on an assigned job: ASSIGNED -> IN_PROGRESS (ON WORK).
+    """
+    staff_id = session.get('user_id')
+    note = request.form.get('note', 'Work started by staff').strip()
+    if not note:
+        note = 'Work started by staff'
+        
+    conn = get_db_connection()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status, assigned_to FROM maintenance_requests WHERE id = ?", (id,))
+            job = cursor.fetchone()
+            if not job:
+                flash("Job not found.", "error")
+                return redirect(url_for('staff.history'))
+                
+            if job['assigned_to'] != staff_id:
+                flash("You are not assigned to this job.", "error")
+                return redirect(url_for('staff.history'))
+                
+            is_valid, err_msg = validate_transition(job['status'], STATUS_ON_WORK)
+            if not is_valid:
+                flash(err_msg, "error")
+                return redirect(url_for('staff.history'))
+                
+            cursor.execute("""
+                UPDATE maintenance_requests 
+                SET status = ?, updated_at = CURRENT_TIMESTAMP 
+                WHERE id = ?
+            """, (STATUS_ON_WORK, id))
+            
+            log_request_update(cursor, id, staff_id, job['status'], STATUS_ON_WORK, note)
+            
+            conn.commit()
+            flash("Work started on job! Current status: On Work.", "success")
+            return redirect(url_for('staff.work_details', id=id))
+        except Exception:
+            flash("An error occurred while starting work.", "error")
+        finally:
+            conn.close()
+            
+    return redirect(url_for('staff.history'))
+
+@staff_bp.route('/job/<int:id>/update', methods=['POST'])
+@role_required('staff')
+def update_work(id):
+    """
+    Staff adds progress update notes while job is IN_PROGRESS (ON WORK).
+    """
+    staff_id = session.get('user_id')
+    note = request.form.get('note', '').strip()
+    if not note:
+        flash("Please provide a work note describing progress.", "error")
+        return redirect(url_for('staff.work_details', id=id))
+        
+    conn = get_db_connection()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status, assigned_to FROM maintenance_requests WHERE id = ?", (id,))
+            job = cursor.fetchone()
+            if not job:
+                flash("Job not found.", "error")
+                return redirect(url_for('staff.history'))
+                
+            if job['assigned_to'] != staff_id:
+                flash("You are not assigned to this job.", "error")
+                return redirect(url_for('staff.history'))
+                
+            if job['status'] != STATUS_ON_WORK:
+                flash("Work progress updates can only be added to jobs currently On Work.", "error")
+                return redirect(url_for('staff.work_details', id=id))
+                
+            cursor.execute("""
+                UPDATE maintenance_requests 
+                SET updated_at = CURRENT_TIMESTAMP 
+                WHERE id = ?
+            """, (id,))
+            
+            log_request_update(cursor, id, staff_id, STATUS_ON_WORK, STATUS_ON_WORK, note)
+            
+            conn.commit()
+            flash("Work progress note recorded successfully.", "success")
+            return redirect(url_for('staff.work_details', id=id))
+        except Exception:
+            flash("An error occurred while updating work progress.", "error")
+        finally:
+            conn.close()
+            
+    return redirect(url_for('staff.history'))
+
+@staff_bp.route('/job/<int:id>/rectify', methods=['POST'])
+@role_required('staff')
+def rectify_job(id):
+    """
+    Staff completes repair and marks job as RECTIFIED: IN_PROGRESS -> RESOLVED.
+    Requires resolution note and saves resolved_at timestamp.
+    """
+    staff_id = session.get('user_id')
+    resolution_note = request.form.get('resolution_note', '').strip()
+    if not resolution_note:
+        resolution_note = request.form.get('note', '').strip()
+        
+    if not resolution_note:
+        flash("A resolution note is required when marking a job as rectified.", "error")
+        return redirect(url_for('staff.work_details', id=id))
+        
+    conn = get_db_connection()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status, assigned_to FROM maintenance_requests WHERE id = ?", (id,))
+            job = cursor.fetchone()
+            if not job:
+                flash("Job not found.", "error")
+                return redirect(url_for('staff.history'))
+                
+            if job['assigned_to'] != staff_id:
+                flash("You are not assigned to this job.", "error")
+                return redirect(url_for('staff.history'))
+                
+            is_valid, err_msg = validate_transition(job['status'], STATUS_RECTIFIED)
+            if not is_valid:
+                flash(err_msg, "error")
+                return redirect(url_for('staff.work_details', id=id))
+                
+            cursor.execute("""
+                UPDATE maintenance_requests 
+                SET status = ?, resolution_note = ?, resolved_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP 
+                WHERE id = ?
+            """, (STATUS_RECTIFIED, resolution_note, id))
+            
+            log_request_update(cursor, id, staff_id, STATUS_ON_WORK, STATUS_RECTIFIED, resolution_note)
+            
+            conn.commit()
+            flash("Job marked as rectified! Awaiting admin verification and closure.", "success")
+            return redirect(url_for('staff.history'))
+        except Exception:
+            flash("An error occurred while marking job as rectified.", "error")
+        finally:
+            conn.close()
+            
+    return redirect(url_for('staff.history'))
+
+# --- Bug Report & Profile ---
 
 @staff_bp.route('/bug-report', methods=['GET', 'POST'])
 @role_required('staff')

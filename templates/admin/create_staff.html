@@ -1,0 +1,66 @@
+{% extends "base_dashboard.html" %}
+{% from "components/macros.html" import admin_sidebar %}
+{% set role = 'admin' %}
+{% block title %}Create Staff Account — MaintenX{% endblock %}
+{% block page_title %}Staff Management{% endblock %}
+{% block user_initial %}A{% endblock %}
+{% block sidebar_nav %}{{ admin_sidebar('staff') }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl">
+  <div class="mb-6">
+    <a href="{{ url_for('admin.staff') }}" class="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-primary transition-colors mb-3">
+      <span class="material-symbols-outlined text-lg">arrow_back</span> Back to Staff
+    </a>
+    <h2 class="font-serif text-2xl font-semibold text-ink-primary">Add Maintenance Staff</h2>
+    <p class="text-sm text-ink-muted mt-1">Register a new maintenance technician with designated trade credentials.</p>
+  </div>
+
+  <form action="{{ url_for('admin.create_staff') }}" method="POST" class="bg-white rounded-2xl border border-border-subtle p-6 sm:p-8 space-y-5 shadow-sm">
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="name">
+        Full Name <span class="text-red-500">*</span>
+      </label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="name" name="name" type="text" placeholder="e.g. Alex Johnson" required/>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="email">
+        Email Address <span class="text-red-500">*</span>
+      </label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="email" name="email" type="email" placeholder="alex@maintenx.org" required/>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="department">
+          Trade / Department
+        </label>
+        <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="department" name="department" type="text" placeholder="e.g. Plumbing, Electrical"/>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-ink-primary mb-1.5" for="phone">
+          Phone Number
+        </label>
+        <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="phone" name="phone" type="text" placeholder="e.g. +1 555-0192"/>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-ink-primary mb-1.5" for="password">
+        Temporary Password <span class="text-red-500">*</span>
+      </label>
+      <input class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="password" name="password" type="password" minlength="6" placeholder="Minimum 6 characters" required/>
+      <span class="text-xs text-ink-muted mt-1 block">The staff member can update this password in their profile settings.</span>
+    </div>
+
+    <div class="pt-2 flex items-center gap-3">
+      <button class="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">
+        Create Staff Account
+      </button>
+      <a href="{{ url_for('admin.staff') }}" class="px-6 py-2.5 rounded-full border border-border-subtle hover:bg-surface-container text-ink-muted hover:text-ink-primary text-sm font-medium transition-all">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

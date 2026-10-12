@@ -30,34 +30,94 @@
         <p class="text-sm text-ink-primary mt-1 leading-relaxed">{{ req.description }}</p>
       </div>
       
-      <!-- Admin Action Form: Assign Staff / Change Status -->
-      <form action="#" method="POST" class="border-t border-border-subtle pt-4 mt-2">
-        <h4 class="text-sm font-semibold text-ink-primary mb-3">Admin Actions</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="block text-sm font-medium text-ink-primary mb-1.5" for="assign_staff">Assign Staff</label>
-            <select class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="assign_staff" name="staff_id" {% if req.status != 'pending' %}disabled{% endif %}>
-              <option value="">Select Staff</option>
-              {% for staff in staff_members %}
-              <option value="{{ staff.id }}" {% if req.assigned_to == staff.id %}selected{% endif %}>{{ staff.name }}</option>
-              {% endfor %}
-            </select>
+      <!-- Admin Actions Section -->
+      <div class="border-t border-border-subtle pt-5 mt-4 space-y-6">
+        <h4 class="text-sm font-semibold text-ink-primary">Administrative Controls</h4>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- 1. Assign Staff Action -->
+          <div class="p-4 rounded-xl border border-border-subtle bg-surface-container-low/60 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-lg">person_add</span>
+              <span class="text-xs font-semibold text-ink-primary uppercase tracking-wider">Assign Staff</span>
+            </div>
+            {% if req.status in ('pending', 'assigned') %}
+            <form action="{{ url_for('admin.assign_request', id=req.id) }}" method="POST" class="space-y-3">
+              <div>
+                <select class="w-full px-3.5 py-2 rounded-lg border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="assign_staff" name="staff_id" required>
+                  <option value="">Select Staff Member</option>
+                  {% for staff in staff_members %}
+                  <option value="{{ staff.id }}" {% if req.assigned_to == staff.id %}selected{% endif %}>
+                    {{ staff.name }} {% if staff.department %}({{ staff.department }}){% endif %}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button class="w-full px-4 py-2 rounded-full bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-sm transition-all" type="submit">
+                {{ 'Reassign Staff' if req.assigned_to else 'Assign Staff' }}
+              </button>
+            </form>
+            {% elif req.status == 'closed' %}
+            <p class="text-xs text-ink-muted">Cannot reassign a closed request.</p>
+            {% else %}
+            <p class="text-xs text-ink-muted">Assignment locked while request is {{ req.status|replace('_', ' ')|capitalize }}.</p>
+            {% endif %}
           </div>
-          <div>
-            <label class="block text-sm font-medium text-ink-primary mb-1.5" for="status">Update Status</label>
-            <select class="w-full px-4 py-2.5 rounded-xl border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="status" name="status">
-              <option value="pending" {% if req.status == 'pending' %}selected{% endif %}>Pending</option>
-              <option value="assigned" {% if req.status == 'assigned' %}selected{% endif %}>Assigned</option>
-              <option value="in_progress" {% if req.status == 'in_progress' %}selected{% endif %}>In Progress</option>
-              <option value="resolved" {% if req.status == 'resolved' %}selected{% endif %}>Resolved</option>
-              <option value="closed" {% if req.status == 'closed' %}selected{% endif %}>Closed</option>
-            </select>
+
+          <!-- 2. Priority Action -->
+          <div class="p-4 rounded-xl border border-border-subtle bg-surface-container-low/60 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-priority-high text-lg">flag</span>
+              <span class="text-xs font-semibold text-ink-primary uppercase tracking-wider">Set Priority</span>
+            </div>
+            {% if req.status != 'closed' %}
+            <form action="{{ url_for('admin.update_priority', id=req.id) }}" method="POST" class="space-y-3">
+              <div>
+                <select class="w-full px-3.5 py-2 rounded-lg border border-border-subtle bg-white text-sm text-ink-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="priority" name="priority" required>
+                  <option value="low" {% if req.priority == 'low' %}selected{% endif %}>Low</option>
+                  <option value="medium" {% if req.priority == 'medium' %}selected{% endif %}>Medium</option>
+                  <option value="high" {% if req.priority == 'high' %}selected{% endif %}>High</option>
+                  <option value="critical" {% if req.priority == 'critical' %}selected{% endif %}>Critical</option>
+                </select>
+              </div>
+              <button class="w-full px-4 py-2 rounded-full border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-xs font-semibold shadow-sm transition-all" type="submit">
+                Update Priority
+              </button>
+            </form>
+            {% else %}
+            <p class="text-xs text-ink-muted">Priority locked for closed requests.</p>
+            {% endif %}
           </div>
         </div>
-        <button class="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all" type="submit">
-          Apply Updates
-        </button>
-      </form>
+
+        <!-- 3. Close Request Action (Workflow: RESOLVED -> CLOSED) -->
+        <div class="p-4 rounded-xl border border-border-subtle bg-surface-container-low/60">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-status-rectified text-lg">task_alt</span>
+            <span class="text-xs font-semibold text-ink-primary uppercase tracking-wider">Close Request</span>
+          </div>
+          {% if req.status == 'resolved' %}
+          <form action="{{ url_for('admin.close_request', id=req.id) }}" method="POST" class="space-y-3 mt-3">
+            <div>
+              <label class="block text-xs text-ink-muted mb-1" for="close_note">Verification / Closure Note</label>
+              <input type="text" class="w-full px-3.5 py-2 rounded-lg border border-border-subtle bg-white text-sm text-ink-primary placeholder:text-ink-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="close_note" name="close_note" placeholder="Verified repair and closed." value="Verified and closed by Admin"/>
+            </div>
+            <button class="px-5 py-2 rounded-full bg-status-rectified hover:bg-primary text-white text-xs font-semibold shadow-sm transition-all" type="submit" onclick="return confirm('Verify repair and officially close this maintenance request?');">
+              Verify & Close Request
+            </button>
+          </form>
+          {% elif req.status == 'closed' %}
+          <div class="flex items-center gap-2 text-xs text-ink-muted mt-2">
+            <span class="material-symbols-outlined text-green-600 text-sm">check_circle</span>
+            <span>Request officially closed{% if req.closed_at %} on {{ req.closed_at }}{% endif %}.</span>
+          </div>
+          {% else %}
+          <p class="text-xs text-ink-muted mt-1">
+            Request must be marked as <strong>Rectified / Resolved</strong> by assigned staff before admin verification and closure. Current stage: <span class="font-medium text-ink-primary">{{ req.status|replace('_',' ')|capitalize }}</span>.
+          </p>
+          {% endif %}
+        </div>
+      </div>
     </div>
     
     <!-- Work History -->

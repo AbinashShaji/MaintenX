@@ -1,5 +1,5 @@
 {% extends "base_dashboard.html" %}
-{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% from "components/macros.html" import admin_sidebar, empty_state, status_badge, priority_badge %}
 {% set role = 'admin' %}
 {% block title %}Admin Dashboard — MaintenX{% endblock %}
 {% block page_title %}Admin Dashboard{% endblock %}
@@ -52,22 +52,74 @@
   <!-- Requests Needing Attention -->
   <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
-      <h3 class="text-sm font-semibold text-ink-primary">Needs Assignment</h3>
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-priority-high text-xl">pending_actions</span>
+        <h3 class="text-sm font-semibold text-ink-primary">Needs Assignment</h3>
+      </div>
       <a href="{{ url_for('admin.requests_list') }}" class="text-xs text-primary font-medium hover:underline">View All</a>
     </div>
     <div class="p-6">
+      {% if needs_assignment %}
+      <div class="space-y-3">
+        {% for req in needs_assignment %}
+        <div class="flex items-center justify-between p-3.5 rounded-xl border border-border-subtle hover:bg-surface-container-low transition-colors">
+          <div class="min-w-0 pr-3">
+            <div class="text-sm font-medium text-ink-primary truncate">{{ req.title }}</div>
+            <div class="text-xs text-ink-muted flex flex-wrap items-center gap-2 mt-1">
+              <span>{{ req.category_name }}</span>
+              <span>&bull;</span>
+              {{ priority_badge(req.priority) }}
+              <span>&bull;</span>
+              <span>{{ req.user_name or 'Unknown user' }}</span>
+            </div>
+          </div>
+          <a href="{{ url_for('admin.request_details', id=req.id) }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold shrink-0 transition-colors">
+            <span>Assign</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
       {{ empty_state('assignment_turned_in','All caught up','There are no pending requests waiting for assignment.') }}
+      {% endif %}
     </div>
   </div>
   
   <!-- Critical Issues -->
   <div class="bg-white rounded-2xl border border-border-subtle shadow-sm">
     <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
-      <h3 class="text-sm font-semibold text-ink-primary">Critical Priority</h3>
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-priority-critical text-xl">priority_high</span>
+        <h3 class="text-sm font-semibold text-ink-primary">Critical Priority</h3>
+      </div>
       <a href="{{ url_for('admin.requests_list') }}" class="text-xs text-primary font-medium hover:underline">View All</a>
     </div>
     <div class="p-6">
-      {{ empty_state('warning','No critical issues','There are currently no critical priority requests.') }}
+      {% if critical_requests %}
+      <div class="space-y-3">
+        {% for req in critical_requests %}
+        <div class="flex items-center justify-between p-3.5 rounded-xl border border-border-subtle hover:bg-surface-container-low transition-colors">
+          <div class="min-w-0 pr-3">
+            <div class="text-sm font-medium text-ink-primary truncate">{{ req.title }}</div>
+            <div class="text-xs text-ink-muted flex flex-wrap items-center gap-2 mt-1">
+              <span>{{ req.category_name }}</span>
+              <span>&bull;</span>
+              {{ status_badge(req.status) }}
+              <span>&bull;</span>
+              <span>{{ req.user_name or 'Unknown user' }}</span>
+            </div>
+          </div>
+          <a href="{{ url_for('admin.request_details', id=req.id) }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-priority-critical/10 hover:bg-priority-critical/20 text-priority-critical text-xs font-semibold shrink-0 transition-colors">
+            <span>View</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ empty_state('warning','No critical issues','There are currently no active critical priority requests.') }}
+      {% endif %}
     </div>
   </div>
 </div>

@@ -39,7 +39,12 @@
                 {% endif %}
               </td>
               <td class="px-6 py-4 text-right">
-                <button class="text-primary hover:text-primary-hover font-medium mr-3">Edit</button>
+                <a href="{{ url_for('admin.edit_category', id=cat['id']) }}" class="text-xs font-medium text-primary hover:underline mr-3">Edit</a>
+                <form action="{{ url_for('admin.toggle_category_status', id=cat['id']) }}" method="POST" class="inline" onsubmit="return confirm('Change status for category {{ cat['name'] }}?');">
+                  <button type="submit" class="text-xs font-medium px-3 py-1 rounded-full border transition-colors {% if cat['is_active'] %}border-red-200 text-red-600 hover:bg-red-50{% else %}border-green-200 text-green-700 hover:bg-green-50{% endif %}">
+                    {{ 'Deactivate' if cat['is_active'] else 'Activate' }}
+                  </button>
+                </form>
               </td>
             </tr>
             {% endfor %}

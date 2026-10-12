@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Operations Report — MaintenX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a1a;
+      background-color: #fff;
+    }
+    .font-serif {
+      font-family: 'Cinzel', serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      @page {
+        margin: 1.5cm;
+      }
+    }
+  </style>
+</head>
+<body class="p-6 sm:p-10 max-w-5xl mx-auto">
+  <!-- Controls for screen view -->
+  <div class="no-print mb-8 pb-4 border-b border-gray-200 flex items-center justify-between">
+    <div class="text-xs text-gray-500">
+      Previewing print-friendly layout. Click <strong>Print Report</strong> or press <strong>Ctrl+P</strong> to print or save as PDF.
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="window.print()" class="px-5 py-2 rounded-lg bg-black text-white text-xs font-semibold hover:bg-gray-800 transition-colors cursor-pointer">
+        Print Report
+      </button>
+      <button onclick="window.close()" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 text-xs font-semibold hover:bg-gray-50 transition-colors cursor-pointer">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <!-- Document Header -->
+  <header class="mb-8 border-b-2 border-black pb-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="font-serif text-3xl font-bold tracking-tight text-black">MaintenX</h1>
+        <p class="text-xs uppercase tracking-widest text-gray-600 mt-1">Maintenance Operations & Performance Audit</p>
+      </div>
+      <div class="text-right text-xs text-gray-600 font-mono">
+        <div><strong>Generated:</strong> {{ generated_at }}</div>
+        <div><strong>Access Level:</strong> Administrator Only</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Executive Summary -->
+  <section class="mb-8">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">1. Executive Summary</h2>
+    <div class="grid grid-cols-4 gap-4">
+      <div class="p-3 border border-gray-300 rounded-lg">
+        <div class="text-[11px] text-gray-600 uppercase font-semibold">Total Requests</div>
+        <div class="text-2xl font-bold font-mono text-black mt-1">{{ data.summary.total }}</div>
+      </div>
+      <div class="p-3 border border-gray-300 rounded-lg">
+        <div class="text-[11px] text-gray-600 uppercase font-semibold">Resolution Rate</div>
+        <div class="text-2xl font-bold font-mono text-black mt-1">{{ data.summary.resolution_rate }}%</div>
+      </div>
+      <div class="p-3 border border-gray-300 rounded-lg">
+        <div class="text-[11px] text-gray-600 uppercase font-semibold">Avg Resolution Time</div>
+        <div class="text-xl font-bold font-mono text-black mt-1">{{ data.summary.avg_resolution_time }}</div>
+      </div>
+      <div class="p-3 border border-gray-300 rounded-lg">
+        <div class="text-[11px] text-gray-600 uppercase font-semibold">Active In Progress</div>
+        <div class="text-2xl font-bold font-mono text-black mt-1">{{ data.summary.active }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Breakdown Tables (Category & Priority) -->
+  <div class="grid grid-cols-2 gap-6 mb-8">
+    <!-- Category Breakdown -->
+    <section>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">2. Requests by Category</h2>
+      <table class="w-full text-left text-xs border border-gray-300">
+        <thead class="bg-gray-100 border-b border-gray-300">
+          <tr>
+            <th class="p-2">Category</th>
+            <th class="p-2 text-center font-mono">Count</th>
+            <th class="p-2 text-right font-mono">% Share</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for cat in data.categories %}
+          <tr>
+            <td class="p-2 font-medium">{{ cat.name }}</td>
+            <td class="p-2 text-center font-mono">{{ cat.count }}</td>
+            <td class="p-2 text-right font-mono">{{ cat.percentage }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Priority Breakdown -->
+    <section>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">3. Requests by Priority</h2>
+      <table class="w-full text-left text-xs border border-gray-300">
+        <thead class="bg-gray-100 border-b border-gray-300">
+          <tr>
+            <th class="p-2">Priority Level</th>
+            <th class="p-2 text-center font-mono">Count</th>
+            <th class="p-2 text-right font-mono">% Share</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for p in data.priorities %}
+          <tr>
+            <td class="p-2 font-medium">{{ p.label }}</td>
+            <td class="p-2 text-center font-mono">{{ p.count }}</td>
+            <td class="p-2 text-right font-mono">{{ p.percentage }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- 3. Status Pipeline & Monthly Trends -->
+  <div class="grid grid-cols-2 gap-6 mb-8">
+    <!-- Status Breakdown -->
+    <section>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">4. Requests by Status</h2>
+      <table class="w-full text-left text-xs border border-gray-300">
+        <thead class="bg-gray-100 border-b border-gray-300">
+          <tr>
+            <th class="p-2">Workflow Status</th>
+            <th class="p-2 text-center font-mono">Count</th>
+            <th class="p-2 text-right font-mono">% Share</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for s in data.statuses %}
+          <tr>
+            <td class="p-2 font-medium">{{ s.label }}</td>
+            <td class="p-2 text-center font-mono">{{ s.count }}</td>
+            <td class="p-2 text-right font-mono">{{ s.percentage }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Monthly Activity Trends -->
+    <section>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">5. Monthly Trends</h2>
+      <table class="w-full text-left text-xs border border-gray-300">
+        <thead class="bg-gray-100 border-b border-gray-300">
+          <tr>
+            <th class="p-2">Month</th>
+            <th class="p-2 text-center font-mono">Total</th>
+            <th class="p-2 text-center font-mono">Resolved</th>
+            <th class="p-2 text-right font-mono">Rate</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          {% for m in data.monthly_trends %}
+          <tr>
+            <td class="p-2 font-medium">{{ m.month_label }}</td>
+            <td class="p-2 text-center font-mono">{{ m.total_count }}</td>
+            <td class="p-2 text-center font-mono">{{ m.resolved_count }}</td>
+            <td class="p-2 text-right font-mono">{{ m.resolution_rate }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- 4. Staff Workload Distribution -->
+  <section class="mb-8">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-black border-b border-gray-300 pb-1 mb-3">6. Staff Workload Distribution</h2>
+    <table class="w-full text-left text-xs border border-gray-300">
+      <thead class="bg-gray-100 border-b border-gray-300">
+        <tr>
+          <th class="p-2">Technician</th>
+          <th class="p-2">Department</th>
+          <th class="p-2 text-center font-mono">Active Jobs</th>
+          <th class="p-2 text-center font-mono">Resolved</th>
+          <th class="p-2 text-center font-mono">Total Assigned</th>
+          <th class="p-2 text-right font-mono">Avg Resolution Time</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {% for s in data.staff_workload %}
+        <tr>
+          <td class="p-2 font-medium">{{ s.name }}</td>
+          <td class="p-2 text-gray-600">{{ s.department }}</td>
+          <td class="p-2 text-center font-mono">{{ s.active_jobs }}</td>
+          <td class="p-2 text-center font-mono">{{ s.resolved_jobs }}</td>
+          <td class="p-2 text-center font-mono">{{ s.total_jobs }}</td>
+          <td class="p-2 text-right font-mono font-semibold">{{ s.avg_resolution_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Document Footer -->
+  <footer class="pt-4 border-t border-gray-300 text-[10px] text-gray-500 flex items-center justify-between">
+    <span>MaintenX Maintenance Management System</span>
+    <span>Confidential — Internal Organizational Report</span>
+  </footer>
+</body>
+</html>

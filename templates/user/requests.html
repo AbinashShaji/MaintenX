@@ -48,7 +48,11 @@
           <td class="px-6 py-4">{{ status_badge(req.status) }}</td>
           <td class="px-6 py-4 text-ink-muted">{{ req.user_name }}</td>
           <td class="px-6 py-4 text-right">
+            {% if req.user_id == session.get('user_id') %}
             <a href="{{ url_for('user.request_details', id=req.id) }}" class="text-primary hover:underline font-medium">View</a>
+            {% else %}
+            <span class="text-ink-muted text-xs italic">Private</span>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

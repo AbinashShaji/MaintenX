@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect, url_for, flash
 from blueprints.user import user_bp
 from database.connection import get_db_connection
 from blueprints.auth.utils import role_required
+from blueprints.workflow import log_request_update, STATUS_REQUESTED
 from werkzeug.security import check_password_hash, generate_password_hash
 
 @user_bp.route('/dashboard')
@@ -86,7 +87,7 @@ def requests_list():
         try:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT r.id, r.title, r.status, r.priority, c.name as category_name, r.created_at, u.name as user_name
+                SELECT r.id, r.user_id, r.title, r.status, r.priority, c.name as category_name, r.created_at, u.name as user_name
                 FROM maintenance_requests r
                 LEFT JOIN categories c ON r.category_id = c.id
                 LEFT JOIN users u ON r.user_id = u.id
@@ -119,16 +120,12 @@ def create_request():
                 cursor.execute("""
                     INSERT INTO maintenance_requests 
                     (user_id, category_id, title, description, location, priority, status)
-                    VALUES (?, ?, ?, ?, ?, ?, 'pending')
-                """, (user_id, category_id, title, description, location, priority))
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (user_id, category_id, title, description, location, priority, STATUS_REQUESTED))
                 
                 request_id = cursor.lastrowid
                 
-                cursor.execute("""
-                    INSERT INTO request_updates 
-                    (request_id, user_id, new_status, note)
-                    VALUES (?, ?, 'pending', 'Request created')
-                """, (request_id, user_id))
+                log_request_update(cursor, request_id, user_id, None, STATUS_REQUESTED, 'Request created')
                 
                 conn.commit()
                 flash("Maintenance request submitted successfully.", "success")
@@ -155,6 +152,7 @@ def create_request():
 @user_bp.route('/request/<int:id>')
 @role_required('user')
 def request_details(id):
+    user_id = session.get('user_id')
     req = None
     updates = []
     statuses = set()
@@ -175,6 +173,11 @@ def request_details(id):
             req = cursor.fetchone()
             
             if req:
+                # Security rule: Users can only view details of their own requests
+                if req['user_id'] != user_id:
+                    flash("Access denied: You can only view details of your own maintenance requests.", "error")
+                    return redirect(url_for('user.my_requests'))
+
                 # Calculate statuses for timeline
                 s = req['status']
                 if s == 'pending':

@@ -1,61 +1,303 @@
 {% extends "base_dashboard.html" %}
-{% from "components/macros.html" import admin_sidebar, empty_state %}
+{% from "components/macros.html" import admin_sidebar, status_badge, priority_badge, empty_state %}
 {% set role = 'admin' %}
-{% block title %}Reports — MaintenX{% endblock %}
+{% block title %}Reports & Analytics — MaintenX{% endblock %}
 {% block page_title %}Reports & Analytics{% endblock %}
 {% block user_initial %}A{% endblock %}
 {% block sidebar_nav %}{{ admin_sidebar('reports') }}{% endblock %}
+
 {% block content %}
 <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
   <div>
-    <h2 class="font-serif text-2xl font-semibold text-ink-primary">Platform Analytics</h2>
-    <p class="text-sm text-ink-muted mt-1">View statistics and export maintenance reports.</p>
+    <h2 class="font-serif text-2xl font-semibold text-ink-primary">Platform Analytics & Reports</h2>
+    <p class="text-sm text-ink-muted mt-1">Real-time organizational maintenance metrics, performance distribution, and operational exports.</p>
   </div>
-  <div class="flex gap-2">
-    <button class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-medium transition-all shrink-0">
-      <span class="material-symbols-outlined text-lg">print</span> Print
-    </button>
-    <button class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-sm transition-all shrink-0">
-      <span class="material-symbols-outlined text-lg">download</span> Export CSV
-    </button>
-  </div>
-</div>
-
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
-    <h3 class="text-sm font-semibold text-ink-primary mb-4">Requests by Category</h3>
-    <div class="flex items-center justify-center h-48 border border-dashed border-border-subtle rounded-lg bg-surface-container-low">
-      <span class="text-sm text-ink-muted">Chart visualization area</span>
-    </div>
-  </div>
-  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
-    <h3 class="text-sm font-semibold text-ink-primary mb-4">Requests by Priority</h3>
-    <div class="flex items-center justify-center h-48 border border-dashed border-border-subtle rounded-lg bg-surface-container-low">
-      <span class="text-sm text-ink-muted">Chart visualization area</span>
-    </div>
+  <div class="flex flex-wrap items-center gap-2.5">
+    <a href="{{ url_for('admin.print_report') }}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-subtle bg-white hover:bg-surface-container text-ink-primary text-sm font-semibold shadow-sm transition-all shrink-0">
+      <span class="material-symbols-outlined text-lg">print</span>
+      <span>Print Report</span>
+    </a>
+    <a href="{{ url_for('admin.export_reports_csv') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-sm font-semibold shadow-sm transition-all shrink-0">
+      <span class="material-symbols-outlined text-lg">download</span>
+      <span>Export CSV</span>
+    </a>
   </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
-  <h3 class="text-sm font-semibold text-ink-primary mb-4">Staff Workload Distribution</h3>
+<!-- 1. Executive Summary Metrics Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Total Requests</span>
+      <div class="w-9 h-9 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined text-xl">receipt_long</span>
+      </div>
+    </div>
+    <div class="font-serif text-3xl font-bold text-ink-primary">{{ data.summary.total }}</div>
+    <div class="text-xs text-ink-muted mt-1 flex items-center gap-1">
+      <span>{{ data.summary.pending }} pending assignment</span>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Resolution Rate</span>
+      <div class="w-9 h-9 rounded-xl bg-surface-container-low flex items-center justify-center text-status-rectified">
+        <span class="material-symbols-outlined text-xl">verified</span>
+      </div>
+    </div>
+    <div class="font-serif text-3xl font-bold text-ink-primary">{{ data.summary.resolution_rate }}%</div>
+    <div class="text-xs text-ink-muted mt-1 flex items-center gap-1">
+      <span>{{ data.summary.resolved }} resolved or closed</span>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Avg Resolution Time</span>
+      <div class="w-9 h-9 rounded-xl bg-surface-container-low flex items-center justify-center text-secondary">
+        <span class="material-symbols-outlined text-xl">schedule</span>
+      </div>
+    </div>
+    <div class="font-serif text-3xl font-bold text-ink-primary">{{ data.summary.avg_resolution_time }}</div>
+    <div class="text-xs text-ink-muted mt-1">From report submission to repair</div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-border-subtle p-5 shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Active Operations</span>
+      <div class="w-9 h-9 rounded-xl bg-surface-container-low flex items-center justify-center text-priority-high">
+        <span class="material-symbols-outlined text-xl">engineering</span>
+      </div>
+    </div>
+    <div class="font-serif text-3xl font-bold text-ink-primary">{{ data.summary.active }}</div>
+    <div class="text-xs text-ink-muted mt-1">Assigned or currently On Work</div>
+  </div>
+</div>
+
+<!-- 2. Distributions Grid (Category & Priority) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <!-- Requests by Category -->
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-ink-primary">Requests by Category</h3>
+        <p class="text-xs text-ink-muted">Volume breakdown across facility maintenance classifications.</p>
+      </div>
+      <span class="text-xs font-semibold text-ink-muted bg-surface-container-low px-2.5 py-1 rounded-full">{{ data.categories|length }} Categories</span>
+    </div>
+
+    {% if data.categories %}
+    <div class="space-y-4">
+      {% for cat in data.categories %}
+      <div>
+        <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+          <span class="text-ink-primary">{{ cat.name }}</span>
+          <span class="text-ink-muted font-mono">{{ cat.count }} reqs ({{ cat.percentage }}%)</span>
+        </div>
+        <div class="w-full bg-surface-container-low rounded-full h-2.5 overflow-hidden">
+          <div class="bg-primary h-2.5 rounded-full transition-all duration-500" style="width: {{ cat.percentage if cat.percentage > 0 else 0 }}%;"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center text-sm text-ink-muted py-8">No category data recorded yet.</div>
+    {% endif %}
+  </div>
+
+  <!-- Requests by Priority -->
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-ink-primary">Requests by Priority</h3>
+        <p class="text-xs text-ink-muted">Urgency classification breakdown across all complaints.</p>
+      </div>
+      <span class="text-xs font-semibold text-ink-muted bg-surface-container-low px-2.5 py-1 rounded-full">4 Levels</span>
+    </div>
+
+    <div class="space-y-4">
+      {% for p in data.priorities %}
+      <div>
+        <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+          <div class="flex items-center gap-2">
+            {{ priority_badge(p.priority) }}
+          </div>
+          <span class="text-ink-muted font-mono">{{ p.count }} reqs ({{ p.percentage }}%)</span>
+        </div>
+        <div class="w-full bg-surface-container-low rounded-full h-2.5 overflow-hidden">
+          {% if p.priority == 'critical' %}
+          <div class="bg-priority-critical h-2.5 rounded-full" style="width: {{ p.percentage }}%;"></div>
+          {% elif p.priority == 'high' %}
+          <div class="bg-priority-high h-2.5 rounded-full" style="width: {{ p.percentage }}%;"></div>
+          {% elif p.priority == 'medium' %}
+          <div class="bg-priority-medium h-2.5 rounded-full" style="width: {{ p.percentage }}%;"></div>
+          {% else %}
+          <div class="bg-priority-low h-2.5 rounded-full" style="width: {{ p.percentage }}%;"></div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- 3. Status Pipeline & Monthly Trends -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <!-- Requests by Status -->
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-ink-primary">Requests by Status</h3>
+        <p class="text-xs text-ink-muted">Distribution across the official 5-stage workflow lifecycle.</p>
+      </div>
+      <span class="text-xs font-semibold text-ink-muted bg-surface-container-low px-2.5 py-1 rounded-full">5 Stages</span>
+    </div>
+
+    <div class="space-y-4">
+      {% for s in data.statuses %}
+      <div>
+        <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+          <div class="flex items-center gap-2">
+            {{ status_badge(s.status) }}
+          </div>
+          <span class="text-ink-muted font-mono">{{ s.count }} reqs ({{ s.percentage }}%)</span>
+        </div>
+        <div class="w-full bg-surface-container-low rounded-full h-2.5 overflow-hidden">
+          {% if s.status == 'pending' %}
+          <div class="bg-status-requested h-2.5 rounded-full" style="width: {{ s.percentage }}%;"></div>
+          {% elif s.status == 'assigned' %}
+          <div class="bg-status-approved h-2.5 rounded-full" style="width: {{ s.percentage }}%;"></div>
+          {% elif s.status == 'in_progress' %}
+          <div class="bg-status-onwork h-2.5 rounded-full" style="width: {{ s.percentage }}%;"></div>
+          {% elif s.status == 'resolved' %}
+          <div class="bg-status-rectified h-2.5 rounded-full" style="width: {{ s.percentage }}%;"></div>
+          {% else %}
+          <div class="bg-status-closed h-2.5 rounded-full" style="width: {{ s.percentage }}%;"></div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Monthly Activity Trends -->
+  <div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-ink-primary">Monthly Request Trends</h3>
+        <p class="text-xs text-ink-muted">Historical submission volume and resolution rates over time.</p>
+      </div>
+      <span class="text-xs font-semibold text-ink-muted bg-surface-container-low px-2.5 py-1 rounded-full">Past 12 Months</span>
+    </div>
+
+    {% if data.monthly_trends %}
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm whitespace-nowrap">
+        <thead class="bg-surface-container-low/60 border-b border-border-subtle text-ink-muted text-[11px] font-semibold uppercase tracking-[0.04em]">
+          <tr>
+            <th class="px-4 py-2.5">Month</th>
+            <th class="px-4 py-2.5 text-center">Submitted</th>
+            <th class="px-4 py-2.5 text-center">Resolved</th>
+            <th class="px-4 py-2.5 text-right">Completion Rate</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border-subtle text-xs">
+          {% for m in data.monthly_trends %}
+          <tr class="hover:bg-surface-container-low/40 transition-colors">
+            <td class="px-4 py-3 font-medium text-ink-primary">{{ m.month_label }}</td>
+            <td class="px-4 py-3 text-center font-mono text-ink-primary">{{ m.total_count }}</td>
+            <td class="px-4 py-3 text-center font-mono text-status-rectified font-semibold">{{ m.resolved_count }}</td>
+            <td class="px-4 py-3 text-right font-mono font-semibold {{ 'text-green-600' if m.resolution_rate >= 75 else 'text-ink-primary' }}">
+              {{ m.resolution_rate }}%
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center text-sm text-ink-muted py-8">No monthly activity recorded yet.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- 4. Staff Workload Distribution Section -->
+<div class="bg-white rounded-2xl border border-border-subtle p-6 shadow-sm mb-6">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+    <div>
+      <h3 class="font-serif text-lg font-semibold text-ink-primary">Staff Workload Distribution</h3>
+      <p class="text-xs text-ink-muted mt-0.5">Active assignments, completed repairs, and technician turnaround statistics.</p>
+    </div>
+    <span class="text-xs font-semibold text-ink-muted bg-surface-container-low px-3 py-1 rounded-full self-start sm:self-auto">
+      {{ data.staff_workload|length }} Active Technicians
+    </span>
+  </div>
+
   <div class="overflow-x-auto">
     <table class="w-full text-left text-sm whitespace-nowrap">
       <thead class="bg-surface-container-low border-b border-border-subtle text-ink-muted text-[12px] font-semibold uppercase tracking-[0.04em]">
         <tr>
-          <th class="px-6 py-3 border-b border-border-subtle">Staff Member</th>
-          <th class="px-6 py-3 border-b border-border-subtle">Active Jobs</th>
-          <th class="px-6 py-3 border-b border-border-subtle">Resolved (All Time)</th>
-          <th class="px-6 py-3 border-b border-border-subtle">Avg Resolution Time</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Technician</th>
+          <th class="px-6 py-3 border-b border-border-subtle">Department</th>
+          <th class="px-6 py-3 border-b border-border-subtle text-center">Active Jobs</th>
+          <th class="px-6 py-3 border-b border-border-subtle text-center">Resolved (All-Time)</th>
+          <th class="px-6 py-3 border-b border-border-subtle text-center">Total Assigned</th>
+          <th class="px-6 py-3 border-b border-border-subtle text-right">Avg Resolution Time</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-border-subtle">
+        {% if data.staff_workload %}
+        {% for staff in data.staff_workload %}
+        <tr class="hover:bg-surface-container-low/40 transition-colors">
+          <td class="px-6 py-4">
+            <div class="font-semibold text-ink-primary flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-base">badge</span>
+              <span>{{ staff.name }}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4 text-ink-muted text-xs">{{ staff.department }}</td>
+          <td class="px-6 py-4 text-center">
+            {% if staff.active_jobs > 0 %}
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+              {{ staff.active_jobs }} active
+            </span>
+            {% else %}
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-ink-muted bg-surface-container-low">
+              0 active
+            </span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4 text-center font-mono font-medium text-ink-primary">{{ staff.resolved_jobs }}</td>
+          <td class="px-6 py-4 text-center font-mono font-medium text-ink-muted">{{ staff.total_jobs }}</td>
+          <td class="px-6 py-4 text-right font-mono text-xs font-semibold text-ink-primary">{{ staff.avg_resolution_time }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
         <tr>
-          <td colspan="4" class="px-6 py-8">
-            <div class="text-center text-ink-muted">Not enough data to display staff workload.</div>
+          <td colspan="6" class="px-6 py-8">
+            <div class="text-center text-ink-muted text-sm">No active maintenance staff accounts found.</div>
           </td>
         </tr>
+        {% endif %}
       </tbody>
     </table>
   </div>
 </div>
+
+<style>
+@media print {
+  aside, header, #flash-container, .no-print, a[href*="export-csv"], a[href*="print"] {
+    display: none !important;
+  }
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  body {
+    background: white !important;
+  }
+}
+</style>
 {% endblock %}
